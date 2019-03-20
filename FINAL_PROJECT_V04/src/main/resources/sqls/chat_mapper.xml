@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.websocket.chat.Mapper">
+
+	<select id="chatSelectList" resultType="ChatDto">
+		SELECT CHATNO, USERNO, FILENO, CHATTYPE, CHATCONTENT, VIDEOURL, CHATCOLOR
+		FROM CHAT
+	</select>
+	
+	<insert id="chatInsert" parameterType="ChatDto">
+		INSERT INTO CHAT
+		VALUES(CHAT_SEQ.NEXTVAL, #{userno}, #{fileno}, #{chattype}, #{chatcontent}, #{videourl}, #{chatcolor})
+	</insert>
+	
+	 
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<websocket:handlers>
+		<!-- chat.jsp에서 웹 소켓 클라이언트가 /chat-ws.do로 접속하면 chatHandler 빈을 이용해서 메시지 처리 -->
+		<websocket:mapping handler="chatHandler" path="/chat-ws.do"/>
+		<websocket:mapping handler="paintHandler" path="/paint-ws.do"/>		
+	</websocket:handlers>
+	
+	<!-- 위의 chatHandler 매핑. 자동 스캔 안해놨기에 직접 매핑 -->
+	<bean id="chatHandler" class="com.websocket.handler.ChatWebSocketHandler"/>
+	<bean id="paintHandler" class="com.websocket.handler.PaintHandler"/>
+	
+</beans>
