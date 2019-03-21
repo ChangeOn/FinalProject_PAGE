@@ -1,0 +1,114 @@
+/*!
+ * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
+ */
+ 
+.collapsing {
+   -webkit-transition: none;
+   transition: none;
+   display: none;
+}
+ 
+/* 커스터 마이즈 설정 */
+body {
+
+  overflow: hidden;
+}
+
+.draggable {
+	z-index: auto;
+}
+
+/* 텍스트 상자 관련 */
+.draggable.text {
+	max-height: 900px;
+}
+.plain.text, .editor.text, .draggable.text, .ui-wrapper{
+	width: fit-content;
+	height: fit-content;
+}
+/* /텍스트 상자 관련 */
+
+/* 테이블 상자 관련 */
+.editor.table, .draggable.table {
+	width: fit-content;
+	height: fit-content;
+}
+.table {
+	margin-bottom: 0 !important;
+}
+/* /테이블 상자 관련 */
+
+/* 사이드바 관련 */
+#sidebar-scroll {
+	display: block !important;
+	max-height: calc(100vh);
+	overflow-y: auto !important;
+}
+/* /사이드바 관련 */
+
+/* 컨텐츠 영역 관련 */
+.container-fluid {
+	height: 100%;
+	overflow-y: auto !important;
+}
+/* /컨텐츠 영역 관련 */
+
+/* 경고창 관련 */
+.alert {
+	padding: .375rem .75rem !important;
+	margin-left: 20px;
+	margin-bottom: 0 !important;
+}
+/* /경고창 관련 */
+
+/* 페이지 탭 관련 */
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+/* /페이지 탭 관련 */
+
+/* 부트스트랩 기본 설정 */
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}

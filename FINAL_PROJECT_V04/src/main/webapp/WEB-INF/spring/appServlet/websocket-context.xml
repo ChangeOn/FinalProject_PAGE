@@ -10,7 +10,10 @@
 	<websocket:handlers>
 		<!-- chat.jsp에서 웹 소켓 클라이언트가 /chat-ws.do로 접속하면 chatHandler 빈을 이용해서 메시지 처리 -->
 		<websocket:mapping handler="chatHandler" path="/chat-ws.do"/>
-		<websocket:mapping handler="paintHandler" path="/paint-ws.do"/>		
+		<websocket:mapping handler="paintHandler" path="/paint-ws.do"/>
+		<websocket:handshake-interceptors>
+			  <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
 	</websocket:handlers>
 	
 	<!-- 위의 chatHandler 매핑. 자동 스캔 안해놨기에 직접 매핑 -->

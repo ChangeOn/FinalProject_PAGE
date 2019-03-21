@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
@@ -16,10 +18,10 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.websocket.chat.biz.ChatBiz;
-import com.websocket.chat.biz.ChatBizImpl;
 import com.websocket.chat.dto.ChatDto;
 import com.websocket.file.biz.FileBiz;
 import com.websocket.file.dto.FileDto;
+
 
 public class ChatWebSocketHandler extends TextWebSocketHandler {
 
@@ -32,6 +34,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	private FileBiz fileBiz;
 	
 	private Map<String,WebSocketSession> users;
+	private Map<WebSocketSession,String> pageUsers;
 	
 	/*
 	 * 클라이언트가 연결되면, 클라이언트의 관련된 WebSocketSession을 users 맵에 저장한다.
@@ -40,28 +43,44 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	
 	public ChatWebSocketHandler() {
 		users = new ConcurrentHashMap<String,WebSocketSession>();
+		pageUsers = new ConcurrentHashMap<WebSocketSession,String>();
     }
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		logger.info(session.getId()+"(IP)"+session.getRemoteAddress().getHostName() + " 연결됨");
-		users.put(session.getId(), session);
 		
+		//1. 들어온 사람의 실제 로그인 아이디 정보를 가져온다.
+    	//Map<String, Object> map = session.getAttributes();
+    	//UserInfoDto mem = (UserInfoDto)map.get("login"); 
+    	//String userId = mem.getId();
+		Map<String,Object> map = session.getAttributes();
+		String userid = (String)map.get("userid");
+		logger.info("로그인 한 아이디 : " + userid);
+		// 같은 페이지를 사용하는 사용자별 세션 분리				
+		String pageno = map.get("pageno").toString();
+		logger.info("pageno : "+map.get("pageno").toString());
+		pageUsers.put(session , pageno);
+		
+		logger.info(session.getId()+"(IP)"+session.getRemoteAddress().getHostName() + " 연결됨");			
+		users.put(session.getId(), session);
 		// CHAT 테이블 전체값 List에 가져오기
 		List<ChatDto> list = biz.selectList();
 		String sendmessage = "";
 		// 가져온 값 종류별로 전달.
 		for (ChatDto dto : list) {
+			// 메세지
 			if (dto.getChattype().equals("msg")){
 				sendmessage = "{\"type\" :\"msg\","
 							+ "\"nickname\" :\"sadf\","
 							+ "\"message\" :\""+dto.getChatcontent()+"\","
 							+ "\"randomcolor\" :\""+dto.getChatcolor()+"\"}";
+			// 동영상
 			} else if (dto.getChattype().equals("video")){
 				sendmessage = "{\"type\" :\"video\","
 							+ "\"nickname\" :\"sadf\","
 							+ "\"url\" :\""+dto.getVideourl()+"\","
 							+ "\"randomcolor\" :\""+dto.getChatcolor()+"\"}";
+			// 파일
 			} else if (dto.getChattype().equals("filedata")){
 				FileDto selectFileDto = fileBiz.FileSelectOne(dto.getFileno());
 				sendmessage = "{\"type\" :\"filedata\","
@@ -90,6 +109,11 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		JSONParser jsonparser = new JSONParser();
 		JSONObject jsonObj = null;
 		jsonObj = (JSONObject)jsonparser.parse(message.getPayload());
+		
+		// 같은 페이지를 사용하는 사용자별 세션 분리
+		//logger.info("pageno : "+(String)jsonObj.get("pageno"));
+		String pageno = (String)jsonObj.get("pageno");
+		//pageUsers.put(session , pageno);
 
 		// 값 없을 시 null값 추가
 		if((String)jsonObj.get("url") == null) {
@@ -109,10 +133,18 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 			int insert_res = biz.insert(dto);
 		}
 		
-		for(WebSocketSession s : users.values()) {
+		/*for(WebSocketSession s : users.values()) {
 			s.sendMessage(message);
 			logger.info(s.getId() + "에 메시지 발송 : " + message.getPayload());
-		}
+		}*/
+		
+		for(WebSocketSession s : users.values()) {
+			//pageno 가 같은 사용자에게만  메시지 전송
+			if (pageno.equals(pageUsers.get(s))) {
+				s.sendMessage(message);
+				logger.info(s.getId() + "에 메시지 발송 : " + message.getPayload());
+			}
+		}		
 	}	
 
 	@Override

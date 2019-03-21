@@ -9,6 +9,9 @@
 <script type="text/javascript">
 	var wsocket;
 	var randomcolor = setRandomColor();
+	var userid = '${userid}';
+	var username = '${username}';
+	var pageno = '${pageno}';	
 
 	function connect() {
 		wsocket = new WebSocket("ws://localhost:8787/FINAL_PROJECT_V04/chat-ws.do");		
@@ -19,17 +22,24 @@
 
 		$('#message').attr('disabled', false);
 		$('#plusbutton').attr('disabled', false);
+		
+		userid = prompt('ID 입력하세요');
+		username = prompt('username 입력하세요');
+		pageno = prompt('pageno 입력하세요');
+		
+		$('#nickname').val(username);
+		$('#enterBtn').click();
 	}
 
 	function disconnect() {
 		var msg = '{"type":"inout", "message":"[' + $('#nickname').val()
-				+ '님 퇴장!]"}';
+				+ '님 퇴장!]"'+ ', "pageno" :"' + pageno+'"}';
 		wsocket.send(msg);
 	}
 
 	function onOpen(evt) {
 		var msg = '{"type":"inout", "message":"[' + $('#nickname').val()
-				+ '님 입장!]"}';
+				+ '님 입장!]"'+ ', "pageno" :"' + pageno+'"}';
 		wsocket.send(msg);
 	}
 
@@ -49,10 +59,8 @@
 					+ jsonmsg.message + '</p></div>'
 					+ '</div>');
 			/* 닉네임 확인 == 자기 닉네임과 같은지 체크 */
-			if (jsonmsg.message
-					.substring(1, jsonmsg.message.lastIndexOf('퇴장!')) == $(
-					'#nickname').val()
-					&& jsonmsg.message.lastIndexOf('퇴장!') != -1) {
+			if (jsonmsg.message.substring(1, jsonmsg.message.lastIndexOf('님 퇴장!')) == username
+					&& jsonmsg.message.lastIndexOf('님 퇴장!') != -1) {
 				wsocket.close();
 			}
 		} else if (jsonmsg.type == 'filedata') {			
@@ -95,7 +103,7 @@
 			return false;
 		}
 		wsocket.send('{"type" :"msg", "nickname" :"' + nickname
-				+ '", "message" :"' + msg + '", "randomcolor" :"' + randomcolor
+				+ '", "message" :"' + msg + '", "randomcolor" :"' + randomcolor + '", "pageno" :"' + pageno
 				+ '"}');
 		$('#message').val('');
 	}
@@ -119,7 +127,7 @@
 		}
 
 		wsocket.send('{"type" :"video", "nickname" :"' + nickname
-				+ '", "url" :"' + url + '", "randomcolor" :"' + randomcolor
+				+ '", "url" :"' + url + '", "randomcolor" :"' + randomcolor+ '", "pageno" :"' + pageno
 				+ '"}');
 		$('#videoUp').val('');
 	}
@@ -158,6 +166,7 @@
 					obj.filename = data.fileName;
 					obj.newFileName = data.newFileName;
 					obj.fileno = String(data.fileno);
+					obj.pageno = pageno;
 					jsonStr = JSON.stringify(obj);
 
 					wsocket.send(jsonStr);
@@ -177,6 +186,8 @@
 	}
 
 	$(document).ready(function() {
+		
+		connect();
 
 		$('#message').keypress(function(event) {
 			var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -332,9 +343,9 @@
 		<div id="chatArea">
 			<h4 class="card-headerCustom" id="moveChat" style="color: #fff; padding: 0;">
 				<span class="fas fa-comment"></span> Chat
-				<input type="text" id="nickname" style="width: 30%;">
-				<input type="button" id="enterBtn" value="입장">
-				<input type="button" id="exitBtn" value="나가기">
+				<input type="text" id="nickname" style="display:none; width: 30%;">
+				<input type="button" id="enterBtn" style="display:none;" value="입장">
+				<input type="button" id="exitBtn" style="display:none;" value="나가기">
 				<i class="fas fa-times-circle icon-red float-right" onclick="deleteChat();"></i>			
 			</h4>
 			

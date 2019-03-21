@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
@@ -28,6 +29,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,6 +43,7 @@ import com.websocket.handler.ChatWebSocketHandler;
  * Handles requests for the application home page.
  */
 @Controller
+@SessionAttributes({"userid", "pageno", "username"})
 public class ChatController {
 	
 	private Logger logger = LoggerFactory.getLogger(ChatController.class);
@@ -48,8 +51,25 @@ public class ChatController {
 	@Autowired
 	private FileBiz biz;	
 	
+	@RequestMapping("/test.do")
+	public String viewPage() {
+		return "test";
+	}
+	
 	@RequestMapping("/web/chat.do")
-	public String viewChatPage() {
+	public String viewChatPage(Model model, HttpServletRequest request) {
+		
+		logger.info("chat.do RUN! / Run Time: " + new Date());
+		String userid = "TESTUSER";
+		int pageno = 3;
+		//UserInfoDto login = (UserInfoDto)request.getSession().getAttribute("login");
+		/*(login==null) {
+			return "redirect:/loginNull.do";
+		}*/
+		model.addAttribute("userid", userid );
+		model.addAttribute("username", "개나리" );
+		model.addAttribute("pageno", pageno );
+		
 		return "chat";
 	}
 	

@@ -295,9 +295,9 @@ input[type=color].form-control {
 </style>
 
 </head>
-<body>
+<body style="height: 100%;">
 
-	<div class="card text-white" style="width: 795px; float: left;">
+	<div class="card text-white" style="width: 795px; height: 100%;">
 		<h4 class="card-header" id="movePaint" style="padding: 0;">
 			<span class="fas fa-palette"></span> Paint <i id="paintexit"
 				class="fas fa-times float-right" style="margin: 0 10px 0 10px;"></i>
