@@ -24,4 +24,9 @@ public class ChatBizImpl implements ChatBiz {
 		return dao.ChatInsert(dto);
 	}
 
+	@Override
+	public List<ChatDto> ChatSelectPageList(int pageno) {
+		return dao.ChatSelectPageList(pageno);
+	}
+
 }

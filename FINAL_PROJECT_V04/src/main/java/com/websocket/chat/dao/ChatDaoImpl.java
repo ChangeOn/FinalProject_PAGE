@@ -38,4 +38,13 @@ public class ChatDaoImpl implements ChatDao {
 		return res;
 	}
 
+	@Override
+	public List<ChatDto> ChatSelectPageList(int pageno) {
+		List<ChatDto> list = new ArrayList<ChatDto>();
+		
+		list = sqlSession.selectList(NAMESPACE+"chatSelectPageList",pageno);
+		
+		return list;
+	}
+
 }

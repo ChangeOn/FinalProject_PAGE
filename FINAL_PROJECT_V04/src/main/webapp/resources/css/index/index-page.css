@@ -47,6 +47,11 @@ html, body {
 	margin-top: 5%;
 	margin-bottom: 5%;
 }
+
+div[class^=col]>.form-control {
+	background-color: white;
+	border: 2px solid dimgray;
+}
 /* /01.0 Universal area */
 
 /* 02.0 header area */
@@ -89,6 +94,15 @@ html, body {
 /* 03.0 - Navigation */
 .navbar {
 	background: #111 !important;
+}
+
+.navbar>.row {
+	width: 100%;
+	display: contents;
+    vertical-align: middle;
+}
+.form-row>.col {
+	margin-right: 10px;
 }
 
 .navbar-wrap {

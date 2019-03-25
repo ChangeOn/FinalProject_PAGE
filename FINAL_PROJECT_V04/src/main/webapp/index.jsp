@@ -53,18 +53,24 @@
 
 	<!-- Navigation Area -->
 	<nav id="navigation" class="navbar navbar-dark">
-		<span class="navbar-brand">PAGE</span>
-		<ul class="nav justify-content-end">
-			<li class="nav-item">
-			<a class="nav-link text-muted" href="#">맨위로</a>
-			</li>
-			<li class="nav-item">
-			<a class="nav-link text-muted" href="#">로그인</a>
-			</li>
-			<li class="nav-item">
-			<a class="nav-link text-muted" href="#">회원가입</a>
-			</li>
-		</ul>
+		<div class="row">
+			<div class="col-2 col-lg-1">
+				<span id="nav-logo" class="navbar-brand">PAGE</span>
+			</div>
+			<div class="col-10 col-lg-3">
+				<ul class="nav justify-content-end">
+					<li class="nav-item">
+					<a class="nav-link text-muted" href="#">맨위로</a>
+					</li>
+					<li class="nav-item">
+					<a class="nav-link text-muted" href="#" onclick="login()">로그인</a>
+					</li>
+					<li class="nav-item">
+					<a class="nav-link text-muted" href="#">회원가입</a>
+					</li>
+				</ul>
+			</div>
+		</div>
 	</nav>
 	<!-- /Navigation Area -->
 	
@@ -129,17 +135,52 @@
 							</ul>
 						</div>
 					</div>
+					<!-- 회원가입 입력 창 -->
 					<div class="col-sm-6">
 						<h2 class="con-title">Drop us a line</h2>
 						<form role="form">
-							<div class="form-group">
-								<input type="text" class="form-control" id="user_name"
-									placeholder="Enter your name">
+							<!-- 아이디 및 이름 -->
+							<div class="form-group row">
+   								<div class="col-6" style="padding-right: 0">
+									<input type="text" class="form-control" id="user_id"
+										placeholder="Enter your id">
+								</div>
+								<div class="col-6">
+									<input type="text" class="form-control" id="user_name"
+										placeholder="Enter your name">
+								</div>
 							</div>
+							<!-- 이메일 -->
 							<div class="form-group">
-								<input type="email" class="form-control" id="your_email"
-									placeholder="Enter your email">
+								<div class="col-12" style="padding-right: 0; padding-left: 0;">
+									<input type="email" class="form-control" id="your_email"
+										placeholder="Enter your email">
+								</div>
 							</div>
+							<!-- 비밀번호 -->
+							<div class="form-group row">
+   								<div class="col-6" style="padding-right: 0">
+									<input type="text" class="form-control" id="user_password"
+										placeholder="Enter password">
+								</div>
+								<div class="col-6">
+									<input type="text" class="form-control" id="user_password_again"
+										placeholder="Enter password again">
+								</div>
+							</div>
+							<!-- 성별 -->
+							<div class="form-group row"">
+								<div class="col-3" style="padding-right: 0">
+		    						<a id="M" class="btn btn-primary active" href="#" onclick="toggles(this)"
+		    						style="width:100%;">MAN</a>
+		  						</div>	
+		  						<div class="col-3" style="padding-right: 0;">
+									<a id="W" class="btn btn-secondary" href="#" onclick="toggles(this)"
+									style="width:100%;" id="user-sex">WOMAN</a>
+								</div>
+								<input type="hidden" id="user_sex">
+							</div>
+							<!-- 추가 입력사항 -->
 							<div class="form-group">
 								<textarea name="InputMessage" id="user_message"
 									class="form-control" rows="5" required></textarea>

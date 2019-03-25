@@ -1,6 +1,7 @@
 package com.websocket.handler;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -63,8 +64,8 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		
 		logger.info(session.getId()+"(IP)"+session.getRemoteAddress().getHostName() + " 연결됨");			
 		users.put(session.getId(), session);
-		// CHAT 테이블 전체값 List에 가져오기
-		List<ChatDto> list = biz.selectList();
+		// CHAT 테이블 값 중 pageno와 일치하는 채팅 List에 가져오기
+		List<ChatDto> list = biz.ChatSelectPageList(Integer.parseInt(pageno));
 		String sendmessage = "";
 		// 가져온 값 종류별로 전달.
 		for (ChatDto dto : list) {
@@ -116,12 +117,12 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		//pageUsers.put(session , pageno);
 
 		// 값 없을 시 null값 추가
-		if((String)jsonObj.get("url") == null) {
+		/*if((String)jsonObj.get("url") == null) {
 			jsonObj.put("url", "");
 		}
 		if ((String)jsonObj.get("message") == null) {
 			jsonObj.put("message", "");
-		}		
+		}*/		
 		
 		// DB CHAT 테이블에 저장(insert)
 		if (!jsonObj.get("type").equals("inout")) {
@@ -129,7 +130,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 			if (jsonObj.get("type").equals("filedata")) {
 				fileno = Integer.parseInt((String)jsonObj.get("fileno"));
 			}
-			ChatDto dto = new ChatDto(0, 1, fileno , (String)jsonObj.get("type"), (String)jsonObj.get("message"), (String)jsonObj.get("url"), (String)jsonObj.get("randomcolor"));
+			ChatDto dto = new ChatDto(0, 1, Integer.parseInt((String)jsonObj.get("pageno")) , (String)jsonObj.get("type"), (String)jsonObj.get("message"), (String)jsonObj.get("url"), fileno , (String)jsonObj.get("randomcolor"), new Date(), 0,0);
 			int insert_res = biz.insert(dto);
 		}
 		
