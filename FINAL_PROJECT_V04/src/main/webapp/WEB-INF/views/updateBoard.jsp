@@ -14,6 +14,7 @@
   }
   
   .container{
+  	min-width: 500px;
   	width: fit-content;
   	height: fit-content;
   }
