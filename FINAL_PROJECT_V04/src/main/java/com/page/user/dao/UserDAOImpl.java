@@ -76,4 +76,10 @@ public class UserDAOImpl implements UserDAO {
         paramMap.put("userImg", userImg);
         sqlSession.update(NAMESPACE + ".userImgUpdate", paramMap);
     }
+
+	@Override
+	public int countUserWithSameKey(String value) throws Exception {
+		
+		return sqlSession.selectOne(NAMESPACE + ".countUserWithSameKey", value);
+	}
 }

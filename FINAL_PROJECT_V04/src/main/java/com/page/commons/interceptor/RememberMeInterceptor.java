@@ -23,6 +23,7 @@ public class RememberMeInterceptor extends HandlerInterceptorAdapter {
 	@Inject
 	private UserService userService;
 
+	/* 로그인 컨트롤러가 호출될지 여부 판단 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -30,14 +31,24 @@ public class RememberMeInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("SYSTEM: RememberMeInterceptor' preHandle");
 
 		HttpSession httpSession = request.getSession();
-		Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
-
-        if (loginCookie != null) {
+		
+		//쿠키 정보 얻기
+		Cookie login_cookie_old = WebUtils.getCookie(request, "login_cookie");
+		
+		//이미 생성된 쿠키 존재 여부 파악
+        if (login_cookie_old != null) {
         	
-            UserVO userVO = userService.checkLoginBefore(loginCookie.getValue());
+        	//쿠키 값 비교로 로그인 유저 찾기
+            UserVO userVO = userService.checkLoginBefore(login_cookie_old.getValue());
             
             if (userVO != null) {
             	
+                //로그인 정보 쿠키 재생성
+                Cookie loginCookie = new Cookie("loginCookie", httpSession.getId());
+                loginCookie.setPath("/");
+                loginCookie.setMaxAge(60*60*24*7);
+                // 전송
+                response.addCookie(loginCookie);
                 httpSession.setAttribute("login", userVO);
                 return true;
             }

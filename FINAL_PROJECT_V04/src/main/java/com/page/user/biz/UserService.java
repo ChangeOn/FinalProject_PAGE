@@ -8,10 +8,12 @@ import java.util.Date;
 public interface UserService {
 
     UserVO login(LoginDTO loginDTO) throws Exception;
-
+    
     void keepLogin(String userId, String sessionId, Date sessionLimit) throws Exception;
-
+   
     UserVO checkLoginBefore(String value) throws Exception;
+    
+    int countUserWithSameKey(String value) throws Exception;
 
     void register(UserVO userVO) throws Exception;
 

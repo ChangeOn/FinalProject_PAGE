@@ -60,4 +60,9 @@ public class UserServiceImpl implements UserService {
     public void userImgModify(String userId, String userImg) throws Exception {
         userDAO.userImgUpdate(userId, userImg);
     }
+
+	@Override
+	public int countUserWithSameKey(String value) throws Exception {
+		return userDAO.countUserWithSameKey(value);
+	}
 }

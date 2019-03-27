@@ -42,24 +42,22 @@
 	 <!--인터셉터 설정-->
     <beans:bean id="loginInterceptor" class="com.page.commons.interceptor.LoginInterceptor"/>
     <beans:bean id="authInterceptor" class="com.page.commons.interceptor.AuthInterceptor"/>
-    <beans:bean id="rememberMeInterceptor" class="com.page.commons.interceptor.RememberMeInterceptor"/>
     <beans:bean id="loginAfterInterceptor" class="com.page.commons.interceptor.LoginAfterInterceptor"/>
+    <beans:bean id="loginBeforeInterceptor" class="com.page.commons.interceptor.LoginAfterInterceptor"/>
     
      <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/user/login"/>
+            <beans:ref bean="loginBeforeInterceptor"/>
+        </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/user/loginPost"/>
             <beans:ref bean="loginInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
-            <mvc:mapping path="/article/paging/search/write"/>
-            <mvc:mapping path="/article/paging/search/modify"/>
-            <mvc:mapping path="/article/paging/search/remove"/>
+            <mvc:mapping path="/page" />
             <mvc:mapping path="/user/info"/>
             <beans:ref bean="authInterceptor"/>
-        </mvc:interceptor>
-        <mvc:interceptor>
-            <mvc:mapping path="/user/re_loginGet" />
-            <beans:ref bean="rememberMeInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/user/register"/>

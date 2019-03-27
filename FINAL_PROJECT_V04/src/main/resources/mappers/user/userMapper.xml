@@ -32,12 +32,19 @@
         WHERE 	USER_ID = #{user_id}
     </update>
 
+    <select id="countUserWithSameKey" resultType="int">
+        SELECT 	count(*)
+        FROM 	USERS
+        WHERE 	SESSION_KEY = #{value}
+    </select>
+    
     <select id="checkUserWithSessionKey" resultMap="userVOResultMap">
         SELECT 	*
         FROM 	USERS
         WHERE 	SESSION_KEY = #{value}
+        AND		SESSION_LIMIT > SYSDATE
     </select>
-
+    
     <insert id="register">
         INSERT INTO USERS (
         	USER_NO

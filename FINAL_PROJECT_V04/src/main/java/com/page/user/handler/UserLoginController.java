@@ -32,25 +32,29 @@ public class UserLoginController {
         this.userService = userService;
     }
 
-    // 인덱스 페이지
+    /* 컨트롤러 내 로그인 전처리 메소드 */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginGET(@ModelAttribute("loginDTO") LoginDTO loginDTO) {
+    public void loginPOST(@ModelAttribute("loginDTO") LoginDTO loginDTO) {
     	
-    	return "redirect:/";
+    	/* 
+    	 * 1. 이어하기
+    	 * 
+    	 * 2. 새로하기
+    	 * 
+    	 *  구분을 해서 넘겨야 함
+    	 * 
+    	 *  */
     } 
     
     // 재로그인 처리
     @RequestMapping(value = "/re_loginGet", method = RequestMethod.GET)
-    public void re_loginGET(HttpServletRequest request, HttpServletResponse response
-    		, HttpSession httpSession, Model model) throws Exception {
+    public String re_loginGET(HttpSession httpSession, Model model) throws Exception {
     	
-    	System.out.println("SYSTEM: UserLoginController' auto_loginGET");
+    	System.out.println("SYSTEM: UserLoginController' re_loginGET");
     	
     	//세션에서 로그인 중인 유저 정보 받아오기
     	Object object = httpSession.getAttribute("login");
     	UserVO userVO = (UserVO) object;
-    	
-    	System.out.println(userVO);
     	
     	/* 
     	 * 지금껏 알아본 바 인터셉터로 리다이렉트시 해당 URL로 매핑된
@@ -58,7 +62,7 @@ public class UserLoginController {
     	 * 
     	 * */
     	
-    	/*
+    	
     	//유저 쿠키 정보 재설정
     	System.out.println("SYSTEM: UserLoginController' user login cookie setting");
     	int amount = 60 * 60 * 24 * 7;
@@ -66,7 +70,7 @@ public class UserLoginController {
         userService.keepLogin(userVO.getUser_id(), httpSession.getId(), session_limit);
         System.out.println("SYSTEM: " + userVO);
         
-    	model.addAttribute("user", userVO); */
+    	return "redirect:/page";
     	
     	
     }
@@ -93,8 +97,11 @@ public class UserLoginController {
 
         model.addAttribute("user", userVO);
 
+        // 로그인 유지를 체크 했을 경우
         if (loginDTO.isUser_cookie()) {
+        	
         	System.out.println("SYSTEM: UserLoginController' set login cookie");
+        	
             int amount = 60 * 60 * 24 * 7;
             Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
             userService.keepLogin(userVO.getUser_id(), httpSession.getId(), sessionLimit);

@@ -15,6 +15,9 @@ public interface UserDAO {
 
     // 세션키 검증
     UserVO checkUserWithSessionKey(String value) throws Exception;
+    
+    // 동일 세션키 검증
+    int countUserWithSameKey(String value) throws Exception;
 
     // 회원가입 처리
     void register(UserVO userVO) throws Exception;
