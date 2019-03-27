@@ -48,9 +48,9 @@ public class BoardController {
 		List<boardDto> list = bbiz.listPaging(cri); 
 		
 		System.out.println(list.get(0));
-		System.out.println("���������� ������ �Խñ��� ���� : "+cri.getPerPageNum());
-		System.out.println("Ư�� �������� �Խñ� ���� �� ��ȣ : "+cri.getPageStart());
-		System.out.println("���� ������ ��ȣ : "+cri.getPage());
+		System.out.println("한페이지당 보여줄 게시글의 갯수 : "+cri.getPerPageNum());
+		System.out.println("특정 페이지의 게시글 시작 행 번호 : "+cri.getPageStart());
+		System.out.println("현재 페이지 번호 : "+cri.getPage());
 
 		model.addAttribute("pageMaker",pageMaker);
 		model.addAttribute("boardlist",list);
@@ -67,7 +67,7 @@ public class BoardController {
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(scri);
 		pageMaker.setTotalCount(bbiz.countTitleList(keyword));
-		System.out.println("searchTitle �� ���� : "+pageMaker.getTotalCount());
+		System.out.println("searchTitle 총 갯수 : "+pageMaker.getTotalCount());
 		
 		List<boardDto> list = bbiz.searchTitle(scri);
 		
@@ -76,10 +76,10 @@ public class BoardController {
 		System.out.println(list.get(0).getContent());
 		System.out.println(list.get(0).getId());
 		System.out.println("keyword"+scri.getKeyword());
-		System.out.println("���� ������ ��ȣ"+scri.getPage());
-		System.out.println("�Խñ� ���� �� ��ȣ"+scri.getPageStart());
-		System.out.println("�� �������� ������ �Խñ��� ����"+scri.getPerPageNum());
-		System.out.println("�˻���� ���� :"+ pageMaker.getTotalCount());
+		System.out.println("현재 페이지 번호"+scri.getPage());
+		System.out.println("게시글 시작 행 번호"+scri.getPageStart());
+		System.out.println("한 페이지당 보여줄 게시글의 갯수"+scri.getPerPageNum());
+		System.out.println("검색결과 갯수 :"+ pageMaker.getTotalCount());
 		
 		model.addAttribute("pageMaker",pageMaker);
 		model.addAttribute("boardlist",list);
@@ -96,15 +96,15 @@ public class BoardController {
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(scri);
 		pageMaker.setTotalCount(bbiz.countContentList(keyword));
-		System.out.println("searchContent �� ���� : "+pageMaker.getTotalCount());
+		System.out.println("searchContent 총 갯수 : "+pageMaker.getTotalCount());
 		
 		List<boardDto> list = bbiz.searchContent(scri);
 		
 		System.out.println("keyword"+scri.getKeyword());
-		System.out.println("���� ������ ��ȣ"+scri.getPage());
-		System.out.println("�Խñ� ���� �� ��ȣ"+scri.getPageStart());
-		System.out.println("�� �������� ������ �Խñ��� ����"+scri.getPerPageNum());
-		System.out.println("�˻���� ���� :"+ pageMaker.getTotalCount());
+		System.out.println("현재 페이지 번호"+scri.getPage());
+		System.out.println("게시글 시작 행 번호"+scri.getPageStart());
+		System.out.println("한 페이지당 보여줄 게시글의 갯수"+scri.getPerPageNum());
+		System.out.println("검색결과 갯수 :"+ pageMaker.getTotalCount());
 		
 		model.addAttribute("pageMaker",pageMaker);
 		model.addAttribute("boardlist",list);
@@ -121,15 +121,15 @@ public class BoardController {
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(scri);
 		pageMaker.setTotalCount(bbiz.countIdList(keyword));
-		System.out.println("searchID �� ���� : "+pageMaker.getTotalCount());
+		System.out.println("searchID 총 갯수 : "+pageMaker.getTotalCount());
 		
 		List<boardDto> list = bbiz.searchId(scri);
 		
 		System.out.println("keyword"+scri.getKeyword());
-		System.out.println("���� ������ ��ȣ"+scri.getPage());
-		System.out.println("�Խñ� ���� �� ��ȣ"+scri.getPageStart());
-		System.out.println("�� �������� ������ �Խñ��� ����"+scri.getPerPageNum());
-		System.out.println("�˻���� ���� :"+ pageMaker.getTotalCount());
+		System.out.println("현재 페이지 번호"+scri.getPage());
+		System.out.println("게시글 시작 행 번호"+scri.getPageStart());
+		System.out.println("한 페이지당 보여줄 게시글의 갯수"+scri.getPerPageNum());
+		System.out.println("검색결과 갯수 :"+ pageMaker.getTotalCount());
 
 		
 		model.addAttribute("pageMaker",pageMaker);
@@ -147,8 +147,8 @@ public class BoardController {
 	@RequestMapping(value="/insertBoard.do", method=RequestMethod.GET)
 	public String insertBoard(String title, String editor) {
 		
-		System.out.println("����"+title);
-		System.out.println("������ ����"+editor);
+		System.out.println("제목"+title);
+		System.out.println("저장할 내용"+editor);
 		
 		boardDto dto = new boardDto();
 		dto.setTitle(title);
@@ -173,7 +173,7 @@ public class BoardController {
 		dto.setBoardseq(boardseq);
 		
 		
-		System.out.println("***************��� ����¡***************");
+		System.out.println("***************댓글 페이징***************");
 		Criteria cri = new Criteria(1,5,boardseq);
 
 		
@@ -181,12 +181,12 @@ public class BoardController {
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(abiz.countAnsListTotal(boardseq));
 		
-		System.out.println("���� �Խù��� ��� ���� : "+pageMaker.getTotalCount());
-		System.out.println("���� �Խù� ��ȣ:"+cri.getBoardseq());
-		System.out.println("���� �Խù� �������� ���̴� ��� �� :"+cri.getPerPageNum());
-		System.out.println("���� ������"+pageMaker.getStartPage());
+		System.out.println("현재 게시물의 댓글 갯수 : "+pageMaker.getTotalCount());
+		System.out.println("현재 게시물 번호:"+cri.getBoardseq());
+		System.out.println("현재 게시물 페이지당 보이는 댓글 수 :"+cri.getPerPageNum());
+		System.out.println("시작 페이지"+pageMaker.getStartPage());
 		System.out.println(cri.getPageStart());
-		System.out.println("�� ������"+pageMaker.getEndPage());
+		System.out.println("끝 페이지"+pageMaker.getEndPage());
 		
 		List<ansDto> listAnswer = abiz.ansPaging(cri);
 		
@@ -194,7 +194,7 @@ public class BoardController {
 		model.addAttribute("listAnswer",listAnswer);
 		model.addAttribute("pageMaker",pageMaker);
 		
-		System.out.println("�����Ϸ� ������!!!");
+		System.out.println("디테일로 가기전!!!");
 		return "detailBoard";
 	}
 	
@@ -262,7 +262,7 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="/insertAnswer.do", method=RequestMethod.GET)
 	public String insertAnswer(@ModelAttribute ansDto adto,int boardseq) {
-		System.out.println("��� ���߰��� �Ѿ�ͽ� ����");
+		System.out.println("댓글 ㅊ추가로 넘어와써 성공");
 		
 		abiz.insertAns(adto);
 		 
@@ -272,7 +272,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/deleteAnswer.do")
 	public String deleteAnswer(int ansno,int boardseq) {
-		System.out.println("������ �Ѿ�ͽ�");
+		System.out.println("삭제로 넘어와써");
 		
 		abiz.deleteAns(ansno);
 		
@@ -282,17 +282,17 @@ public class BoardController {
 	@RequestMapping("/file_uploader_html5.do")
 	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response){
 	    try {
-	         //��������
+	         //파일정보
 	         String sFileInfo = "";
-	         //���ϸ��� �޴´� - �Ϲ� �������ϸ�
+	         //파일명을 받는다 - 일반 원본파일명
 	         String filename = request.getHeader("file-name");
-	         //���� Ȯ����
+	         //파일 확장자
 	         String filename_ext = filename.substring(filename.lastIndexOf(".")+1);
-	         //Ȯ���ڸ��ҹ��ڷ� ����
+	         //확장자를소문자로 변경
 	         filename_ext = filename_ext.toLowerCase();
-	         //���� �⺻���
+	         //파일 기본경로
 	         String dftFilePath = request.getSession().getServletContext().getRealPath("/");
-	         //���� �⺻��� _ �󼼰��
+	         //파일 기본경로 _ 상세경로
 	         String filePath = dftFilePath + "resources/" + File.separator + "upload" + File.separator;
 	         File file = new File(filePath);
 	         if(!file.exists()) {
@@ -304,7 +304,7 @@ public class BoardController {
 	         realFileNm = today+UUID.randomUUID().toString() + filename.substring(filename.lastIndexOf("."));
 	         
 	         String rlFileNm = filePath + realFileNm;
-	         ///////////////// ������ ���Ͼ��� /////////////////
+	         ///////////////// 서버에 파일쓰기 /////////////////
 	         InputStream is = request.getInputStream();
 	         OutputStream os=new FileOutputStream(rlFileNm);
 	         
@@ -314,7 +314,7 @@ public class BoardController {
 	         
 	         int res = bbiz.insertFile(fdto);
 	         if(res == 0) {
-	        	 System.out.println("���� ���� �ȵ�");
+	        	 System.out.println("파일 저장 안됨");
 	         }
 	         
 	         int numRead;
@@ -327,10 +327,10 @@ public class BoardController {
 	         }
 	         os.flush();
 	         os.close();
-	         ///////////////// ������ ���Ͼ��� /////////////////
-	         // ���� ���
+	         ///////////////// 서버에 파일쓰기 /////////////////
+	         // 정보 출력
 	         sFileInfo += "&bNewLine=true";
-	         // img �±��� title �Ӽ��� �������ϸ����� ��������ֱ� ����
+	         // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 	         sFileInfo += "&sFileName="+ filename;
 	         sFileInfo += "&sFileURL="+"resources/upload/"+realFileNm;
 	         PrintWriter print = response.getWriter();
@@ -341,11 +341,6 @@ public class BoardController {
 	        e.printStackTrace();
 	    }
 	}
-
-
-	
-	
-	
 
 	
 }
