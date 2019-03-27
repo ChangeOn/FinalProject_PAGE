@@ -9,14 +9,14 @@
 
 /* 키워드검색 */
 #menu_wrap {
-	position: absolute;
-/* 	width: 200px; */
+	position: relative;
+ 	width: 170px; 
 	height: 2.4em;
 	margin: 3px 0 0 5px;
 	padding: 5px;
 	background: rgba(255, 255, 255, 0.7);
 	z-index: 1;
-	font-size: 12px;
+	font-size: 15px;
 	border-radius: 10px;
 }
 
@@ -24,7 +24,7 @@
 	border: none;
 	background: transparent;
 	outline: none;
-/* 	opacity: 0.5; */
+ 	opacity: 0.5;
 }
 
 .option input:focus{
@@ -32,30 +32,23 @@
 	opacity: 0.5;
 }
 
-
 /* 오버레이 */
 .wrap {
 	position: absolute;
-	left: 80px;
-	bottom: -35px;
-	width: 288px;
-	height: 132px;
-	margin-left: -144px;
+	left: -60px;
+	bottom: -45px;
+/* 	width: 288px; */
+	height: 122px;
+/* 	margin-left: -144px; */
 	text-align: left;
 	overflow: hidden;
 	font-size: 12px;
-	font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
 	line-height: 1.5;
 }
 
-.wrap * {
-	padding: 0;
-	margin: 0;
-}
-
 .wrap .info {
-	width: 286px;
-	height: 120px;
+	width: 265px;
+	height: 100px;
 	border-radius: 5px;
 	border-bottom: 2px solid #ccc;
 	border-right: 1px solid #ccc;
@@ -69,23 +62,22 @@
 }
 
 .info .title {
-	padding: 5px 0 0 10px;
+	padding: 3px 0 0 5px;
 	height: 30px;
-	background: #d95050;
+	background: #ffc107a6;	/* #d95050; */
 	border-bottom: 1px solid #ddd;
-	font-size: 18px;
-	font-weight: bold;
+	font-size: 16px;
 }
 
 .info .close {
 	position: absolute;
-	top: 10px;
-	right: 10px;
-	color: #888;
+	top: 7px;
+	right: 5px;
+	color: black;
 	width: 17px;
 	height: 17px;
 	background:
-		url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+		url('https://img.icons8.com/ios-glyphs/17/000000/multiply.png');
 }
 
 .info .close:hover {
@@ -93,15 +85,13 @@
 }
 
 .info .body {
-	margin-left: -6em;
 	position: relative;
 	overflow: hidden;
 }
 
 .info .desc {
 	position: relative;
-	margin: 13px 0 0 90px;
-	height: 75px;
+	margin: 10px 0 0 10px;
 }
 
 .desc .ellipsis {
@@ -111,17 +101,17 @@
 }
 
 .desc .jibun {
-	font-size: 11px;
+	font-size: 11.5px;
 	color: #888;
-	margin-top: -2px;
+	margin-top: -1px;
 }
 
 .info:after {
 	content: '';
 	position: absolute;
-	margin-left: -12px;
+	margin-left: -8px;
 	left: 50%;
-	bottom: 0;
+	bottom: 10px;
 	width: 22px;
 	height: 12px;
 	background:

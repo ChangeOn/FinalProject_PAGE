@@ -29,7 +29,7 @@ public class MapController {
 	private MapDao mdao;
 	
 	@ResponseBody
-	@RequestMapping(value="/select_map.do")
+	@RequestMapping(value="/select_map")
 	public JSONArray select_map(Model model) {
 		List<MapDto> list = new ArrayList<MapDto>();
 		list = mdao.select_map();
@@ -47,13 +47,13 @@ public class MapController {
 		return jsonArray;
 	}
 
-	@RequestMapping("/search02.do")
+	@RequestMapping("/search02")
 	public String map() {				
 		return "map04";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/insert_map.do", method={RequestMethod.POST})
+	@RequestMapping(value="/insert_map", method={RequestMethod.POST})
 	public Map<String, Object> insert_map(@RequestParam Map<String, Object> geoinfo) {
 		System.out.println(geoinfo);
 		Map<String, Object> jsonObject = new HashMap<String, Object>();

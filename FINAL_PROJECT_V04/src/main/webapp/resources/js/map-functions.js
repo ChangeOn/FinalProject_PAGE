@@ -123,7 +123,7 @@ function displayPlaces(places) {
 		})(marker, places[i].place_name);
 	}
 
-	// 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+	// 검색결과 항목들을 결과목록 Elemnet에 추가합니다
 	listEl.appendChild(fragment);
 	menuEl.scrollTop = 0;
 
@@ -131,7 +131,7 @@ function displayPlaces(places) {
 	map.setBounds(bounds);
 }
 
-//마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+//검색결과 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, title) {
 	var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png',	// 마커이미지 url, 스프라이트 이미지를 씁니다
 	imageSize = new daum.maps.Size(36, 37), // 마커 이미지의 크기
@@ -163,7 +163,7 @@ function removeMarker() {
 //검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 //인포윈도우에 장소명을 표시합니다
 function displayInfowindow(marker, title) {
-	var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+	var content = '<div style="padding:5px;z-index:1;font-size:14px; overflow: hidden;">' + title + '</div>';
 
 	infowindow.setContent(content);
 	infowindow.open(map, marker);
@@ -179,11 +179,14 @@ function removeAllChildNods(el) {
 //주소-좌표 변환 객체를 생성합니다
 var geocoder = new daum.maps.services.Geocoder();
 
+
+
+
 //마커이미지의 주소입니다
-var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
+var imageSrc = 'https://img.icons8.com/cotton/64/000000/taxi-rank-map-pin.png',
 	imageSize = new daum.maps.Size(50, 55), // 마커이미지의 크기입니다
 	imageOption = {
-		offset : new daum.maps.Point(15, 50) //25, 60
+		offset : new daum.maps.Point(25, 60) //25, 60
 	}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
 //마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
@@ -221,7 +224,7 @@ daum.maps.event.addListener(map,'click',function(mouseEvent) {
 						+ '</div>'
 						+ '                <div><a href="javascript:popUp('
 						+ lat + ',' + lng
-						+ ');" class="link">길찾기&nbsp</a>'
+						+ ');" class="link">길찾기&nbsp|</a>'
 						+ '                <a href="javascript:test1('
 						+ lat + ',' + lng + ',\'' + detailAddr + '\',\'' + jibun
 						+ '\');" class="link">저장</a></div>'
@@ -243,7 +246,7 @@ daum.maps.event.addListener(map,'click',function(mouseEvent) {
 //클릭한 장소의 좌표를 저장합니다
 function test1(lat, lng, detailAddr, jibun){
 		$.ajax({
-			url: 'insert_map.do',
+			url: 'insert_map',
 			type: 'post',
 			//data: JSON.stringify(latlng),
 			data: {'lat':lat, 'lng':lng, 'addr':detailAddr, 'jibun':jibun},
@@ -331,7 +334,7 @@ function closeOverlay() {
 //DB에 저장된 핀들을 맵이 로드되자마자 불러와 지도에 표시합니다
 $(function(){
  	$.ajax({
-		url: 'select_map.do',
+		url: 'select_map',
 		dataType: 'json',
 		success: function(data){
 			console.log(data);
