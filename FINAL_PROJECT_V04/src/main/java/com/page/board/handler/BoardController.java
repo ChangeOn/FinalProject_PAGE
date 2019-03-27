@@ -46,11 +46,6 @@ public class BoardController {
 		pageMaker.setTotalCount(bbiz.countBoardListTotal());
 		
 		List<boardDto> list = bbiz.listPaging(cri); 
-		
-		System.out.println(list.get(0));
-		System.out.println("한페이지당 보여줄 게시글의 갯수 : "+cri.getPerPageNum());
-		System.out.println("특정 페이지의 게시글 시작 행 번호 : "+cri.getPageStart());
-		System.out.println("현재 페이지 번호 : "+cri.getPage());
 
 		model.addAttribute("pageMaker",pageMaker);
 		model.addAttribute("boardlist",list);
@@ -71,16 +66,6 @@ public class BoardController {
 		
 		List<boardDto> list = bbiz.searchTitle(scri);
 		
-		System.out.println(list.get(0).getTitle());
-		System.out.println(list.get(0).getBoardseq());
-		System.out.println(list.get(0).getContent());
-		System.out.println(list.get(0).getId());
-		System.out.println("keyword"+scri.getKeyword());
-		System.out.println("현재 페이지 번호"+scri.getPage());
-		System.out.println("게시글 시작 행 번호"+scri.getPageStart());
-		System.out.println("한 페이지당 보여줄 게시글의 갯수"+scri.getPerPageNum());
-		System.out.println("검색결과 갯수 :"+ pageMaker.getTotalCount());
-		
 		model.addAttribute("pageMaker",pageMaker);
 		model.addAttribute("boardlist",list);
 		
@@ -99,13 +84,7 @@ public class BoardController {
 		System.out.println("searchContent 총 갯수 : "+pageMaker.getTotalCount());
 		
 		List<boardDto> list = bbiz.searchContent(scri);
-		
-		System.out.println("keyword"+scri.getKeyword());
-		System.out.println("현재 페이지 번호"+scri.getPage());
-		System.out.println("게시글 시작 행 번호"+scri.getPageStart());
-		System.out.println("한 페이지당 보여줄 게시글의 갯수"+scri.getPerPageNum());
-		System.out.println("검색결과 갯수 :"+ pageMaker.getTotalCount());
-		
+
 		model.addAttribute("pageMaker",pageMaker);
 		model.addAttribute("boardlist",list);
 		
@@ -124,14 +103,7 @@ public class BoardController {
 		System.out.println("searchID 총 갯수 : "+pageMaker.getTotalCount());
 		
 		List<boardDto> list = bbiz.searchId(scri);
-		
-		System.out.println("keyword"+scri.getKeyword());
-		System.out.println("현재 페이지 번호"+scri.getPage());
-		System.out.println("게시글 시작 행 번호"+scri.getPageStart());
-		System.out.println("한 페이지당 보여줄 게시글의 갯수"+scri.getPerPageNum());
-		System.out.println("검색결과 갯수 :"+ pageMaker.getTotalCount());
 
-		
 		model.addAttribute("pageMaker",pageMaker);
 		model.addAttribute("boardlist",list);
 		return "boardlist";
@@ -147,9 +119,7 @@ public class BoardController {
 	@RequestMapping(value="/insertBoard", method=RequestMethod.GET)
 	public String insertBoard(String title, String editor) {
 		
-		System.out.println("제목"+title);
-		System.out.println("저장할 내용"+editor);
-		
+
 		boardDto dto = new boardDto();
 		dto.setTitle(title);
 		dto.setContent(editor);
@@ -172,29 +142,20 @@ public class BoardController {
 		
 		dto.setBoardseq(boardseq);
 		
-		
-		System.out.println("***************댓글 페이징***************");
 		Criteria cri = new Criteria(1,5,boardseq);
 
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(abiz.countAnsListTotal(boardseq));
-		
-		System.out.println("현재 게시물의 댓글 갯수 : "+pageMaker.getTotalCount());
-		System.out.println("현재 게시물 번호:"+cri.getBoardseq());
-		System.out.println("현재 게시물 페이지당 보이는 댓글 수 :"+cri.getPerPageNum());
-		System.out.println("시작 페이지"+pageMaker.getStartPage());
-		System.out.println(cri.getPageStart());
-		System.out.println("끝 페이지"+pageMaker.getEndPage());
+
 		
 		List<ansDto> listAnswer = abiz.ansPaging(cri);
 		
 		model.addAttribute("bdto",dto);
 		model.addAttribute("listAnswer",listAnswer);
 		model.addAttribute("pageMaker",pageMaker);
-		
-		System.out.println("디테일로 가기전!!!");
+
 		return "detailBoard";
 	}
 	
@@ -221,7 +182,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/updateform", method=RequestMethod.GET)
 	public String updateForm(Model model,int boardseq) {
-		System.out.println("update form === boardseq"+boardseq);
+
 		boardDto dto = bbiz.selectOne(boardseq);
 		dto.setBoardseq(boardseq);
 		model.addAttribute("bdto",dto);
@@ -231,10 +192,7 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="/updateBoard", method=RequestMethod.GET)
 	public String updateBoard(@ModelAttribute boardDto bdto, int boardseq,String title,String content) {
-		System.out.println("updateBoard!!!!!!!!!!");
-		System.out.println(boardseq);
-		System.out.println(title);
-		System.out.println(content);
+
 		bdto.setBoardseq(boardseq);
 		bdto.setTitle(title);
 		bdto.setContent(content);
@@ -249,7 +207,7 @@ public class BoardController {
 	
 	@RequestMapping("/deleteform")
 	public String deleteBoard(int boardseq) {
-		System.out.println("delete"+boardseq);
+
 		int res = bbiz.deleteBoard(boardseq);
 		
 		if(res>0) {
@@ -262,8 +220,7 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="/insertAnswer", method=RequestMethod.GET)
 	public String insertAnswer(@ModelAttribute ansDto adto,int boardseq) {
-		System.out.println("댓글 ㅊ추가로 넘어와써 성공");
-		
+
 		abiz.insertAns(adto);
 		 
 		return "redirect:selectOne?boardseq="+boardseq;
@@ -272,8 +229,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/deleteAnswer")
 	public String deleteAnswer(int ansno,int boardseq) {
-		System.out.println("삭제로 넘어와써");
-		
+	
 		abiz.deleteAns(ansno);
 		
 		return "redirect:selectOne?boardseq="+boardseq;
