@@ -4,6 +4,11 @@
 
 <html>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
+
 <head>
 <title>Page</title>
 
@@ -13,7 +18,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- 웹폰트 관련 -->
-<link rel="stylesheet" href="resources/css/web-fonts.css"
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/web-fonts.css"
 	type="text/css">
 
 <!-- Font Awesome CDN -->
@@ -23,18 +28,18 @@
 	crossorigin="anonymous">
 
 <!-- JQuery 관련 -->
-<script src="webjars/jquery/3.3.1-2/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/webjars/jquery/3.3.1-2/jquery.min.js"></script>
 
 <!-- Bootstrap 관련 -->
-<script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
-	href="webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+	href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <!-- 인덱스 페이지 CSS -->
-<link href="resources/css/index/index-page.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/index/index-page.css" rel="stylesheet">
 
 <!-- 인덱스 주요 기능 관련 -->
-<script src="resources/js/index/index-page-functions.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/index/index-page-functions.js"></script>
 
 </head>
 <body>
@@ -57,16 +62,21 @@
 			<div class="col-2 col-lg-1">
 				<span id="nav-logo" class="navbar-brand">PAGE</span>
 			</div>
-			<div class="col-10 col-lg-3">
+			<div class="col-10 col-lg-4">
 				<ul class="nav justify-content-end">
 					<li class="nav-item">
 					<a class="nav-link text-muted" href="#">맨위로</a>
 					</li>
+					<c:if test="${not empty login}">
+						<li class="nav-item">
+						<a class="nav-link text-muted" href="${path }/user/re_loginGet">이어하기</a>
+						</li>
+					</c:if>
 					<li class="nav-item">
-					<a class="nav-link text-muted" href="#" onclick="login()">로그인</a>
+					<a class="nav-link text-muted" href="#" onclick="login()">새로하기</a>
 					</li>
 					<li class="nav-item">
-					<a class="nav-link text-muted" href="#">회원가입</a>
+					<a class="nav-link text-muted" href="#" onclick="move_scroll('registration')">회원가입</a>
 					</li>
 				</ul>
 			</div>
@@ -138,30 +148,30 @@
 					<!-- 회원가입 입력 창 -->
 					<div class="col-sm-6">
 						<h2 class="con-title">Drop us a line</h2>
-						<form role="form">
+						<form role="form" action="user/register"  method="post">
 							<!-- 아이디 및 이름 -->
 							<div class="form-group row">
    								<div class="col-6" style="padding-right: 0">
 									<input type="text" class="form-control" id="user_id"
-										placeholder="Enter your id">
+										name="user_id" placeholder="Enter your id">
 								</div>
 								<div class="col-6">
 									<input type="text" class="form-control" id="user_name"
-										placeholder="Enter your name">
+										name="user_name" placeholder="Enter your name">
 								</div>
 							</div>
 							<!-- 이메일 -->
 							<div class="form-group">
 								<div class="col-12" style="padding-right: 0; padding-left: 0;">
 									<input type="email" class="form-control" id="your_email"
-										placeholder="Enter your email">
+										name="user_email" placeholder="Enter your email">
 								</div>
 							</div>
 							<!-- 비밀번호 -->
 							<div class="form-group row">
    								<div class="col-6" style="padding-right: 0">
 									<input type="text" class="form-control" id="user_password"
-										placeholder="Enter password">
+										name="user_pw" placeholder="Enter password">
 								</div>
 								<div class="col-6">
 									<input type="text" class="form-control" id="user_password_again"
@@ -178,16 +188,15 @@
 									<a id="W" class="btn btn-secondary" href="#" onclick="toggles(this)"
 									style="width:100%;" id="user-sex">WOMAN</a>
 								</div>
-								<input type="hidden" id="user_sex">
+								<input type="hidden" id="user_sex" name="user_sex" value="M">
 							</div>
 							<!-- 추가 입력사항 -->
 							<div class="form-group">
-								<textarea name="InputMessage" id="user_message"
+								<textarea name="user_signature" id="user_signature"
 									class="form-control" rows="5" required></textarea>
 							</div>
 
-							<button type="submit" class="btn btn-warning">Let us
-								know</button>
+							<button type="submit" class="btn btn-warning">REGIST!</button>
 						</form>
 					</div>
 				</div>

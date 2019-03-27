@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.page.mappers.users.UserMapper">
+
+    <resultMap id="userVOResultMap" type="UserVO">
+        <id property="user_no" column="USER_NO"/>
+        <result property="user_id" column="USER_ID"/>
+        <result property="user_pw" column="USER_PW"/>
+        <result property="user_name" column="USER_NAME"/>
+        <result property="user_email" column="USER_EMAIL"/>
+        <result property="user_sex" column="USER_SEX"/>
+        <result property="user_img" column="USER_IMG"/>
+        <result property="user_signature" column="USER_SIGNATURE"/>
+        <result property="user_point" column="USER_POINT"/>
+        <result property="user_join_date" column="USER_JOIN_DATE"/>
+        <result property="user_login_date" column="USER_LOGIN_DATE"/>
+    </resultMap>
+
+    <select id="login" resultMap="userVOResultMap">
+        SELECT 	*
+        FROM 	users
+        WHERE 	user_id = #{user_id}
+    </select>
+
+    <update id="keepLogin">
+        UPDATE 	USERS
+        SET 	SESSION_KEY = #{session_id}
+            	,SESSION_LIMIT = #{session_limit}
+        WHERE 	USER_ID = #{user_id}
+    </update>
+
+    <select id="checkUserWithSessionKey" resultMap="userVOResultMap">
+        SELECT 	*
+        FROM 	USERS
+        WHERE 	SESSION_KEY = #{value}
+    </select>
+
+    <insert id="register">
+        INSERT INTO USERS (
+        	USER_NO
+            ,USER_ID
+            ,USER_PW
+            ,USER_NAME
+            ,USER_EMAIL
+            ,USER_SEX
+            ,USER_SIGNATURE
+        ) VALUES (
+        	USER_NO_SEQ.NEXTVAL
+            ,#{user_id}
+            ,#{user_pw}
+            ,#{user_name}
+            ,#{user_email}
+            ,#{user_sex}
+            ,#{user_signature}
+        )
+    </insert>
+
+    <select id="getUserPw" resultType="string">
+        SELECT 	USER_PW
+        FROM 	USERS
+        WHERE 	USER_ID = #{userId}
+    </select>
+
+    <update id="userInfoUpdate">
+        UPDATE 	USERS
+        SET
+            	USER_NAME 	= #{user_name}
+            	,USER_EMAIL = #{user_email}
+            	,USER_SIGNATURE = #{user_signature}
+        WHERE 	USER_ID 	= #{user_id}
+    </update>
+
+    <update id="userPwUpdate">
+        UPDATE 	USERS
+        SET
+            	USER_PW = #{newUserPw}
+        WHERE 	USER_ID = #{userId}
+    </update>
+
+    <update id="userImgUpdate">
+        UPDATE 	USERS
+        SET
+           		USER_IMG = #{user_img}
+        WHERE 	USER_ID  = #{user_id}
+    </update>
+
+</mapper>

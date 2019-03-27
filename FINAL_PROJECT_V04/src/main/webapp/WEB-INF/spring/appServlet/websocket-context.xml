@@ -17,7 +17,7 @@
 	</websocket:handlers>
 	
 	<!-- 위의 chatHandler 매핑. 자동 스캔 안해놨기에 직접 매핑 -->
-	<bean id="chatHandler" class="com.websocket.handler.ChatWebSocketHandler"/>
-	<bean id="paintHandler" class="com.websocket.handler.PaintHandler"/>
+	<bean id="chatHandler" class="com.page.websocket.handler.ChatWebSocketHandler"/>
+	<bean id="paintHandler" class="com.page.websocket.handler.PaintHandler"/>
 	
 </beans>

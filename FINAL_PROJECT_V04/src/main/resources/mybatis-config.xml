@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+    	<!--  oracle null 처리  -->
+        <setting name="jdbcTypeForNull" value="NULL" />
+    </settings>
+
+    <typeAliases>
+        <typeAlias type="com.page.websocket.chat.dto.ChatDto" alias="ChatDto"/>
+        <typeAlias type="com.page.websocket.file.dto.FileDto" alias="FileDto"/>
+        <typeAlias type="com.page.user.dto.UserVO" alias="UserVO"/>
+    </typeAliases>
+
+</configuration>

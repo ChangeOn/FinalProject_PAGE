@@ -376,8 +376,8 @@ footer {
 	/* /HEADER AREA */
 
 	/* NAVIGATION */
-	.navbar {
-		
+	.nav-link {
+    padding: .1rem 0.3rem !important;
 	}
 	.nav-item {
 		font-size: 0.7em;

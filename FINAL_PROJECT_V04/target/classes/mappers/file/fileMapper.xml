@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.page.websocket.file.Mapper">
+
+	<select id="fileSelectList" resultType="FileDto">
+		SELECT FILENO, FILENAME, FILESAVENAME
+		FROM "FILE"
+	</select>
+	
+	<select id="fileSelectOne" parameterType="Int" resultType="FileDto">
+		SELECT FILENAME, FILESAVENAME
+		FROM "FILE"
+		WHERE FILENO = #{fileno}
+	</select>
+	
+	<select id="fileSelectFileno" parameterType="String" resultType="Int">
+		SELECT FILENO
+		FROM "FILE"
+		WHERE FILESAVENAME = #{filesavename}
+	</select>	
+	
+	<insert id="fileInsert" parameterType="FileDto">
+		INSERT INTO "FILE"
+		VALUES(FILE_SEQ.NEXTVAL, #{filename}, #{filesavename})
+	</insert>
+	
+	
+	
+	 
+</mapper>

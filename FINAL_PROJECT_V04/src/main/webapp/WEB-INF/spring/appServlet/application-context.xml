@@ -3,9 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<mvc:annotation-driven></mvc:annotation-driven>
 	
@@ -24,26 +28,26 @@
 		<property name="password" value="${password}"></property>
 	</bean>
 	
-	<bean id="chatSqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"></property>
-		<property name="configLocation" value="/WEB-INF/spring/sqls/chat_config.xml"></property>		
-	</bean>
+	<!--SqlSessionFactory 설정 : dataSource를 참조, mybatis-config.xml 경로설정-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:/mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"/>
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 	
-	<bean id="chatSqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg ref="chatSqlSession"/>
-		<qualifier value="chatSqlSessionTemplate"></qualifier>
-	</bean>
-	
-	<bean id="fileSqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"></property>
-		<property name="configLocation" value="/WEB-INF/spring/sqls/file_config.xml"></property>		
-	</bean>
-	
-	<bean id="fileSqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg ref="fileSqlSession"/>
-		<qualifier value="fileSqlSessionTemplate"></qualifier>
-	</bean>
-		
+	 <tx:annotation-driven/>
+	 
+	 <context:component-scan base-package="com.page"/>
+	 
+	<!-- ??? -->	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="2000000000"/>
 		<property name="defaultEncoding" value="UTF-8"/>
