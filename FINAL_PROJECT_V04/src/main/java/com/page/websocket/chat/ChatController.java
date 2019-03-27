@@ -49,14 +49,9 @@ public class ChatController {
 	private Logger logger = LoggerFactory.getLogger(ChatController.class);
 	
 	@Autowired
-	private FileBiz biz;	
+	private FileBiz biz;
 	
-	@RequestMapping("/test.do")
-	public String viewPage() {
-		return "test";
-	}
-	
-	@RequestMapping("/web/chat.do")
+	@RequestMapping("/web/chat")
 	public String viewChatPage(Model model, HttpServletRequest request) {
 		
 		logger.info("chat.do RUN! / Run Time: " + new Date());
@@ -73,7 +68,7 @@ public class ChatController {
 		return "chat";
 	}
 	
-	@RequestMapping("/paint.do")
+	@RequestMapping("/paint")
 	public String viewPaintPage() {
 		return "paint";
 	}
@@ -128,7 +123,7 @@ public class ChatController {
         return jsonObject;
     }
 	
-	@RequestMapping(value="/download.do")
+	@RequestMapping(value="/download")
 	@ResponseBody
 	public byte[] fileDown(HttpServletRequest request, HttpServletResponse response, String filename, String name) throws IOException {
 		String root = request.getSession().getServletContext().getRealPath("/");
@@ -146,7 +141,7 @@ public class ChatController {
 		return bytes;		
 	}
 	
-	@RequestMapping("/saveimage.do")
+	@RequestMapping("/saveimage")
 	public @ResponseBody Map<String , Object> ajax_canvasUpload(HttpServletRequest request, String dataurl) throws Throwable{
 	  logger.info("page_canvasUpload > "+dataurl);
 	  
@@ -185,7 +180,7 @@ public class ChatController {
 	  return jsonObject;
 	 }
 	
-	@RequestMapping("/loadimage.do")
+	@RequestMapping("/loadimage")
 	@ResponseBody
 	public String ajax_canvasLoad(HttpServletRequest request, String dataurl) throws Throwable{
 	  //logger.info("page_canvasLoad > "+dataurl);	        

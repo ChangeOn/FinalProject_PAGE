@@ -16,7 +16,7 @@
      
     $(document).ready(function() {
          
-        sock = new WebSocket("ws://localhost:8787/FINAL_PROJECT_V04/paint-ws.do");
+        sock = new WebSocket("ws://localhost:8787/paint-ws.do");
          
         var ctx = null;
          
@@ -168,7 +168,7 @@
                 	var dataurl = canvas.toDataURL('image/png', 1.0);
 
                 	$.ajax({
-            			url : '/FINAL_PROJECT_V04/saveimage.do',
+            			url : '/saveimage',
             			type : 'POST',
             			data : { dataurl: dataurl },
             			success : function(data) {
@@ -202,7 +202,7 @@
             	var copyContext = copyCanvas.getContext('2d');            	
             	
             	$.ajax({
-        			url : '/FINAL_PROJECT_V04/loadimage.do',
+        			url : '/loadimage',
         			type : 'POST',
         			data : { dataurl: drawData.data },
         			success : function(data) {        				        				

@@ -9,7 +9,7 @@
 		$(".container-fluid").prepend(
 				"<div id='chatcontainer' style='width:795px;'>"
 						+"</div>");
-		var url = "${pageContext.request.contextPath}/web/chat.do";
+		var url = "/web/chat";
 		$("#chatcontainer").load(url, function(){
 			$("#chatcontainer").resizable({
 				minHeight: 260,

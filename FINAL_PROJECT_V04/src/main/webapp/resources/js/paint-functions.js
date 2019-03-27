@@ -8,6 +8,6 @@
 		$(".container-fluid").prepend(
 				"<div id='paintcontainer' style='width:795px;'>"
 						+"</div>");
-		var url = "${pageContext.request.contextPath}/paint.do";
+		var url = "/paint";
 		$("#paintcontainer").load(url, function(){});
 	}

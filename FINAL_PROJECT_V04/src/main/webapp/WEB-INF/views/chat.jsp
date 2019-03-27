@@ -14,7 +14,7 @@
 	var pageno = '${pageno}';	
 
 	function connect() {
-		wsocket = new WebSocket("ws://localhost:8787/FINAL_PROJECT_V04/chat-ws.do");		
+		wsocket = new WebSocket("ws://localhost:8787/chat-ws.do");		
 		wsocket.onopen = onOpen;
 		//서버로부터 메시지를 받으면 호출되는 함수 지정
 		wsocket.onmessage = onMessage;
@@ -72,7 +72,7 @@
 					+ '</p></div>'
 					+ '<div><span class="badge badge-pill badge-success" style="font-size: 82%;">'
 					+ jsonmsg.filename + '</span>'
-					+ '<a class="btn" href="/FINAL_PROJECT_V04/download.do?filename='
+					+ '<a class="btn" href="/FINAL_PROJECT_V04/download?filename='
 					+ jsonmsg.newFileName + '&name=' + jsonmsg.filename
 					+ '"><i class="fa fa-download"></i>download</a></div>'
 					+ '</div>');
@@ -141,7 +141,7 @@
 		var filestream;
 
 		$.ajax({
-			url : '/FINAL_PROJECT_V04/fileupload.do',
+			url : '/FINAL_PROJECT_V04/fileupload',
 			type : 'POST',
 			data : newdata,
 			cache : false,
@@ -362,7 +362,7 @@
 							<li><a class="dropdown-item" onclick="insertFile();">
 								<span class="far fa-file"></span>       파일 추가</a>
 								<form id="uploadForm" enctype="multipart/form-data"
-									method="POST" action="/fileupload.do">
+									method="POST" action="/fileupload">
 									<input id="my-file-selector" value="전송" type="file" id="fileUp"
 										name="fileUp" style="display: none" onchange="sendBinary();">
 								</form>
