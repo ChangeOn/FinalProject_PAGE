@@ -41,6 +41,22 @@
 
 <!-- Canvas 관련 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/html5-canvas-drawing-app.js"></script>
+
+<!-- Board 관련 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/board-functions"></script>
+
+<!-- Chat 관련 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/chat-functions.js"></script>
+
+<!-- Paint 관련 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paint-functions.js"></script>
+
+<!-- Map 관련 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/map-functions.js"></script>
+
+<!-- Calendar 관련 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/calendar-functions.js"></script>
+
 </head>
 
 <body>
@@ -83,6 +99,10 @@
 				</div>
 
 				<a href="#" class="list-group-item list-group-item-action bg-light">Board</a>
+				<a href="#" class="list-group-item list-group-item-action bg-light">Chat</a>				
+				<a href="#" class="list-group-item list-group-item-action bg-light">Paint</a>
+				<a href="#" class="list-group-item list-group-item-action bg-light">Map</a>			
+				<a href="#" class="list-group-item list-group-item-action bg-light">Calendar</a>
 
 			</div>
 
