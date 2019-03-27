@@ -2,26 +2,29 @@
 	function Add_Board(){
 		console.log("게시판 생성");
 		$(".container-fluid").prepend(
-				"<div id='boardcontainer' class='container border border-black rounded' style='width:fit-content;'>"
-					+"</div>");
-		var url = "${pageContext.request.contextPath}/boardlist.do";
-		$("#boardcontainer").load(url, function(){
-			$("#boardcontainer").resizable({
-				minHeight: 577,
-				minWidth: 532,
+				"<div id='boardline' class='draggable table border border-dark rounded'>"
+					+"<div id='boardcontainer' class='container border border-black rounded' style='width:fit-content;'>"
+					+"</div>"
+				+"</div>");
+		var url = "/boardlist";
+		$("#boardline").load(url, function(){
+			$("#boardline").resizable({
+				minWidth: 550,
+				minHeight: 521,
+				maxHeight: 521
 			});
 		});
 	}
 	
- 	function refresh(url){
-		$("#boardcontainer").load(url, function(){
-			$("#boardcontainer").resizable({
-				minHeight: 577,
-				minWidth: 532,
+	function refresh(url){
+		$("#boardline").load(url)
+			$("#boardline").resizable({
+				minWidth: 550,
+				minHeight: 521,
+				maxHeight: 521
 			});
-		});	
 	} 
  	
 	function deleteBoard(){
-		$("#boardcontainer").remove();
+		$("#boardline").remove();
 	}

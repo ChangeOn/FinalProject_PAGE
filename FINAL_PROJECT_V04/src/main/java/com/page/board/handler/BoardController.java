@@ -38,7 +38,7 @@ public class BoardController {
 	@Resource(name="ansBizImpl")
 	private ansBiz abiz;
 	
-	@RequestMapping(value = "/boardlist.do", method= { RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/boardlist", method= { RequestMethod.GET, RequestMethod.POST})
 	public String listBoard(Model model,Criteria cri) {
 		
 		PageMaker pageMaker = new PageMaker();
@@ -58,7 +58,7 @@ public class BoardController {
 		return "boardlist";
 	}
 	
-	@RequestMapping(value="/searchTitle.do")
+	@RequestMapping(value="/searchTitle")
 	public String searchTitle(Model model,SearchCriteria scri, String keyword) {
 		
 		scri.setSearchType("title");
@@ -87,7 +87,7 @@ public class BoardController {
 		return "boardlist";
 	}
 	
-	@RequestMapping(value="/searchContent.do")
+	@RequestMapping(value="/searchContent")
 	public String searchContent(Model model,SearchCriteria scri,String keyword) {
 		
 		scri.setKeyword("content");
@@ -112,7 +112,7 @@ public class BoardController {
 		
 		return "boardlist";
 	}
-	@RequestMapping(value="/searchId.do")
+	@RequestMapping(value="/searchId")
 	public String searchId(Model model,SearchCriteria scri,String keyword) {
 		
 		scri.setSearchType("id");
@@ -139,12 +139,12 @@ public class BoardController {
 	
 	
 	
-	@RequestMapping("/insertform.do")
+	@RequestMapping("/insertform")
 	public String insertForm() {
 		return "insertBoard";
 	}
 	@ResponseBody
-	@RequestMapping(value="/insertBoard.do", method=RequestMethod.GET)
+	@RequestMapping(value="/insertBoard", method=RequestMethod.GET)
 	public String insertBoard(String title, String editor) {
 		
 		System.out.println("제목"+title);
@@ -165,7 +165,7 @@ public class BoardController {
 	}
 	
 	
-	@RequestMapping("/selectOne.do")
+	@RequestMapping("/selectOne")
 	public String detailBoard(Model model,int boardseq) {
 		
 		boardDto dto = bbiz.selectOne(boardseq);
@@ -198,7 +198,7 @@ public class BoardController {
 		return "detailBoard";
 	}
 	
-	@RequestMapping("/ansPaging.do")
+	@RequestMapping("/ansPaging")
 	public String detailAnsPaging(Model model,Criteria cri, int boardseq) {
 		cri = new Criteria(cri.getPage(),5,boardseq);
 		boardDto dto = bbiz.selectOne(boardseq);
@@ -219,7 +219,7 @@ public class BoardController {
 	}
 	
 	
-	@RequestMapping(value="/updateform.do", method=RequestMethod.GET)
+	@RequestMapping(value="/updateform", method=RequestMethod.GET)
 	public String updateForm(Model model,int boardseq) {
 		System.out.println("update form === boardseq"+boardseq);
 		boardDto dto = bbiz.selectOne(boardseq);
@@ -229,7 +229,7 @@ public class BoardController {
 		return "updateBoard";
 	}
 	@ResponseBody
-	@RequestMapping(value="/updateBoard.do", method=RequestMethod.GET)
+	@RequestMapping(value="/updateBoard", method=RequestMethod.GET)
 	public String updateBoard(@ModelAttribute boardDto bdto, int boardseq,String title,String content) {
 		System.out.println("updateBoard!!!!!!!!!!");
 		System.out.println(boardseq);
@@ -247,39 +247,39 @@ public class BoardController {
 		}
 	}
 	
-	@RequestMapping("/deleteform.do")
+	@RequestMapping("/deleteform")
 	public String deleteBoard(int boardseq) {
 		System.out.println("delete"+boardseq);
 		int res = bbiz.deleteBoard(boardseq);
 		
 		if(res>0) {
-			return "redirect:boardlist.do"; 
+			return "redirect:boardlist"; 
 		}else {
-			return "redirect:deleteboard.do";
+			return "redirect:deleteboard";
 		}
 		
 	}
 	@ResponseBody
-	@RequestMapping(value="/insertAnswer.do", method=RequestMethod.GET)
+	@RequestMapping(value="/insertAnswer", method=RequestMethod.GET)
 	public String insertAnswer(@ModelAttribute ansDto adto,int boardseq) {
 		System.out.println("댓글 ㅊ추가로 넘어와써 성공");
 		
 		abiz.insertAns(adto);
 		 
-		return "redirect:selectOne.do?boardseq="+boardseq;
+		return "redirect:selectOne?boardseq="+boardseq;
 
 	}
 	
-	@RequestMapping(value="/deleteAnswer.do")
+	@RequestMapping(value="/deleteAnswer")
 	public String deleteAnswer(int ansno,int boardseq) {
 		System.out.println("삭제로 넘어와써");
 		
 		abiz.deleteAns(ansno);
 		
-		return "redirect:selectOne.do?boardseq="+boardseq;
+		return "redirect:selectOne?boardseq="+boardseq;
 	}
 
-	@RequestMapping("/file_uploader_html5.do")
+	@RequestMapping("/file_uploader_html5")
 	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response){
 	    try {
 	         //파일정보

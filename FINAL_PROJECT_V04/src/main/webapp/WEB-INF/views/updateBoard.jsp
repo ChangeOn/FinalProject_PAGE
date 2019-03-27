@@ -7,6 +7,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	#boardcontainer{
+  	width: fit-content !impotant;
+  	height: fit-content !impotant;
+  }
+  
+  .container{
+  	width: fit-content;
+  	height: fit-content;
+  }
+</style>
 <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <script type="text/javascript" src="./resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
 
@@ -39,12 +50,12 @@ $(function(){
 
         
         $.ajax({
-    		url:"updateBoard.do",
+    		url:"updateBoard",
     		type:"get",
     		data:"boardseq="+boardseq+"&title="+title+"&content="+content,
     		success:function(data){
     			alert("완료");
-    			refresh('${pageContext.request.contextPath}/selectOne.do?boardseq='+boardseq);
+    			refresh('${pageContext.request.contextPath}/selectOne?boardseq='+boardseq);
     		},
     		error:function(){
     			
@@ -64,7 +75,7 @@ $(function(){
 
 </head>
 <body>
-	<div class="container" style="width: 100%">
+	<div class="container"">
 			<input type="hidden" id="boardseq" value="${bdto.boardseq }">
 		<table class="table">
 			<tr>
@@ -77,7 +88,7 @@ $(function(){
 			<tr>
 				<td colspan="6" align="right">
 					<input type="button" id="updateBoard" class="btn btn-outline-secondary btn-sm" value="수정하기"/>
-					<input type="button" id="listBoard" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/boardlist.do')" value="목록으로"/>
+					<input type="button" id="listBoard" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/boardlist')" value="목록으로"/>
 				</td>
 			</tr>
 		</table>

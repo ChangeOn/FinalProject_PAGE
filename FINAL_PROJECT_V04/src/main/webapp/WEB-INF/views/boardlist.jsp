@@ -10,7 +10,15 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-	
+
+	#boardcontainer{
+  	width: fit-content !impotant;
+  	height: fit-content !impotant;
+  }
+  .container{
+  	width: fit-content;
+  	height: fit-content;
+  }
 	ul li{
 		display:inline;
 	}
@@ -30,33 +38,33 @@
 		if(keyword == null || keyword == ""){
 			alert("키워드를 입력해주세요.")
 		}else{
-			refresh('${pageContext.request.contextPath}/searchTitle.do?keyword='+keyword);	
+			refresh('${pageContext.request.contextPath}/searchTitle?keyword='+keyword);	
 		}
 	}else if(searchType == 'c'){
 		if(keyword == null || keyword == ""){
 			alert("키워드를 입력해주세요.")
 		}else{
-			refresh('${pageContext.request.contextPath}/searchContent.do?keyword='+keyword);
+			refresh('${pageContext.request.contextPath}/searchContent?keyword='+keyword);
 		}
 	}else if(searchType == 'w'){
 		if(keyword == null || keyword == ""){
 			alert("키워드를 입력해주세요.")
 		}else{
-			refresh('${pageContext.request.contextPath}/searchId.do?keyword='+keyword);
+			refresh('${pageContext.request.contextPath}/searchId?keyword='+keyword);
 		}
 	}
 	
 	}
 	$(document).ready(function() {
 		
-	$("#boardcontainer").mousedown(function(e){
-		$("#boardcontainer").draggable({
+	$("#boardline").mousedown(function(e){
+		$("#boardline").draggable({
 			disabled : false
 		});
 	})
 	
-	$("#boardcontainer").mouseup(function(e) {
-			$("#boardcontainer").draggable({
+	$("#boardline").mouseup(function(e) {
+			$("#boardline").draggable({
 				disabled : true
 			});
 	})
@@ -98,7 +106,7 @@
 	<i class="fas fa-times-circle icon-red float-right" onclick="deleteBoard()"></i>
 	</nav>
 	
-	<table class="table table-hover table-sm"  style="width: 100%; height: 100%">
+	<table class="table table-hover table-sm" >
 		<%-- <col width="100"/>
 		<col width="300"/>
 		<col width="200"/>
@@ -125,7 +133,7 @@
 					<tr>
 						<th align="center">${bdto.boardseq }</th>
 						<td align="center">
-							<a onclick="refresh('${pageContext.request.contextPath}/selectOne.do?boardseq=${bdto.boardseq }')">${bdto.title }</a>
+							<a onclick="refresh('${pageContext.request.contextPath}/selectOne?boardseq=${bdto.boardseq }')">${bdto.title }</a>
 							
 							<span style="color:red;">(${bdto.anscnt })</span>
 							
@@ -139,7 +147,7 @@
 		</c:choose>
  		<tr>
  			<td colspan="5" align="right">
- 				<input type="button" value="글쓰기" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/insertform.do')" />
+ 				<input type="button" value="글쓰기" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/insertform')" />
  			</td>
  		</tr>
  		<tr>
@@ -147,17 +155,17 @@
  				<ul class="pagination justify-content-center">
  				<c:if test="${pageMaker.prev }">
  				<li class="page-item">
- 					<a class="page-link" onclick="refresh('${pageContext.request.contextPath}/boardlist.do?page=${pageMaker.startPage-1 }')">◀</a>
+ 					<a class="page-link" onclick="refresh('${pageContext.request.contextPath}/boardlist?page=${pageMaker.startPage-1 }')">◀</a>
  				</li>
  				</c:if>
  				<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
  				<li class="page-item">
-  					<a class="page-link" onclick="refresh('${pageContext.request.contextPath}/boardlist.do?page=${idx }')" >${idx }</a> 
+  					<a class="page-link" onclick="refresh('${pageContext.request.contextPath}/boardlist?page=${idx }')" >${idx }</a> 
  				</li>
  				</c:forEach>
  				<c:if test="${pageMaker.next && pageMaker.endPage >0 }">
  				<li class="page-item">
- 					<a class="page-link" onclick="refresh('${pageContext.request.contextPath}/boardlist.do?page=${pageMaker.endPage+1 }')">▶</a>
+ 					<a class="page-link" onclick="refresh('${pageContext.request.contextPath}/boardlist?page=${pageMaker.endPage+1 }')">▶</a>
  				</li>
  				</c:if>
  			</ul>

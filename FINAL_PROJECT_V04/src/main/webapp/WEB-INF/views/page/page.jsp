@@ -43,7 +43,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/html5-canvas-drawing-app.js"></script>
 
 <!-- Board 관련 -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/board-functions"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/board-functions.js"></script>
 
 <!-- Chat 관련 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/chat-functions.js"></script>

@@ -10,6 +10,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	#boardcontainer{
+  	width: fit-content !impotant;
+  	height: fit-content !impotant;
+  }
+  
+  .container{
+  	width: fit-content;
+  	height: fit-content;
+  }
+
+</style>
 <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <script type="text/javascript">
 
@@ -23,12 +35,12 @@
 				alert("댓글내용을 입력해주세요.")
 			}else{
 				$.ajax({
-		    		url:"insertAnswer.do",
+		    		url:"insertAnswer",
 		    		type:"get",
 		    		data:"boardseq="+boardseq+"&anscontent="+anscontent,
 		    		success:function(data){
 		    			alert("완료");
-		    			refresh('${pageContext.request.contextPath}/selectOne.do?boardseq='+boardseq);
+		    			refresh('${pageContext.request.contextPath}/selectOne?boardseq='+boardseq);
 		    		},
 		    		error:function(){
 		    			
@@ -49,26 +61,10 @@
 		alert(ansno+":::::"+boardseq);
 		
 		if(confirm("정말 삭제하시겠습니까?") == true){
-			refresh('${pageContext.request.contextPath}/deleteAnswer.do?boardseq='+boardseq+'&ansno='+ansno);
+			refresh('${pageContext.request.contextPath}/deleteAnswer?boardseq='+boardseq+'&ansno='+ansno);
 		}else{
 			return;
 		}
-		
-		
-		/* if(confirm("정말 삭제하시겠습니까?") == true){
-			$.ajax({
-				type: "post",
-				url: "deleteAnswer.do",
-				data:"boardseq="+boardseq+"&ansno="+ansno,
-				success:function(){
-					location.reload();
-				},
-				errer: function(){
-					alert("다시 시도해주세요.")
-				}
-				
-			})
-		} */
 		
 	}
 	
@@ -83,9 +79,8 @@
 </head>
 <body>
 	<!-- 게시판 글 상세보기 -->
-<div class="container" style="width: fit-content">
+<div class="container">
 	<div id="detailBoard">
-	<form action="updateform.do" method="get">
 		<input type="hidden" name="boardseq" id="boardseq" value="${bdto.boardseq }"/>
 		<table class="table table-sm">
 			<tr>
@@ -104,19 +99,18 @@
 				<td colspan="2" align="right">
 					<c:choose>
 						<c:when test="${bdto.id eq 'KH' }">
-							<input type="button" value="수정" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/updateform.do?boardseq=${bdto.boardseq}')">
-							<input type="button" value="삭제" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/deleteform.do?boardseq=${bdto.boardseq}')">
-							<input type="button" value="목록으로" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/boardlist.do')">
+							<input type="button" value="수정" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/updateform?boardseq=${bdto.boardseq}')">
+							<input type="button" value="삭제" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/deleteform?boardseq=${bdto.boardseq}')">
+							<input type="button" value="목록으로" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/boardlist')">
 						</c:when>
 						<c:otherwise>
-							<input type="button" value="목록으로" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/boardlist.do')">
+							<input type="button" value="목록으로" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/boardlist')">
 						</c:otherwise>
 					</c:choose>
 					
 				</td>
 			</tr>
 		</table>
-	</form>
 
 	<!-- 댓글 쓰는 곳  -->
 	<div style="width:100%;">
