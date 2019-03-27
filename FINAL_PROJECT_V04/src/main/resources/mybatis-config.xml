@@ -17,6 +17,7 @@
 		<typeAlias type="com.page.board.model.dto.ansDto" alias="ansDto"/>
 		<typeAlias type="com.page.board.model.dto.fileDto" alias="fileDto"/>
 		<typeAlias type="com.page.cal.model.dto.CalDto" alias="CalDto"/>
+		<typeAlias type="com.page.map.dto.MapDto" alias="MapDto"/>
     </typeAliases>
 
 </configuration>

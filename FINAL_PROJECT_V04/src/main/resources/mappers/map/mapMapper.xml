@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.page.map.mapper">
+
+	<resultMap type="MapDto" id="dtoMap">
+		<result property="mapno" column="MAPNO"/>
+		<result property="latitude" column="LATITUDE"/>
+		<result property="longitude" column="LONGITUDE"/>
+		<result property="addr" column="ADDR"/>
+		<result property="jibun" column="JIBUN"/>
+	</resultMap>
+	
+	<select id="select_map" resultMap="dtoMap">
+		SELECT MAPNO, LATITUDE, LONGITUDE, ADDR, JIBUN FROM MAP
+	</select>
+	
+<!-- 페이지넘버(임시)를 참조할 경우 해당 값으로 저장된 MAP의 DB를 select
+	<select id="select_map" parameterType="int" resultType="MapDto">
+		SELECT MAPNO, LATITUDE, LONGITUDE FROM MAP WHERE PAGENO = #{pageno}
+	</select>
+ -->
+ 	
+	<insert id="insert_map" parameterType="hashMap">
+		INSERT INTO MAP VALUES (MAPNOSEQ.NEXTVAL, #{latitude}, #{longitude}, #{addr}, #{jibun})
+	</insert>
+
+</mapper>

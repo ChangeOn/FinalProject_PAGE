@@ -51,12 +51,41 @@
 <!-- Paint 관련 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paint-functions.js"></script>
 
-<!-- Map 관련 -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/map-functions.js"></script>
-
 <!-- Calendar 관련 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/calendar-functions.js"></script>
 
+<!-- Map 관련 -->
+<link rel="stylesheet" href="resources/css/map.css">
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2fb1c4ff5a5b502155b05f2ba5928593&libraries=services"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/map-functions.js"></script>
+<script>
+	function Add_Map(){
+		$(".container-fluid").prepend(
+			"<div class='map_wrap'>"
+				+"<div id='map' style='position: relative; width: 60%; height: 100%; overflow: hidden;'></div>"
+				+"<script src='resources/js/map-functions.js'><"+"/script>"
+				// 키워드로 장소검색
+				+"<div id='menu_wrap'>"
+					+"<div class='option'>"
+						+"<div>"
+							+"<form onsubmit='searchPlaces(); return false;'>"
+								+"<input type='text' id='keyword' size='15' placeholder='키워드 입력' />"
+								+"<button type='submit'>Search</button>"
+							+"</form>"
+						+"</div>"
+					+"</div>"
+					// 검색결과인 장소의 마커들을 나타내는 리스트
+					+"<ul id='placesList'></ul>"
+				+"</div>"				
+				// 화면에 지도 고정
+				+"<div id='fix_wrap'>"
+						+"<button id='fixB' onclick='button1_click();'>fix</button>"
+				+"</div>"
+			+"</div>"
+		);
+	}
+</script>
 </head>
 
 <body>
