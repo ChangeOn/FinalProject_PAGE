@@ -3,7 +3,7 @@
 		console.log("게시판 생성");
 		$(".container-fluid").prepend(
 				"<div id='boardline' class='draggable table border border-dark rounded'>"
-					+"<div id='boardcontainer' class='container border border-black rounded''>"
+					+"<div id='boardcontainer' class='container border border-black rounded'>"
 					+"</div>"
 				+"</div>");
 		var url = "/boardlist";

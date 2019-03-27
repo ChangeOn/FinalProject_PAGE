@@ -16,9 +16,10 @@
   	height: fit-content !impotant;
   }
   .container{
-  	width: fit-content;
+  	width: 100%;
   	height: fit-content;
   }
+
 	ul li{
 		display:inline;
 	}
