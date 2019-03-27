@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cal">
+
+	<resultMap type="com.page.cal.model.dto.CalDto" id="calMap">
+		<result property="seq" column="SEQ"/>
+		<result property="id" column="ID"/>
+		<result property="startdate" column="STARTDATE"/>
+		<result property="enddate" column="ENDDATE"/>
+		<result property="title" column="TITLE"/>
+		<result property="content" column="CONTENT"/>
+	</resultMap>
+
+	<select id="selectList" parameterType="String" resultMap="calMap">
+		SELECT SEQ, ID, TITLE, STARTDATE, ENDDATE, TITLE, CONTENT
+		FROM CALBOARD
+		WHERE ID=#{id}
+	</select>
+	
+	
+	<insert id="insertCalBoard" parameterType="CalDto">
+		INSERT INTO CALBOARD
+		VALUES(CALBOARDSEQ.NEXTVAL,#{id},#{startdate},#{enddate},#{title},#{content})
+	</insert>	
+	
+<!--  
+	<select id="selectOne" resultMap="calMap" parameterType="int">
+		SELECT SEQ, ID, TITLE, CONTENT, MDATE,REGDATE
+		FROM CALBOARD
+		WHERE SEQ=#{seq}
+	</select>
+	
+	<update id="updateCal" parameterType="CalDto">
+		UPDATE CALBOARD
+		SET TITLE=#{title}, CONTENT=#{content}
+		WHERE SEQ=#{seq}
+	</update>
+-->
+
+
+
+
+</mapper>

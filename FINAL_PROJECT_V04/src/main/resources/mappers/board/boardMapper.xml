@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="board">
+
+ 	<resultMap type="com.page.board.model.dto.boardDto" id="boardDtoMap">
+ 		<result property="boardseq" column="BOARDSEQ"/>
+ 		<result property="id" column="ID"/>
+ 		<result property="boardno" column="BOARDNO"/>
+ 		<result property="title" column="TITLE"/>
+ 		<result property="content" column="CONTENT"/>
+ 		<result property="regdate" column="REGDATE"/>
+ 		<result property="viewcnt" column="VIEWCNT"/>
+ 		<result property="anscnt" column="ANSCNT"/>
+ 	</resultMap>
+ 	
+ 	<select id="selectOne" resultType="boardDto">
+ 		SELECT BOARDSEQ, ID, BOARDNO, TITLE, CONTENT, REGDATE, VIEWCNT
+ 		FROM BOARD
+ 		WHERE BOARDSEQ=#{boardseq}
+ 	</select>
+ 	
+ 	<insert id="insertBoard" parameterType="boardDto">
+ 		INSERT INTO BOARD
+ 		VALUES(BOARDSEQ.NEXTVAL,'kh',0,#{title},#{content},SYSDATE,0,0)
+ 	</insert>
+ 	
+ 	<update id="updateBoard" parameterType="boardDto">
+ 		UPDATE BOARD
+ 		SET TITLE=#{title}, CONTENT=#{content}
+ 		WHERE BOARDSEQ=#{boardseq}
+ 	</update>
+ 	
+ 	<delete id="deleteBoard" parameterType="int">
+ 		DELETE FROM BOARD WHERE BOARDSEQ=#{boardseq}	
+ 	</delete>
+ 	
+ 	<update id="updateViewCnt">
+ 		UPDATE BOARD 
+ 		SET VIEWCNT = VIEWCNT +1
+ 		WHERE BOARDSEQ=#{boardseq}
+ 	</update>
+ 	
+ 	<select id="listPaging" resultMap="boardDtoMap" parameterType="hashmap">
+ 		<![CDATA[
+ 		SELECT R, BOARD.*
+ 		FROM 
+ 			(SELECT ROW_NUMBER() OVER(ORDER BY BOARDSEQ) AS R, S.BOARDSEQ, S.ID, S.BOARDNO, S.TITLE, S.CONTENT, S.REGDATE, S.VIEWCNT,
+ 					(SELECT COUNT(*) FROM ANSBOARD WHERE BOARDSEQ=S.BOARDSEQ) AS ANSCNT 
+ 			FROM BOARD S) 
+ 		BOARD 
+ 		WHERE R >= #{pageStart} AND R<= (#{pageStart}+#{perPageNum}-1)
+
+ 		]]>
+ 	</select>
+ 	
+ 	<select id="searchTitle" resultMap="boardDtoMap" parameterType="hashmap">
+ 		<![CDATA[
+ 		SELECT R, BOARD.*
+ 		FROM 
+ 			(SELECT ROW_NUMBER() OVER(ORDER BY BOARDSEQ) AS R, S.BOARDSEQ, S.ID, S.BOARDNO, S.TITLE, S.CONTENT, S.REGDATE, S.VIEWCNT,
+ 					(SELECT COUNT(*) FROM ANSBOARD WHERE BOARDSEQ=S.BOARDSEQ) AS ANSCNT 
+ 			FROM BOARD S
+ 			WHERE S.TITLE LIKE '%'||#{keyword}||'%') 
+ 		BOARD 
+ 		WHERE R >= #{pageStart} AND R<= (#{pageStart}+#{perPageNum}-1)
+ 		]]> 
+ 	</select>
+ 	
+ 	<select id="searchContent" resultMap="boardDtoMap" parameterType="hashmap">
+ 		<![CDATA[
+ 		SELECT R, BOARD.*
+ 		FROM 
+ 			(SELECT ROW_NUMBER() OVER(ORDER BY BOARDSEQ) AS R, S.BOARDSEQ, S.ID, S.BOARDNO, S.TITLE, S.CONTENT, S.REGDATE, S.VIEWCNT,
+ 					(SELECT COUNT(*) FROM ANSBOARD WHERE BOARDSEQ=S.BOARDSEQ) AS ANSCNT
+ 			 FROM BOARD S
+ 			WHERE S.CONTENT LIKE '%'||#{keyword}||'%') 
+ 		BOARD 
+ 		WHERE R >= #{pageStart} AND R<= (#{pageStart}+#{perPageNum}-1)
+ 		]]>
+ 	</select>
+ 	
+ 	<select id="searchId" resultMap="boardDtoMap" parameterType="hashmap">
+ 		<![CDATA[
+ 		SELECT R, BOARD.*
+ 		FROM 
+ 			(SELECT ROW_NUMBER() OVER(ORDER BY BOARDSEQ) AS R, S.BOARDSEQ, S.ID, S.BOARDNO, S.TITLE, S.CONTENT, S.REGDATE, S.VIEWCNT,
+ 					(SELECT COUNT(*) FROM ANSBOARD WHERE BOARDSEQ=S.BOARDSEQ) AS ANSCNT
+ 			FROM BOARD S
+ 			WHERE S.ID=#{keyword}) 
+ 		BOARD 
+ 		WHERE R >= #{pageStart} AND R<= (#{pageStart}+#{perPageNum}-1)
+ 		]]>
+ 	</select>
+
+ 	<select id="countBoardList" resultType="int">
+ 		SELECT COUNT(*)	
+ 		FROM BOARD
+ 	</select>
+ 	
+ 	<select id="countTitleList" resultType="int" parameterType="String">
+ 		SELECT COUNT(*) FROM BOARD WHERE TITLE LIKE '%'||#{keyword}||'%'
+ 	</select>
+ 	
+ 	<select id="countContentList" resultType="int" parameterType="String">
+ 		SELECT COUNT(*) FROM BOARD WHERE CONTENT LIKE '%'||#{keyword}||'%'
+ 	</select>
+ 	
+ 	<select id="countIdList" resultType="int" parameterType="String">
+ 		SELECT COUNT(*) FROM BOARD WHERE ID=#{keyword}
+ 	</select>
+ 	
+ 	<insert id="insertFile" parameterType="fileDto">
+ 		INSERT INTO FILES
+ 		VALUES(FILESEQ.NEXTVAL,#{filestream},#{filetitle})
+ 	</insert>
+
+ 	
+ 	
+</mapper>

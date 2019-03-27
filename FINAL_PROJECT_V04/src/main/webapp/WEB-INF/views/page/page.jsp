@@ -97,12 +97,16 @@
 						Box</a> <a href="#" onclick="Add_Table();"
 						class="list-group-item list-group-item-action bg-white">Table</a>
 				</div>
-
-				<a href="#" class="list-group-item list-group-item-action bg-light">Board</a>
-				<a href="#" class="list-group-item list-group-item-action bg-light">Chat</a>				
-				<a href="#" class="list-group-item list-group-item-action bg-light">Paint</a>
-				<a href="#" class="list-group-item list-group-item-action bg-light">Map</a>			
-				<a href="#" class="list-group-item list-group-item-action bg-light">Calendar</a>
+				<a href="#" onclick="Add_Board();"
+					class="list-group-item list-group-item-action bg-light">Board</a>
+				<a href="#" onclick="Add_Chat();"
+					class="list-group-item list-group-item-action bg-light">Chat</a> <a
+					href="#" onclick="Add_Paint();"
+					class="list-group-item list-group-item-action bg-light">Paint</a>
+				<a href="#" onclick="Add_Map();"
+					class="list-group-item list-group-item-action bg-light">Map</a> <a
+					href="#" onclick="Add_Calendar();"
+					class="list-group-item list-group-item-action bg-light">Calendar</a>
 
 			</div>
 

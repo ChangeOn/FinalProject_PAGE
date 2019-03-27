@@ -13,6 +13,10 @@
         <typeAlias type="com.page.websocket.chat.dto.ChatDto" alias="ChatDto"/>
         <typeAlias type="com.page.websocket.file.dto.FileDto" alias="FileDto"/>
         <typeAlias type="com.page.user.dto.UserVO" alias="UserVO"/>
+        <typeAlias type="com.page.board.model.dto.boardDto" alias="boardDto"/>
+		<typeAlias type="com.page.board.model.dto.ansDto" alias="ansDto"/>
+		<typeAlias type="com.page.board.model.dto.fileDto" alias="fileDto"/>
+		<typeAlias type="com.page.cal.model.dto.CalDto" alias="CalDto"/>
     </typeAliases>
 
 </configuration>

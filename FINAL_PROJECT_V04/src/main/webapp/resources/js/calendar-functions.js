@@ -1,0 +1,208 @@
+function Add_Calendar(){
+	
+	console.log("캘린더 생성");
+	
+	if($("[class~=editor][class~=table]").length==0){
+		
+		$(".container-fluid").prepend(
+			"<div class='caltable draggable border border-dark rounded' id='caltable'>"	+
+				"<div class='calendar' id='calendar'>"+
+				"</div>"+
+			"</div>"	
+		)
+	// Calendar 실행
+		
+		resizable_switch('ON', $(".calendar"));
+		
+	$(document).ready(function() {
+			
+			var seq=0;
+			var myStartDate='';
+			var myEndDate='';
+			// 현재의 날짜
+			var today=new Date();
+			var date=today.getDate();
+			var month=today.getMonth();
+			var year=today.getFullYear();
+		
+			var id="kh";
+
+			
+			$('#calendar').fullCalendar({
+	    		  
+				     
+				    header: {
+				      left: 'prev,next today',
+				      center: 'title',
+				      right: 'month,agendaWeek,agendaDay,listWeek'
+				    },
+				    
+				    defaultDate: today,
+				    selectable : true,
+				    selectHelper : true,
+				    // 월/주/일 버튼 view
+				    views : {
+				    	month : {
+				    		titleFormat : "MMMM YYYY"
+				    	},
+				    	week:{
+				    		titleFormat : " MMMM D YYYY"
+				    	},
+				    	day:{
+				    		titleFormat : "D MMM YYYY"
+				    	}
+				    },
+				    // 날짜 클릭으로 event 추가
+				  
+				    select : function(startDate,endDate){
+				    
+				    //alert('selected ' + startDate.format() + ' to '+ endDate.format());
+				    	
+				    swal({
+				    	title: 'Create an Event',
+				        html: '<div class="form-group">' +
+				        			'<input class="form-control" placeholder="Event Title" id="title" name="title">' +
+				        		'</div>'+
+				        		'<div class="form-group">'+
+				        			'<input class="form-control" placeholder="Event Content" id="content" name="content">'+
+				        		'</div>',
+				        		
+				        showCancelButton: true,
+				        confirmButtonClass: 'btn btn-success',
+				        confirmButtonText : '일정 추가',
+				        cancelButtonClass: 'btn btn-danger',
+				        cancelButtonText : '취소',
+				        buttonsStyling: false
+				     }).then(function(result) {
+
+				                var eventData;
+				                event_title = $('#title').val();
+				                event_content=$('#content').val();
+				                
+				                
+				                //startDate.isValid() & endDate.isValid()
+				             	if(startDate.isValid() & endDate.isValid()){
+				             		
+				             		eventData={
+				             				id : (++seq),
+					             			title : event_title,
+					             			content :  event_content,
+					             			start : startDate,
+					             			end : endDate,
+					             			allDay : false	
+				             		};
+				             		$('#calendar').fullCalendar('renderEvent',eventData,true);
+				       
+				             	}
+				             	
+				             	// DB에 Insert
+				             	$.ajax({
+				         			
+				         			type : "post",
+				         			url:"insertCal.do",
+				         			data:{
+				         				"seq":seq,
+				         				"id":id,
+				         				"title":event_title,
+				         				"content":event_content,
+				         				"startdate":moment(startDate).format('YYYY-MM-DD HH:mm:00'),
+				         				"enddate":moment(endDate).format('YYYY-MM-DD HH:mm:00')
+				         			},
+				         			success:function(data){
+				         				console.log("event 추가성공")
+				         				swal("추가성공!"+event.id);
+				         			},
+				         			errer:function(request,status,error){
+				         				console.log("event 추가실패")
+				    					swal("추가 실패!"+"\n"+"code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				         			}
+				         			
+				         		}); 
+				             	$('#calendar').fullCalendar('unselect');
+				             	
+				    	});
+				    },
+				    // id 속성
+				    eventAfterRender:function(event,element,view){
+				    	$(element).attr("id",event.id);
+				    },
+				
+				    
+				    navLinks: true, // can click day/week names to navigate views
+				    editable: true,
+				    /*
+				    dayClick : function (date,jsEvent,view){
+				    	
+				    	swal({
+				    	  	text: date.format(),
+				    		});
+
+				    	
+				    	$(this).css('background-color','skyblue');
+				    },*/
+				    
+				    eventLimit: false, // allow "more" link when too many events
+				    
+				    //start,end,callback
+				    events : function(start,end,timezone,callback){
+				    	
+				    	$.ajax({
+				    		type :"GET",
+				    		url : "calDBEvent.do",
+				    		data:{
+				    			"id":id
+				    		},
+				    		dataType:'json',
+				    		success:function(data) { 
+				    			var events =[];
+				    			$(data).each(function(){
+				    				events.push({
+				    					id:$(this).attr('seq'),
+				    					title:$(this).attr('title'),
+				    					content:$(this).attr('content'),
+					    				start:$(this).attr('startdate'),
+					    				end:$(this).attr('enddate')
+				    				});
+				    			});
+				    			callback(events);
+				    		}
+				    	});
+	
+				    },
+				    eventRender : function(event,element){
+				    	element.append("<span class='removebtn'>X</span>");
+				    	element.find(".removebtn").click(function(){
+				    		
+				    		alert("삭제버튼");
+				    		$("#calendar").fullCalendar('removeEvents',event._id);
+				    		console.log("event 삭제!");
+				    	});
+				    		
+				    },
+				    
+				    eventClick:function(event,jsEvent,view){
+				    	swal({
+				    		showCancelButton: true,
+				    		title:'정말 삭제하시겠습니까?',
+				    		confirmButtonClass : 'btn btn-success',
+				    		confirmButtonText : 'Delete',
+				    		cancelButtonClass :'btn btn-danger',
+				    		cancelButtonText : 'Cancel'
+				    	}).then(function(result){
+				    		if(result){
+				    			$("#calendar").fullCalendar('removeEvents',event._id);
+				    		}
+				    		
+				    	})
+				  
+				    }
+				    
+				    //events : getJsonList()
+				
+				  });
+						
+		});
+		
+	}
+	
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ansBoard">
+
+	<resultMap type="com.page.board.model.dto.ansDto" id="ansDtoMap">
+		<result property="boardseq" column="BOARDSEQ"/>
+		<result property="ansno" column="ANSNO"/>
+		<result property="id" column="ID"/>
+		<result property="anscontent" column="ANSCONTENT"/>
+		<result property="ansregdate" column="ANSREGDATE"/>
+	</resultMap>
+
+
+
+	<select id="listAnswer" resultMap="ansDtoMap">
+		SELECT BOARDSEQ, ANSNO, ID, ANSCONTENT, ANSREGDATE
+		FROM ANSBOARD
+		WHERE BOARDSEQ=#{boardseq}
+		ORDER BY ANSNO 
+	</select> 
+	
+	<select id="ansPaging" resultMap="ansDtoMap" parameterType="hashmap">
+		<![CDATA[
+		SELECT R, ANSBOARD.*
+		FROM 
+			(SELECT ROW_NUMBER() OVER(ORDER BY ANSNO) AS R, A.* FROM ANSBOARD A WHERE BOARDSEQ=#{boardseq})
+		ANSBOARD
+		WHERE R >= #{pageStart} AND R<= (#{pageStart}+#{perPageNum}-1)
+		]]>
+	</select>
+
+	<select id="countAnsList" resultType="int" parameterType="int">
+		SELECT COUNT(*)
+		FROM ANSBOARD
+		WHERE BOARDSEQ=#{boardseq}
+	</select>
+	
+	<insert id="insertAnswer">
+		INSERT INTO ANSBOARD 
+		VALUES(#{boardseq},ANSWERSEQ.NEXTVAL,'KH',#{anscontent},SYSDATE)
+		
+	</insert>
+	
+	<delete id="deleteAnswer">
+		DELETE FROM ANSBOARD WHERE ANSNO=#{ansno}
+	</delete>
+
+</mapper>
