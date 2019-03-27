@@ -87,7 +87,7 @@
 
 </head>
 <body> 
-<div class="container" id="moveBoard">
+<div class="container">
 <nav class="navbar navbar-light bg-light justify-content-between" style="width: 100%">
 	<form class="form-inline">
 		<select name="searchType">

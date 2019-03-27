@@ -3,12 +3,12 @@
 		console.log("게시판 생성");
 		$(".container-fluid").prepend(
 				"<div id='boardline' class='draggable table border border-dark rounded'>"
-					+"<div id='boardcontainer' class='container border border-black rounded' style='width:fit-content;'>"
+					+"<div id='boardcontainer' class='container border border-black rounded''>"
 					+"</div>"
 				+"</div>");
 		var url = "/boardlist";
-		$("#boardline").load(url, function(){
-			$("#boardline").resizable({
+		$("#boardcontainer").load(url, function(){
+			$("#boardcontainer").resizable({
 				minWidth: 550,
 				minHeight: 521,
 				maxHeight: 521
@@ -17,8 +17,8 @@
 	}
 	
 	function refresh(url){
-		$("#boardline").load(url)
-			$("#boardline").resizable({
+		$("#boardcontainer").load(url)
+			$("#boardcontainer").resizable({
 				minWidth: 550,
 				minHeight: 521,
 				maxHeight: 521
@@ -26,5 +26,5 @@
 	} 
  	
 	function deleteBoard(){
-		$("#boardline").remove();
+		$("#boardcontainer").remove();
 	}
