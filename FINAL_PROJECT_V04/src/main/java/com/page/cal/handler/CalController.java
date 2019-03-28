@@ -116,6 +116,7 @@ public class CalController {
 		int res=cbiz.deleteCalBoard(seq);
 		System.out.println("test");
 		System.out.println("test");
+		System.out.println("test");
 	
 		return "redirect:page";
 	}
