@@ -52,6 +52,24 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paint-functions.js"></script>
 
 <!-- Calendar 관련 -->
+
+<!-- sweetalert -->
+<script type="text/javascript" src="resources/js/sweetalert2.min.js"></script>
+<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css'/>
+
+<!-- moment.js -->
+<script type="text/javascript" src="resources/js/moment.min.js"></script>
+
+<!-- fullcalendar -->
+<script type="text/javascript" src="resources/js/fullcalendar.min.js"></script>
+<link rel='stylesheet' type='text/css' href='resources/css/fullcalendar.css' />
+<link rel='stylesheet' type='text/css' href='resources/css/fullcalendar.min.css' />
+<link rel='stylesheet' type='text/css' href='resources/css/fullcalendar.print.css' media="print"/>
+<script type="text/jacascript" src="resources/js/json2.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/calendar-functions.js"></script>
+
+
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/calendar-functions.js"></script>
 
 <!-- Map 관련 -->

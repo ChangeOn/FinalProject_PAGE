@@ -52,12 +52,21 @@ function Add_Calendar(){
 				    		titleFormat : "D MMM YYYY"
 				    	}
 				    },
+				    timeFormat:{
+				    	"" : "HH:mm", // 월간
+				    	agenda : "HH:mm{-HH:mm}" // 주간, 일간
+				    },
+				    allDayText : '시간',
+				    axisFormat : 'tt hh',
+				    
 				    // 날짜 클릭으로 event 추가
 				  
 				    select : function(startDate,endDate){
 				    
 				    //alert('selected ' + startDate.format() + ' to '+ endDate.format());
+				    
 				    	
+				   
 				    swal({
 				    	title: 'Create an Event',
 				        html: '<div class="form-group">' +
@@ -65,8 +74,11 @@ function Add_Calendar(){
 				        		'</div>'+
 				        		'<div class="form-group">'+
 				        			'<input class="form-control" placeholder="Event Content" id="content" name="content">'+
+				        		'</div>'+
+				        		'<div class="form-group col-xs-3" style="display:inline-block">'+
+				        			'<input class="form-control" placeholder="Time (00 : 00)" id="time" name="time" >'+
 				        		'</div>',
-				        		
+
 				        showCancelButton: true,
 				        confirmButtonClass: 'btn btn-success',
 				        confirmButtonText : '일정 추가',
@@ -78,21 +90,34 @@ function Add_Calendar(){
 				                var eventData;
 				                event_title = $('#title').val();
 				                event_content=$('#content').val();
+				                event_time=$("#time").val();
+				                
+				                swal(typeof event_time);
+				                
+				      
 				                
 				                
 				                //startDate.isValid() & endDate.isValid()
-				             	if(startDate.isValid() & endDate.isValid()){
+				             	
+				                if(event_title && event_content){
 				             		
 				             		eventData={
 				             				id : (++seq),
 					             			title : event_title,
 					             			content :  event_content,
-					             			start : startDate,
-					             			end : endDate,
+					             			//start : startDate+,
+					             			//end : endDate,
+					             			start: startDate,
+					             			end:endDate,
 					             			allDay : false	
 				             		};
 				             		$('#calendar').fullCalendar('renderEvent',eventData,true);
 				       
+				             	}else if(event_title==="" || event_content===""){
+				             		swal("You need to write something!");
+				             		return false;
+				             	}else{
+				             		swal.close();
 				             	}
 				             	
 				             	// DB에 Insert
@@ -105,12 +130,12 @@ function Add_Calendar(){
 				         				"id":id,
 				         				"title":event_title,
 				         				"content":event_content,
-				         				"startdate":moment(startDate).format('YYYY-MM-DD HH:mm:00'),
-				         				"enddate":moment(endDate).format('YYYY-MM-DD HH:mm:00')
+				         				"startdate":moment(startDate).format('YYYY-MM-DD HH:mm'),
+				         				"enddate":moment(endDate).format('YYYY-MM-DD HH:mm')
 				         			},
 				         			success:function(data){
 				         				console.log("event 추가성공")
-				         				swal("추가성공!"+event.id);
+				         				swal("추가성공!"+event._id);
 				         			},
 				         			errer:function(request,status,error){
 				         				console.log("event 추가실패")
@@ -169,18 +194,15 @@ function Add_Calendar(){
 				    	});
 	
 				    },
+				    // Render 생길때 
 				    eventRender : function(event,element){
 				    	element.append("<span class='removebtn'>X</span>");
-				    	element.find(".removebtn").click(function(){
-				    		
-				    		alert("삭제버튼");
-				    		$("#calendar").fullCalendar('removeEvents',event._id);
-				    		console.log("event 삭제!");
-				    	});
-				    		
+				    	
 				    },
-				    
+				    // 삭제!
 				    eventClick:function(event,jsEvent,view){
+				    	
+				    	
 				    	swal({
 				    		showCancelButton: true,
 				    		title:'정말 삭제하시겠습니까?',
@@ -189,16 +211,37 @@ function Add_Calendar(){
 				    		cancelButtonClass :'btn btn-danger',
 				    		cancelButtonText : 'Cancel'
 				    	}).then(function(result){
-				    		if(result){
+				    		if(result.value){
 				    			$("#calendar").fullCalendar('removeEvents',event._id);
+				    			
+				    			// 삭제 정보 보내기
+				    			$.ajax({
+				    				type : "post",
+				    				url : "deleteCal.do",
+				    				data : {
+				    					"seq":event._id
+				    				},
+				    				success(data){
+				    					console.log("event 삭제성공")
+				         				swal(event._id+"글 삭제성공!");
+				    				},
+				    				error(request,status,error){
+				    					console.log("event 삭제실패")
+				    					swal("삭제 실패!"+"\n"+"code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				    				}
+				    				
+				    			})
+				    			
+				    			
+				    			
+				    		}else{
+				    			swal.close();
 				    		}
-				    		
-				    	})
+	
+				    	});
 				  
 				    }
-				    
-				    //events : getJsonList()
-				
+				    			
 				  });
 						
 		});
@@ -206,3 +249,19 @@ function Add_Calendar(){
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

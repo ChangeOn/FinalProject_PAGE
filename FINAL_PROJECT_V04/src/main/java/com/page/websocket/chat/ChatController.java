@@ -35,6 +35,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
+import com.page.user.dto.UserVO;
 import com.page.websocket.file.biz.FileBiz;
 import com.page.websocket.file.dto.FileDto;
 import com.page.websocket.handler.ChatWebSocketHandler;
@@ -55,15 +56,11 @@ public class ChatController {
 	public String viewChatPage(Model model, HttpServletRequest request) {
 		
 		logger.info("chat.do RUN! / Run Time: " + new Date());
-		String userid = "TESTUSER";
-		int pageno = 3;
-		//UserInfoDto login = (UserInfoDto)request.getSession().getAttribute("login");
-		/*(login==null) {
-			return "redirect:/loginNull.do";
-		}*/
-		model.addAttribute("userid", userid );
-		model.addAttribute("username", "개나리" );
-		model.addAttribute("pageno", pageno );
+		UserVO userVO = (UserVO)request.getSession().getAttribute("login");
+		
+		model.addAttribute("userid", userVO.getUser_id() );
+		model.addAttribute("username", userVO.getUser_name() );
+		model.addAttribute("pageno", userVO.getUser_no() );
 		
 		return "chat";
 	}

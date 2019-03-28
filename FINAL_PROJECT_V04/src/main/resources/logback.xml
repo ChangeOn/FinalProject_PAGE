@@ -64,9 +64,9 @@
 	</logger>
 
 	<!-- com.websocket.handler -->
-	<logger name="com.websocket.handler">
+	<logger name="com.page">
 		<level value="info"></level>
-		<appender-ref ref="fileAppender" />
+		<appender-ref ref="consoleAppender" />
 	</logger>
 	
 	<!-- root는 글로벌 로거를 의미하며, 위의 logger에 해당하지 않으면 root 로거가 실행된다. -->

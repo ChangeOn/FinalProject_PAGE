@@ -23,10 +23,6 @@
 		$('#message').attr('disabled', false);
 		$('#plusbutton').attr('disabled', false);
 		
-		userid = prompt('ID 입력하세요');
-		username = prompt('username 입력하세요');
-		pageno = prompt('pageno 입력하세요');
-		
 		$('#nickname').val(username);
 		$('#enterBtn').click();
 	}

@@ -38,7 +38,7 @@ public class CalController {
 	@Autowired
 	private CalBiz cbiz;
 	
-	@RequestMapping(value="/calDBEvent.do", method= { RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/calDBEvent", method= { RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public String getCal(String id, HttpServletRequest request) throws IOException {
 		
@@ -79,7 +79,7 @@ public class CalController {
 		return jsonMsg;
 	}
 	
-	@RequestMapping(value="/insertCal.do",method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value="/insertCal",method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public String insertCal(Model model, String seq,String id,String startdate,String enddate,String title,String content, HttpServletResponse response) throws IOException {
 		
@@ -103,14 +103,20 @@ public class CalController {
 
 		if(res>0) {
 			System.out.println("새로운 일정 추가 성공");
-			return "redirect:test.do";
+			return "redirect:page";
 
 		}else {
 			System.out.println("새로운 일정 추가 실패");
-			return "redirect:test.do";
+			return "redirect:page";
 		}
 	}
-
+	@RequestMapping("/deleteCal")
+	public String delete(String seq) {
+		
+		int res=cbiz.deleteCalBoard(seq);
+	
+		return "redirect:page";
+	}
 
 }
 

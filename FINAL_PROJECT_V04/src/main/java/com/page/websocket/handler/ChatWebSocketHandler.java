@@ -18,6 +18,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.page.user.dto.UserVO;
 import com.page.websocket.chat.biz.ChatBiz;
 import com.page.websocket.chat.dto.ChatDto;
 import com.page.websocket.file.biz.FileBiz;
@@ -50,22 +51,19 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		
-		//1. 들어온 사람의 실제 로그인 아이디 정보를 가져온다.
-    	//Map<String, Object> map = session.getAttributes();
-    	//UserInfoDto mem = (UserInfoDto)map.get("login"); 
-    	//String userId = mem.getId();
-		Map<String,Object> map = session.getAttributes();
-		String userid = (String)map.get("userid");
-		logger.info("로그인 한 아이디 : " + userid);
-		// 같은 페이지를 사용하는 사용자별 세션 분리				
-		String pageno = map.get("pageno").toString();
-		logger.info("pageno : "+map.get("pageno").toString());
-		pageUsers.put(session , pageno);
+		// 들어온 사람의 실제 로그인 아이디 정보를 가져온다.
+    	Map<String, Object> map = session.getAttributes();
+    	UserVO userVO = (UserVO)map.get("login");				
 		
 		logger.info(session.getId()+"(IP)"+session.getRemoteAddress().getHostName() + " 연결됨");			
 		users.put(session.getId(), session);
-		// CHAT 테이블 값 중 pageno와 일치하는 채팅 List에 가져오기
-		List<ChatDto> list = biz.ChatSelectPageList(Integer.parseInt(pageno));
+		
+		// CHAT 테이블 값 중 pageno와 일치하는 채팅 List에 가져오기 / 미사용
+		//pageUsers.put(session , pageno);
+		//List<ChatDto> list = biz.ChatSelectPageList(Integer.parseInt(pageno));
+		
+		List<ChatDto> list = biz.selectList();
+		
 		String sendmessage = "";
 		// 가져온 값 종류별로 전달.
 		for (ChatDto dto : list) {
@@ -111,18 +109,10 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		JSONObject jsonObj = null;
 		jsonObj = (JSONObject)jsonparser.parse(message.getPayload());
 		
-		// 같은 페이지를 사용하는 사용자별 세션 분리
+		// 같은 페이지를 사용하는 사용자별 세션 분리 / 미사용
 		//logger.info("pageno : "+(String)jsonObj.get("pageno"));
-		String pageno = (String)jsonObj.get("pageno");
-		//pageUsers.put(session , pageno);
-
-		// 값 없을 시 null값 추가
-		/*if((String)jsonObj.get("url") == null) {
-			jsonObj.put("url", "");
-		}
-		if ((String)jsonObj.get("message") == null) {
-			jsonObj.put("message", "");
-		}*/		
+		//String pageno = (String)jsonObj.get("pageno");
+		//pageUsers.put(session , pageno);		
 		
 		// DB CHAT 테이블에 저장(insert)
 		if (!jsonObj.get("type").equals("inout")) {
@@ -134,18 +124,19 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 			int insert_res = biz.insert(dto);
 		}
 		
-		/*for(WebSocketSession s : users.values()) {
+		for(WebSocketSession s : users.values()) {
 			s.sendMessage(message);
 			logger.info(s.getId() + "에 메시지 발송 : " + message.getPayload());
-		}*/
+		}
 		
-		for(WebSocketSession s : users.values()) {
+		// pageno 같은 사용자만 메시지전달 / 미사용 주석처리
+		/*for(WebSocketSession s : users.values()) {
 			//pageno 가 같은 사용자에게만  메시지 전송
 			if (pageno.equals(pageUsers.get(s))) {
 				s.sendMessage(message);
 				logger.info(s.getId() + "에 메시지 발송 : " + message.getPayload());
 			}
-		}		
+		}*/		
 	}	
 
 	@Override
