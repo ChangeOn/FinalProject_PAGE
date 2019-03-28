@@ -33,18 +33,9 @@
 <!-- fullcalendar -->
 <script type="text/javascript" src="resources/js/page/calendar/fullcalendar.min.js"></script>
 <link rel='stylesheet' type='text/css' href='resources/css/page/calendar/fullcalendar.css' />
-<link rel='stylesheet' type='text/css' href='resources/css/page/fullcalendar.min.css' />
-<link rel='stylesheet' type='text/css' href='resources/css/print/fullcalendar.print.css' media="print"/>
+<link rel='stylesheet' type='text/css' href='resources/css/page/calendar/fullcalendar.min.css' />
+<link rel='stylesheet' type='text/css' href='resources/css/page/calendar/fullcalendar.print.css' media="print"/>
 <script type="text/jacascript" src="resources/js/json2.js"></script>
-
-
-
-
-
-
-
-
-
 
 <!-- Map -->
 <link rel="stylesheet" href="resources/css/page/map/map.css">
