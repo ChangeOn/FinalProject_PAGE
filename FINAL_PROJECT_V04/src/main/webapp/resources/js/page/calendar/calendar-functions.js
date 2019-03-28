@@ -14,6 +14,12 @@ function Add_Calendar(){
 		
 		resizable_switch('ON', $(".calendar"));
 		
+		
+	$('button:contains("list")').click(function(){
+		
+	})
+		
+		
 	$(document).ready(function() {
 			
 			var seq=0;
@@ -34,7 +40,7 @@ function Add_Calendar(){
 				    header: {
 				      left: 'prev,next today',
 				      center: 'title',
-				      right: 'month,agendaWeek,agendaDay,listWeek'
+				      right: 'month,agendaWeek,agendaDay,listMonth'
 				    },
 				    
 				    defaultDate: today,
@@ -50,7 +56,13 @@ function Add_Calendar(){
 				    	},
 				    	day:{
 				    		titleFormat : "D MMM YYYY"
+				    	},
+				    	list:{
+				    		buttonTest : "listMonth",
+				    		titleFormat : "MMMM YYYY",
+				    		listMonthFormat : "YYYY-MM-DD"
 				    	}
+				    	
 				    },
 				    timeFormat:{
 				    	"" : "HH:mm", // 월간
@@ -107,8 +119,8 @@ function Add_Calendar(){
 					             			content :  event_content,
 					             			//start : startDate+,
 					             			//end : endDate,
-					             			start: startDate,
-					             			end:endDate,
+					             			start: moment(startDate).format('YYYY-MM-DD'),
+					             			end:moment(endDate).format('YYYY-MM-DD'),
 					             			allDay : false	
 				             		};
 				             		$('#calendar').fullCalendar('renderEvent',eventData,true);
@@ -128,10 +140,11 @@ function Add_Calendar(){
 				         			data:{
 				         				"seq":seq,
 				         				"id":id,
+				         				"startdate":moment(startDate).format('YYYY-MM-DD'),
+				         				"enddate":moment(endDate).format('YYYY-MM-DD'),
 				         				"title":event_title,
-				         				"content":event_content,
-				         				"startdate":moment(startDate).format('YYYY-MM-DD HH:mm'),
-				         				"enddate":moment(endDate).format('YYYY-MM-DD HH:mm')
+				         				"content":event_content
+				      
 				         			},
 				         			success:function(data){
 				         				console.log("event 추가성공")
@@ -195,8 +208,12 @@ function Add_Calendar(){
 	
 				    },
 				    // Render 생길때 
-				    eventRender : function(event,element){
+				    eventRender : function(event,element,view){
 				    	element.append("<span class='removebtn'>X</span>");
+				    	
+				    	//if(view.name=="listMonth"){
+				    	//	element.find('.fc-list-item-title').html(event.title);
+				    	//}
 				    	
 				    },
 				    // 삭제!
