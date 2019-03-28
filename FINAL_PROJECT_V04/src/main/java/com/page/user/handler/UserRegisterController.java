@@ -2,7 +2,6 @@ package com.page.user.handler;
 
 import com.page.user.dto.UserVO;
 import com.page.user.biz.UserService;
-import com.page.user.biz.UserService;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +14,12 @@ import javax.inject.Inject;
 @RequestMapping("/user")
 public class UserRegisterController {
 
-    private final UserService userService;
+    private final UserService user_service;
 
     @Inject
-    public UserRegisterController(UserService userService) {
+    public UserRegisterController(UserService user_service) {
     	System.out.println("SYSTEM: UserRegisterController' @Inject");
-        this.userService = userService;
+        this.user_service = user_service;
     }
 
 /*  // 회원가입 페이지
@@ -42,7 +41,7 @@ public class UserRegisterController {
         
         System.out.println("SYSTEM: UserRegisterController' userVo before regist");
         System.out.println("SYSTEM: " + userVO);
-        userService.register(userVO);
+        user_service.register(userVO);
         redirectAttributes.addFlashAttribute("msg", "REGISTERED");
         
         return "redirect:/";

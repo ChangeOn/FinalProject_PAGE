@@ -44,7 +44,6 @@ import com.page.websocket.handler.ChatWebSocketHandler;
  * Handles requests for the application home page.
  */
 @Controller
-@SessionAttributes({"userid", "pageno", "username"})
 public class ChatController {
 	
 	private Logger logger = LoggerFactory.getLogger(ChatController.class);
@@ -62,15 +61,16 @@ public class ChatController {
 		model.addAttribute("username", userVO.getUser_name() );
 		model.addAttribute("pageno", userVO.getUser_no() );
 		
-		return "chat";
+		return "/page/chat/chat";
 	}
 	
 	@RequestMapping("/paint")
 	public String viewPaintPage() {
-		return "paint";
+		logger.info("paint RUN! / Run Time: " + new Date());
+		return "/page/paint/paint";
 	}
 
-	@RequestMapping(value = "/fileupload.do")
+	@RequestMapping(value = "/fileupload")
     public @ResponseBody Map<String , Object> fileUp(MultipartHttpServletRequest multi) {
 	
         // 저장 경로 설정

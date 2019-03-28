@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.page.mappers.page.pageMapper">
+	<resultMap id="PageVOResultMap" type="PageVO">
+		<id property="page_no" column="PAGE_NO" />
+		<result property="page_name" column="PAGE_NAME" />
+		<result property="page_content" column="PAGE_CONTENT"
+			jdbcType="CLOB" javaType="java.lang.String" />
+	</resultMap>
+
+	<select id="loadPageContent" resultMap="PageVOResultMap">
+		SELECT 	*
+		FROM 	PAGES
+	</select>
+
+	<insert id="savePageContent" parameterType="PageVO">
+		INSERT INTO PAGES (
+			PAGE_NO
+			,PAGE_NAME
+			,PAGE_CONTENT
+		) VALUES (
+			PAGE_NO_SEQ.NEXTVAL
+			,#{page_name}
+			,#{page_content}
+		)
+	</insert>
+</mapper>

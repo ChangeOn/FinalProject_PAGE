@@ -4,44 +4,10 @@
 
 <html>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="path" value="${pageContext.request.contextPath}"/>
+<!-- HEAD 태그 공통 부분  -->
+<%@ include file="WEB-INF/views/include/commons/head.jsp"%>
+<!-- /HEAD 태그 공통 부분  -->
 
-<head>
-<title>Page</title>
-
-<!-- meta -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-<!-- 웹폰트 관련 -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/web-fonts.css"
-	type="text/css">
-
-<!-- Font Awesome CDN -->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-	integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-	crossorigin="anonymous">
-
-<!-- JQuery 관련 -->
-<script src="${pageContext.request.contextPath}/webjars/jquery/3.3.1-2/jquery.min.js"></script>
-
-<!-- Bootstrap 관련 -->
-<script src="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
-
-<!-- 인덱스 페이지 CSS -->
-<link href="${pageContext.request.contextPath}/resources/css/index/index-page.css" rel="stylesheet">
-
-<!-- 인덱스 주요 기능 관련 -->
-<script src="${pageContext.request.contextPath}/resources/js/index/index-page-functions.js"></script>
-
-</head>
 <body>
 
 	<!-- Header Area -->
@@ -69,7 +35,7 @@
 					</li>
 					<c:if test="${not empty login}">
 						<li class="nav-item">
-						<a class="nav-link text-muted" href="${path }/user/re_loginGet">이어하기</a>
+						<a class="nav-link text-muted" href="${path }/page">이어하기</a>
 						</li>
 					</c:if>
 					<li class="nav-item">
@@ -239,5 +205,7 @@
 		</div>
 	</footer>
 	<!-- /Footer Area -->
+	
+	<%@ include file="WEB-INF/views/include/index/index_plugin_js.jsp"%>
 </body>
 </html>

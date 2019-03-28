@@ -1,0 +1,451 @@
+/**
+* CSS 목차 (2019.03.20 최종 수정)
+*
+* 01.0 - Universal
+* 02.0 - Header
+* 03.0 - Navigation
+* 04.0 - Services
+* 05.0 - Registration
+* 06.0 - Footer
+* 07.0 - Responsive Fixes
+* -----------------------------------------------------------------------------
+*/
+
+/* 01.0 Universal area */
+html, body {
+	height: 100%;
+	width: 100%;
+	padding: 0 !important;
+}
+
+.block_title {
+	font-weight: 300;
+	text-align: center;
+}
+
+.block_title:before, .block_title:after {
+	content: "";
+	background: #ccc;
+	display: inline-block;
+	height: 3px;
+	position: relative;
+	width: 42%;
+	vertical-align: middle;
+}
+
+.block_title:before {
+	right: 0.5em;
+	margin-left: -42%;
+}
+
+.block_title:after {
+	left: 0.5em;
+	margin-right: -42%;
+}
+
+.col-sm-6 {
+	margin-top: 5%;
+	margin-bottom: 5%;
+}
+
+div[class^=col]>.form-control {
+	background-color: white;
+	border: 2px solid dimgray;
+}
+/* /01.0 Universal area */
+
+/* 02.0 header area */
+.header {
+	height: 100%;
+	background: url(../../image/index/bg.jpg);
+	background-attachment: fixed;
+}
+
+.header>.container {
+	position: relative;
+	text-align: center;
+}
+
+#header-logo {
+	display: inline-block;
+	color: #fff;
+	padding-top: 25.75px;
+}
+
+#header-logo img {
+	margin-bottom: 15px;
+	border-width: 5px !important;
+}
+
+#big-headline {
+	display: block !important;
+	font-weight: 200;
+	margin: 0;
+}
+
+#sub-headline {
+	display: block !important;
+	font-weight: 100;
+	font-size: 2.2vw;
+	margin: 0;
+}
+/* /02.0 header area */
+
+/* 03.0 - Navigation */
+.navbar {
+	background: #111 !important;
+}
+
+.navbar>.row {
+	width: 100%;
+	display: contents;
+    vertical-align: middle;
+}
+.form-row>.col {
+	margin-right: 10px;
+}
+
+.navbar-wrap {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 9999;
+}
+
+a:hover {
+	color: white !important;
+}
+
+.navbar-brand {
+	padding: 0.2em 0;
+	font-weight: 100;
+}
+/* /03.0 - Navigation */
+
+/* 04.0 - Services */
+#services {
+	background-color: whitesmoke;
+}
+
+#services>.container {
+	padding-top: 5%;
+	padding-bottom: 10%;
+	position: relative;
+	text-align: center;
+}
+
+#service-title {
+	position: relative;
+	text-align: center;
+	overflow: hidden;
+	margin-bottom: 70px;
+}
+
+#service-wrap {
+	text-align: center;
+	display: block;
+}
+
+#service-wrap>img {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+#service-wrap p {
+	padding: 0px 40px;
+	font-size: 13px;
+}
+
+#service-wrap h3 {
+	margin: 10px 0px;
+}
+/* /04.0 - Services */
+
+/* 05.0 - Registration */
+#registration {
+	height: fit-content;
+	color: white;
+	background: url(../../image/index/services-people.png);
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+}
+
+#opacity-wrap {
+	width:100%;
+	padding-top: 10%;
+	padding-bottom: 3%;
+	opacity: 0.8;
+	background-color: black;
+}
+
+#normal-txt {
+	color: #fff;
+	font-size: 3em;
+	font-weight: 100;
+	padding-bottom: 10px;
+	border-bottom: 3px solid;
+	margin: 0 auto;
+	margin-bottom: 30px;
+}
+
+#social-links {
+	list-style: none;
+	padding: 0;
+}
+
+#social-icons {
+	display: inline-block;
+	padding: 0px 5px;
+}
+
+#social-icons a {
+	display: block;
+	width: 50px;
+	height: 50px;
+	background-size: 100% 200%;
+}
+
+#facebook img {
+	width: 100%;
+	height: auto;
+}
+
+#twitter img {
+	width: 100%;
+	height: auto;
+}
+
+#google-plus img {
+	width: 100%;
+	height: auto;
+}
+/* /05.0 - Registration */
+
+/* 06.0 - Footer */
+footer {
+	height: fit-content;
+	width: 100%;
+	background: #000;
+	color: #fff;
+}
+
+#copyright {
+	margin: 0;
+	padding: 20px 0px;
+	text-align: left;
+}
+
+#designed {
+	margin: 0;
+	padding: 20px 0px;
+	text-align: right;
+}
+
+.designed a:hover {
+	color: #e66f69;
+}
+/* /06.0 - Footer */
+
+/* 07.0 Responsive Fixes */
+@media all and (min-width: 1400px) {
+	
+	/* UNIVERSIAL */
+	.block_title {
+		font-size: 3em;
+	}
+	/* /UNIVERSIAL */
+
+	/* HEADER AREA */
+	#service-title {
+		margin-top: 5%;
+	}
+	#header-logo {
+		width: 50%;
+	}
+	#header-logo img {
+		width: 70%;
+	}
+	#big-headline {
+		font-size: 13em;
+	}
+	#sub-headline {
+		font-size: 2em;
+	}
+	/* /HEADER AREA */
+
+	/* NAVIGATION */
+	.navbar-brand {
+		font-size: 2.2em;
+	}
+
+	/* /NAVIGATION */
+
+	/* SERVICE */
+	#service-wrap>img {
+		width: 20%;
+		height: auto;
+	}
+	/* /SERVICE */
+
+	/* REGIST */
+	#registration {
+		background-size: 80%;
+		background-position: 50% 60px;
+	}
+	/* /REGIST */
+}
+
+@media all and (max-width: 1200px) and (min-width: 992px) {
+}
+
+@media all and (max-width: 991px) and (min-width: 768px) {
+}
+
+@media all and (max-width: 991px) {
+}
+
+@media all and (max-width: 768px) {
+	
+	/* UNIVERSIAL */
+	.block_title {
+		font-size: 1.5em;
+	}
+	/* /UNIVERSIAL */
+
+	/* HEADER AREA */
+	.header>.container {
+		top: 15%;
+	}
+	#header-logo {
+		width: 100%;
+	}
+	#header-logo img {
+		width: 90%;
+	}
+	#big-headline {
+		font-size: 9em;
+	}
+	#sub-headline {
+		font-size: 1.4em;
+	}
+	/* /HEADER AREA */
+
+	/* NAVIGATION */
+	.navbar {
+		
+	}
+	.nav-item {
+		font-size: 0.7em;
+	}
+	.navbar-brand {
+		font-size: 1.8em;
+	}
+	/* /NAVIGATION */
+
+	/* SERVICE */
+	#service-title {
+		margin-top: 10%;
+	}
+	/* /SERVICE */
+}
+
+@media all and (max-width: 380px) {
+	
+	/* UNIVERSIAL */
+	.block_title {
+		font-size: 1.5em;
+	}
+	/* /UNIVERSIAL */
+
+	/* HEADER AREA */
+	.header>.container {
+		top: 15%;
+	}
+	#header-logo {
+		width: 100%;
+	}
+	#header-logo img {
+		width: 90%;
+	}
+	#big-headline {
+		font-size: 9em;
+	}
+	#sub-headline {
+		font-size: 1.4em;
+	}
+	/* /HEADER AREA */
+
+	/* NAVIGATION */
+	.nav-link {
+    padding: .1rem 0.3rem !important;
+	}
+	.nav-item {
+		font-size: 0.7em;
+	}
+	.navbar-brand {
+		font-size: 1.8em;
+	}
+	/* /NAVIGATION */
+
+	/* SERVICE */
+	#service-title {
+		margin-top: 10%;
+	}
+	/* /SERVICE */
+
+	/* REGIST */
+	#registration {
+		background-size: 250%;
+		background-position: 50% 60px;
+	}
+	/* /REGIST */
+}
+
+@media all and (max-width: 480px) {
+	
+	/* UNIVERSIAL */
+	.block_title {
+		font-size: 1.5em;
+	}
+	/* /UNIVERSIAL */
+
+	/* HEADER AREA */
+	.header>.container {
+		top: 15%;
+	}
+	#header-logo {
+		width: 100%;
+	}
+	#header-logo img {
+		width: 90%;
+	}
+	#big-headline {
+		font-size: 9em;
+	}
+	#sub-headline {
+		font-size: 1.4em;
+	}
+	/* /HEADER AREA */
+
+	/* NAVIGATION */
+	.navbar {
+		
+	}
+	.nav-item {
+		font-size: 0.7em;
+	}
+	.navbar-brand {
+		font-size: 1.8em;
+	}
+	/* /NAVIGATION */
+
+	/* SERVICE */
+	#service-title {
+		margin-top: 10%;
+	}
+	#service-wrap>img {
+		width: 20%;
+		height: auto;
+	}
+	/* /SERVICE */
+}

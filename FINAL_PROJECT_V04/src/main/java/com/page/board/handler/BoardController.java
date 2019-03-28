@@ -50,7 +50,7 @@ public class BoardController {
 		model.addAttribute("pageMaker",pageMaker);
 		model.addAttribute("boardlist",list);
 		
-		return "boardlist";
+		return "/page/board/boardlist";
 	}
 	
 	@RequestMapping(value="/searchTitle")
@@ -69,7 +69,7 @@ public class BoardController {
 		model.addAttribute("pageMaker",pageMaker);
 		model.addAttribute("boardlist",list);
 		
-		return "boardlist";
+		return "/page/board/boardlist";
 	}
 	
 	@RequestMapping(value="/searchContent")
@@ -89,7 +89,7 @@ public class BoardController {
 		model.addAttribute("boardlist",list);
 		
 		
-		return "boardlist";
+		return "/page/board/boardlist";
 	}
 	@RequestMapping(value="/searchId")
 	public String searchId(Model model,SearchCriteria scri,String keyword) {
@@ -106,14 +106,14 @@ public class BoardController {
 
 		model.addAttribute("pageMaker",pageMaker);
 		model.addAttribute("boardlist",list);
-		return "boardlist";
+		return "/page/board/boardlist";
 	}
 	
 	
 	
 	@RequestMapping("/insertform")
 	public String insertForm() {
-		return "insertBoard";
+		return "/page/board/insertBoard";
 	}
 	@ResponseBody
 	@RequestMapping(value="/insertBoard", method=RequestMethod.GET)
@@ -156,7 +156,7 @@ public class BoardController {
 		model.addAttribute("listAnswer",listAnswer);
 		model.addAttribute("pageMaker",pageMaker);
 
-		return "detailBoard";
+		return "/page/board/detailBoard";
 	}
 	
 	@RequestMapping("/ansPaging")
@@ -176,7 +176,7 @@ public class BoardController {
 		
 		
 		
-		return "detailBoard";
+		return "/page/board/detailBoard";
 	}
 	
 	
@@ -187,7 +187,7 @@ public class BoardController {
 		dto.setBoardseq(boardseq);
 		model.addAttribute("bdto",dto);
 	
-		return "updateBoard";
+		return "/page/board/updateBoard";
 	}
 	@ResponseBody
 	@RequestMapping(value="/updateBoard", method=RequestMethod.GET)

@@ -33,7 +33,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     	 * 로그인 후처리 인터셉터가 하는 작업
     	 * 
     	 */
-    	System.out.println("SYSTEM: LoginInterceptor' postHandle");
     	
     	//HTTP SESSION 객체 생성
         HttpSession http_session = request.getSession();
@@ -44,7 +43,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         //로그인에 성공했을 경우
         if (user_vo != null) {
-        	System.out.println("SYSTEM: [LoginInterceptor postHandle] 로그인 성공 처리 작업");
         	
         	//세션에 로그인한 유저정보 등록
             http_session.setAttribute(LOGIN, user_vo);
@@ -52,15 +50,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             /* 로그인 유지를 선택한 경우 쿠키 설정을 최신화 한다. */
             if (request.getParameter("user_cookie") != null) {
             	
-            	System.out.println("SYSTEM: LoginInterceptor' about remember me");
-            	
                 //쿠키 생성 및 유지기간 최신화
-                Cookie loginCookie = new Cookie("loginCookie", http_session.getId());
-                loginCookie.setPath("/");
-                loginCookie.setMaxAge(60*60*24*7);
+                Cookie login_cookie = new Cookie("login_cookie", http_session.getId());
+                login_cookie.setPath("/");
+                login_cookie.setMaxAge(60*60*24*7);
                 
                 //최신화된 쿠키 전송
-                response.addCookie(loginCookie);
+                response.addCookie(login_cookie);
             }
             
             //페이지 컨트롤러로 리다이렉트
@@ -86,27 +82,25 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
          * 새로운 로그인을 위해 제거한다.  
          * */
         if (http_session.getAttribute(LOGIN) != null) {
-        	
             http_session.removeAttribute(LOGIN);
         }
 
 		//이전 쿠키 생성 여부 파악
 		Cookie login_cookie_old = WebUtils.getCookie(request, "login_cookie");
 		if (login_cookie_old != null) {
-
 			/* 이미 쿠키가 존재하는 경우, 이전에 로그인때 생성된 쿠키가 존재한다는 것 */
 			String session_key = login_cookie_old.getValue();
-
+			
 			/*
 			 * 세션 아이디를 기준으로 동일 HTTP 세션 상에서 다른 계정으로 로그인 한 적이 있는지 파악한다, 
 			 * 로그아웃을 하지 않고 종료시 DB상에 세션키값이 계속 남아있기 때문.
 			 */
 			if (user_service.countUserWithSameKey(session_key) > 0) {
-
 				/*
 				 * 동일 세션 상 이미 유지 중인 계정이 있는 경우, 
 				 * 기존 계정의 세션 키값을 변경 해줌으로써 중복 로그인을 막을 수 있다.
 				 */
+				
 				UserVO user_vo = user_service.checkLoginBefore(session_key);
 				user_service.keepLogin(user_vo.getUser_id(), "NONE", new Date());
 			}

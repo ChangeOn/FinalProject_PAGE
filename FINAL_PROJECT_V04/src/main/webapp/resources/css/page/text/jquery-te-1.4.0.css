@@ -74,7 +74,7 @@
 	display: block;
 	width: 22px;
 	height: 22px;
-	background: url(../image/jquery-te.png) no-repeat
+	background: url(../../../image/jquery-te.png) no-repeat
 }
 
 .jqte_tool.jqte_tool_1 .jqte_tool_label {
@@ -254,7 +254,7 @@
 	width: 7px;
 	height: 6px;
 	margin: 0 auto;
-	background: url(../image/jquery-te.png) -7px -23px no-repeat;
+	background: url(../../../image/jquery-te.png) -7px -23px no-repeat;
 }
 
 .jqte_linktypes {
@@ -553,7 +553,7 @@
 	width: 7px;
 	height: 6px;
 	margin: 0 auto;
-	background: url(../image/jquery-te.png) 0 -23px no-repeat;
+	background: url(../../../image/jquery-te.png) 0 -23px no-repeat;
 }
 
 .jqte_titleText {

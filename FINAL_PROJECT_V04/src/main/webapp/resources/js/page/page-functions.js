@@ -300,11 +300,14 @@ $(function() {
 	// 페이지 편집 토글 버튼 클릭 시
 	.on("click", "#menu-toggle", function(e) {
 		console.log("페이지 편집 모드 시작");
+
+		e.preventDefault();
 		$(this).blur();
 		
 		// 페이지 편집 모드 시작
 		if($(this).hasClass('btn btn-secondary')) {
-			$(this).attr('class', 'btn btn-light')
+			$(this).attr('class', 'btn btn-light');
+			$(this).html('종료하기');
 			
 			e.preventDefault();
 			$("#wrapper").toggleClass("toggled");
@@ -332,7 +335,7 @@ $(function() {
 				
 				// 포커스 제거 및 편집 모드 토글 버튼 색상 변경
 				$("#menu-toggle").attr('class', 'btn btn-secondary');
-				e.preventDefault();
+				$("#menu-toggle").html('시작하기');
 				$("#wrapper").toggleClass("toggled");
 				
 				// 전체 드래그 기능 해제
@@ -341,6 +344,30 @@ $(function() {
 				
 				console.log("페이지 요소의 드래그 기능 제거 완료");
 				console.log("페이지 편집 모드 종료 완료");
+				
+				
+				/* 
+				 * 페이지 편집 모드 종료시 완성된 페이지의 모습을 
+				 * 데이터베이스에 저장하기 위해 HTML을 JSON의 형태로 전송한다.
+				 * */
+				
+				//편집된 HTML을 담고 있는 객체
+				var $container = $(".container-fluid").clone();
+				//JSON 오브젝트 생성
+			    var json_object = new Object();
+			    //JSON 오브젝트에 PageVO 모델 바인딩
+			    json_object.page_name = "test_name"
+			    json_object.page_content = $container[0].innerHTML;
+			    
+			    $.ajax({
+			    	    type : "POST",
+			    	    dataType : 'json',
+			    	    data : json_object,
+			    	    url : "/page/save",
+			    	    success : function() {
+			    	       console.log("ajax success");
+			    	    }
+			    });
 			}
 		}
 	})

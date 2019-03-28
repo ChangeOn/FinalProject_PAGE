@@ -17,11 +17,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
 
-    private final UserService userService;
+    private final UserService user_service;
 
     @Inject
-    public AuthInterceptor(UserService userService) {
-        this.userService = userService;
+    public AuthInterceptor(UserService user_service) {
+        this.user_service = user_service;
     }
 
     // 페이지 요청 정보 저장
@@ -69,17 +69,17 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             	 * 생성되어있는 동일 쿠키 세션 정보를 토대로 유저목록을 조회하고,
             	 * 쿠키 유지 기간이 지나지 않은 유저정보를 조회한다.
             	 */
-                UserVO user_vo = userService.checkLoginBefore(login_cookie_old.getValue());
+                UserVO user_vo = user_service.checkLoginBefore(login_cookie_old.getValue());
                 
                 //유저정보 조회에 성공한 경우
                 if (user_vo != null) {
                 	
                     //로그인 정보 쿠키 재생성 및 최신화
-                    Cookie loginCookie = new Cookie("login_cookie", http_session.getId());
-                    loginCookie.setPath("/");
-                    loginCookie.setMaxAge(60*60*24*7);
+                    Cookie login_cookie = new Cookie("login_cookie", http_session.getId());
+                    login_cookie.setPath("/");
+                    login_cookie.setMaxAge(60*60*24*7);
                     // 전송
-                    response.addCookie(loginCookie);
+                    response.addCookie(login_cookie);
                     http_session.setAttribute("login", user_vo);
                     return true;
                 }

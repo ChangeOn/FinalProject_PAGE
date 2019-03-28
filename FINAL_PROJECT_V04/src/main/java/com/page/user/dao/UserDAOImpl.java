@@ -13,7 +13,7 @@ import java.util.Map;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
-    private static final String NAMESPACE = "com.page.mappers.users.UserMapper";
+    private static final String NAMESPACE = "com.page.mappers.user.UserMapper";
 
     private final SqlSession sqlSession;
 

@@ -23,79 +23,42 @@ import java.util.Date;
 @RequestMapping("/user")
 public class UserLoginController {
 
-    private final UserService userService;
+    private final UserService user_service;
 
     @Inject
-    public UserLoginController(UserService userService) {
+    public UserLoginController(UserService user_service) {
     	System.out.println("SYSTEM: UserLoginController' @Inject");
-    	System.out.println("SYSTEM: UserLoginController'" + userService);
-        this.userService = userService;
+    	System.out.println("SYSTEM: UserLoginController'" + user_service);
+        this.user_service = user_service;
     }
 
     /* 컨트롤러 내 로그인 전처리 메소드 */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public void loginPOST(@ModelAttribute("loginDTO") LoginDTO loginDTO) {
-    	
-    	/* 
-    	 * 1. 이어하기
-    	 * 
-    	 * 2. 새로하기
-    	 * 
-    	 *  구분을 해서 넘겨야 함
-    	 * 
-    	 *  */
-    } 
-    
-    // 재로그인 처리
-    @RequestMapping(value = "/re_loginGet", method = RequestMethod.GET)
-    public String re_loginGET(HttpSession httpSession, Model model) throws Exception {
-    	
-    	System.out.println("SYSTEM: UserLoginController' re_loginGET");
-    	
-    	//세션에서 로그인 중인 유저 정보 받아오기
-    	Object object = httpSession.getAttribute("login");
-    	UserVO userVO = (UserVO) object;
-    	
-    	/* 
-    	 * 지금껏 알아본 바 인터셉터로 리다이렉트시 해당 URL로 매핑된
-    	 * 컨트롤러로 넘어가고, 컨트롤러에서 리턴시에만 VIEW로 넘어감
-    	 * 
-    	 * */
-    	
-    	
-    	//유저 쿠키 정보 재설정
-    	System.out.println("SYSTEM: UserLoginController' user login cookie setting");
-    	int amount = 60 * 60 * 24 * 7;
-        Date session_limit = new Date(System.currentTimeMillis() + (1000 * amount));
-        userService.keepLogin(userVO.getUser_id(), httpSession.getId(), session_limit);
-        System.out.println("SYSTEM: " + userVO);
-        
-    	return "redirect:/page";
-    	
-    	
+    public String loginGET(@ModelAttribute("loginDTO") LoginDTO loginDTO) {
+        return "redirect:/";
     }
 
     // 로그인 처리
     @RequestMapping(value = "/loginPost", method = RequestMethod.POST)
-    public void loginPOST(LoginDTO loginDTO, HttpSession httpSession, Model model) throws Exception {
+    public void loginPOST(LoginDTO loginDTO, HttpSession http_session, Model model) throws Exception {
 
     	System.out.println("SYSTEM: UserLoginController' loginPOST");
     	
     	System.out.println("SYSTEM: UserLoginController' loginDTO before login");
         System.out.println("SYSTEM: " + loginDTO);
          
-        UserVO userVO = userService.login(loginDTO);
+        UserVO user_vo = user_service.login(loginDTO);
 
-        System.out.println("SYSTEM: UserLoginController' userVo after login");
-        System.out.println("SYSTEM: " + userVO);
+        System.out.println("SYSTEM: UserLoginController' user_vo after login");
+        System.out.println("SYSTEM: " + user_vo);
         
         // 패스워드 NULL값 혹은 복호화 동일 비교
-        if (userVO == null || !BCrypt.checkpw(loginDTO.getUser_pw(), userVO.getUser_pw())) {
+        if (user_vo == null || !BCrypt.checkpw(loginDTO.getUser_pw(), user_vo.getUser_pw())) {
    
             return;
         }
 
-        model.addAttribute("user", userVO);
+        model.addAttribute("user", user_vo);
 
         // 로그인 유지를 체크 했을 경우
         if (loginDTO.isUser_cookie()) {
@@ -104,8 +67,8 @@ public class UserLoginController {
         	
             int amount = 60 * 60 * 24 * 7;
             Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
-            userService.keepLogin(userVO.getUser_id(), httpSession.getId(), sessionLimit);
-            System.out.println("SYSTEM: " + userVO);
+            user_service.keepLogin(user_vo.getUser_id(), http_session.getId(), sessionLimit);
+            System.out.println("SYSTEM: " + user_vo);
         }
     }
 
@@ -113,22 +76,22 @@ public class UserLoginController {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request,
                          HttpServletResponse response,
-                         HttpSession httpSession) throws Exception {
+                         HttpSession http_session) throws Exception {
 
     	System.out.println("SYSTEM: UserLoginController' logout");
     	
-        Object object = httpSession.getAttribute("login");
+        Object object = http_session.getAttribute("login");
         if (object != null) {
         	System.out.println("SYSTEM: UserLoginController' logout progressing");
-            UserVO userVO = (UserVO) object;
-            httpSession.removeAttribute("login");
-            httpSession.invalidate();
-            Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
-            if (loginCookie != null) {
-                loginCookie.setPath("/");
-                loginCookie.setMaxAge(0);
-                response.addCookie(loginCookie);
-                userService.keepLogin(userVO.getUser_id(), "NONE", new Date());
+            UserVO user_vo = (UserVO) object;
+            http_session.removeAttribute("login");
+            http_session.invalidate();
+            Cookie login_cookie = WebUtils.getCookie(request, "login_cookie");
+            if (login_cookie != null) {
+                login_cookie.setPath("/");
+                login_cookie.setMaxAge(0);
+                response.addCookie(login_cookie);
+                user_service.keepLogin(user_vo.getUser_id(), "NONE", new Date());
             }
         }
 
