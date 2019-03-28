@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.page.board.model.dto.fileDto;
 import com.page.websocket.file.dao.FileDao;
 import com.page.websocket.file.dto.FileDto;
 
@@ -20,12 +21,12 @@ public class FileBizImpl implements FileBiz {
 	}
 
 	@Override
-	public int FileInsert(FileDto dto) {
+	public int FileInsert(fileDto dto) {
 		return dao.FileInsert(dto);
 	}
 
 	@Override
-	public FileDto FileSelectOne(int fileno) {		
+	public fileDto FileSelectOne(int fileno) {		
 		return dao.FileSelectOne(fileno);
 	}
 

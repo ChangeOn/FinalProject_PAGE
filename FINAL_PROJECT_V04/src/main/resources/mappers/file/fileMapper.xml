@@ -2,26 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.websocket.file.Mapper">
 
-	<select id="fileSelectList" resultType="FileDto">
-		SELECT FILENO, FILENAME, FILESAVENAME
-		FROM "FILE"
+	<select id="fileSelectList" resultType="fileDto">
+		SELECT FILENO, FILESTREAM, FILETITLE
+		FROM FILES
 	</select>
 	
-	<select id="fileSelectOne" parameterType="Int" resultType="FileDto">
-		SELECT FILENAME, FILESAVENAME
-		FROM "FILE"
+	<select id="fileSelectOne" parameterType="Int" resultType="fileDto">
+		SELECT FILESTREAM, FILETITLE
+		FROM FILES
 		WHERE FILENO = #{fileno}
 	</select>
 	
 	<select id="fileSelectFileno" parameterType="String" resultType="Int">
 		SELECT FILENO
-		FROM "FILE"
-		WHERE FILESAVENAME = #{filesavename}
+		FROM FILES
+		WHERE FILESTREAM = #{FILESTREAM}
 	</select>	
 	
-	<insert id="fileInsert" parameterType="FileDto">
-		INSERT INTO "FILE"
-		VALUES(FILE_SEQ.NEXTVAL, #{filename}, #{filesavename})
+	<insert id="fileInsert" parameterType="fileDto">
+		INSERT INTO FILES
+ 		VALUES(FILESEQ.NEXTVAL,#{filestream},#{filetitle})
 	</insert>
 	
 	

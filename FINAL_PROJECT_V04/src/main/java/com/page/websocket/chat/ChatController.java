@@ -35,9 +35,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
+import com.page.board.model.biz.boardBiz;
+import com.page.board.model.dto.fileDto;
 import com.page.user.dto.UserVO;
 import com.page.websocket.file.biz.FileBiz;
-import com.page.websocket.file.dto.FileDto;
 import com.page.websocket.handler.ChatWebSocketHandler;
 
 /**
@@ -47,9 +48,9 @@ import com.page.websocket.handler.ChatWebSocketHandler;
 public class ChatController {
 	
 	private Logger logger = LoggerFactory.getLogger(ChatController.class);
-	
+		
 	@Autowired
-	private FileBiz biz;
+	private FileBiz filebiz;
 	
 	@RequestMapping("/web/chat")
 	public String viewChatPage(Model model, HttpServletRequest request) {
@@ -102,10 +103,14 @@ public class ChatController {
                 mFile.transferTo(new File(path+newFileName));
                 
                 // DB 에 file 값 저장
-                FileDto dto = new FileDto(0,fileName,newFileName);
-                biz.FileInsert(dto);
+                fileDto fileDto = new fileDto();
+                fileDto.setFileno(0);
+                fileDto.setFilestream(newFileName);
+                fileDto.setFiletitle(fileName);
                 
-                int fileno = biz.FileSelectFileno(newFileName);
+                filebiz.FileInsert(fileDto);
+                
+                int fileno = filebiz.FileSelectFileno(newFileName);
                 
                 // websocket에 json값 전달
                 jsonObject.put("type","filedata");

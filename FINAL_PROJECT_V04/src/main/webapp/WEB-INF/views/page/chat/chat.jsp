@@ -68,7 +68,7 @@
 					+ '</p></div>'
 					+ '<div><span class="badge badge-pill badge-success" style="font-size: 82%;">'
 					+ jsonmsg.filename + '</span>'
-					+ '<a class="btn" href="/FINAL_PROJECT_V04/download?filename='
+					+ '<a class="btn" href="/download?filename='
 					+ jsonmsg.newFileName + '&name=' + jsonmsg.filename
 					+ '"><i class="fa fa-download"></i>download</a></div>'
 					+ '</div>');
@@ -137,7 +137,7 @@
 		var filestream;
 
 		$.ajax({
-			url : '/FINAL_PROJECT_V04/fileupload',
+			url : '/fileupload',
 			type : 'POST',
 			data : newdata,
 			cache : false,

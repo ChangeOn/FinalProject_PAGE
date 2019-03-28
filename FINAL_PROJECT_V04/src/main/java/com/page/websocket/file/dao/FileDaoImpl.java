@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.page.board.model.dto.fileDto;
 import com.page.websocket.file.dto.FileDto;
 
 @Repository
@@ -26,7 +27,7 @@ public class FileDaoImpl implements FileDao {
 	}
 
 	@Override
-	public int FileInsert(FileDto dto) {		
+	public int FileInsert(fileDto dto) {		
 		int res = 0;
 		try {
 			res = sqlSession.insert(NAMESPACE + "fileInsert", dto);
@@ -37,9 +38,9 @@ public class FileDaoImpl implements FileDao {
 	}
 
 	@Override
-	public FileDto FileSelectOne(int fileno) {
+	public fileDto FileSelectOne(int fileno) {
 		
-		FileDto dto = new FileDto();
+		fileDto dto = new fileDto();
 		dto = sqlSession.selectOne(NAMESPACE + "fileSelectOne", fileno);		
 		return dto;
 	}

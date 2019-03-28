@@ -18,11 +18,11 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.page.board.model.dto.fileDto;
 import com.page.user.dto.UserVO;
 import com.page.websocket.chat.biz.ChatBiz;
 import com.page.websocket.chat.dto.ChatDto;
 import com.page.websocket.file.biz.FileBiz;
-import com.page.websocket.file.dto.FileDto;
 
 
 public class ChatWebSocketHandler extends TextWebSocketHandler {
@@ -83,11 +83,11 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 							+ "\"randomcolor\" :\""+dto.getChatcolor()+"\"}";
 			// 파일
 			} else if (dto.getChattype().equals("filedata")){
-				FileDto selectFileDto = fileBiz.FileSelectOne(dto.getFileno());
+				fileDto selectFileDto = fileBiz.FileSelectOne(dto.getFileno());
 				sendmessage = "{\"type\" :\"filedata\","
 							+ "\"nickname\" :\""+username+"\","
-							+ "\"filename\" :\""+ selectFileDto.getFilename()+"\","
-							+ "\"newFileName\" :\""+ selectFileDto.getFilesavename()+"\","
+							+ "\"filename\" :\""+ selectFileDto.getFiletitle()+"\","
+							+ "\"newFileName\" :\""+ selectFileDto.getFiletitle()+"\","
 							+ "\"randomcolor\" :\""+dto.getChatcolor()+"\"}";
 			}
 			session.sendMessage(new TextMessage(sendmessage));
