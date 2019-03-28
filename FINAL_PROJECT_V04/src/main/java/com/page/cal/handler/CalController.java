@@ -117,6 +117,7 @@ public class CalController {
 		System.out.println("test");
 		System.out.println("test");
 		System.out.println("test");
+		System.out.println("test");
 	
 		return "redirect:page";
 	}
