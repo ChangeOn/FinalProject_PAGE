@@ -58,6 +58,8 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		logger.info(session.getId()+"(IP)"+session.getRemoteAddress().getHostName() + " 연결됨");			
 		users.put(session.getId(), session);
 		
+		String username = userVO.getUser_name();
+		
 		// CHAT 테이블 값 중 pageno와 일치하는 채팅 List에 가져오기 / 미사용
 		//pageUsers.put(session , pageno);
 		//List<ChatDto> list = biz.ChatSelectPageList(Integer.parseInt(pageno));
@@ -70,20 +72,20 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 			// 메세지
 			if (dto.getChattype().equals("msg")){
 				sendmessage = "{\"type\" :\"msg\","
-							+ "\"nickname\" :\"sadf\","
+							+ "\"nickname\" :\""+username+"\","
 							+ "\"message\" :\""+dto.getChatcontent()+"\","
 							+ "\"randomcolor\" :\""+dto.getChatcolor()+"\"}";
 			// 동영상
 			} else if (dto.getChattype().equals("video")){
 				sendmessage = "{\"type\" :\"video\","
-							+ "\"nickname\" :\"sadf\","
+							+ "\"nickname\" :\""+username+"\","
 							+ "\"url\" :\""+dto.getVideourl()+"\","
 							+ "\"randomcolor\" :\""+dto.getChatcolor()+"\"}";
 			// 파일
 			} else if (dto.getChattype().equals("filedata")){
 				FileDto selectFileDto = fileBiz.FileSelectOne(dto.getFileno());
 				sendmessage = "{\"type\" :\"filedata\","
-							+ "\"nickname\" :\"sadf\","
+							+ "\"nickname\" :\""+username+"\","
 							+ "\"filename\" :\""+ selectFileDto.getFilename()+"\","
 							+ "\"newFileName\" :\""+ selectFileDto.getFilesavename()+"\","
 							+ "\"randomcolor\" :\""+dto.getChatcolor()+"\"}";
@@ -104,6 +106,10 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		
 		logger.info(session.getId()+"(IP)"+session.getRemoteAddress().getHostName() + "로부터 메시지 수신 : " + message.getPayload());
 		
+		// 들어온 사람의 실제 로그인 아이디 정보를 가져온다.
+    	Map<String, Object> map = session.getAttributes();
+    	UserVO userVO = (UserVO)map.get("login");
+    	
 		// 웹소켓을 통해 전달된 데이터값 jsonobject로 전환
 		JSONParser jsonparser = new JSONParser();
 		JSONObject jsonObj = null;
@@ -120,7 +126,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 			if (jsonObj.get("type").equals("filedata")) {
 				fileno = Integer.parseInt((String)jsonObj.get("fileno"));
 			}
-			ChatDto dto = new ChatDto(0, 1, Integer.parseInt((String)jsonObj.get("pageno")) , (String)jsonObj.get("type"), (String)jsonObj.get("message"), (String)jsonObj.get("url"), fileno , (String)jsonObj.get("randomcolor"), new Date(), 0,0);
+			ChatDto dto = new ChatDto(0, userVO.getUser_no(), Integer.parseInt((String)jsonObj.get("pageno")) , (String)jsonObj.get("type"), (String)jsonObj.get("message"), (String)jsonObj.get("url"), fileno , (String)jsonObj.get("randomcolor"), new Date(), 0,0);
 			int insert_res = biz.insert(dto);
 		}
 		

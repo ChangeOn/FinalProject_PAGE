@@ -6,7 +6,7 @@ import com.page.websocket.chat.dto.ChatDto;
 
 public interface ChatDao {
 	
-	String NAMESPACE = "com.websocket.chat.Mapper.";
+	String NAMESPACE = "com.page.websocket.chat.Mapper.";
 	
 	public List<ChatDto> ChatSelectList();
 	public List<ChatDto> ChatSelectPageList(int pageno);
