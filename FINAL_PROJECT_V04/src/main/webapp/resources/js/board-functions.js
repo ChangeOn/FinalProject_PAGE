@@ -17,12 +17,14 @@
 	}
 	
 	function refresh(url){
-		$("#boardcontainer").load(url)
+		$("#boardcontainer").load(url,function(){
 			$("#boardcontainer").resizable({
 				minWidth: 550,
 				minHeight: 521,
 				maxHeight: 521
 			});
+		})
+			
 	} 
  	
 	function deleteBoard(){

@@ -10,6 +10,7 @@ public class boardDto {
 	private String title;
 	private String content;
 	private Date regdate;
+	private int fileno;
 	private int viewcnt;
 	private int anscnt;
 	public boardDto() {
@@ -63,6 +64,13 @@ public class boardDto {
 	public void setAnscnt(int anscnt) {
 		this.anscnt = anscnt;
 	}
+	public int getFileno() {
+		return fileno;
+	}
+	public void setFileno(int fileno) {
+		this.fileno = fileno;
+	}
+	
 	
 	
 

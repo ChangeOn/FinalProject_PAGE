@@ -98,7 +98,7 @@
 			<tr>
 				<td colspan="2" align="right">
 					<c:choose>
-						<c:when test="${bdto.id eq 'KH' }">
+						<c:when test="${bdto.id eq 'kh' }">
 							<input type="button" value="수정" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/updateform?boardseq=${bdto.boardseq}')">
 							<input type="button" value="삭제" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/deleteform?boardseq=${bdto.boardseq}')">
 							<input type="button" value="목록으로" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/boardlist')">
@@ -125,9 +125,7 @@
 				</td>
 			</tr>
 		</table>
-
 	</div>
-	
 	
 	<!-- 댓글 목록 출력 위치 -->
 	<div id="listAnswer">
