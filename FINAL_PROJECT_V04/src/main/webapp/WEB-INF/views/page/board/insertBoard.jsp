@@ -16,7 +16,7 @@
   
   .container{
   	min-width: 500px;
-  	width: fit-content;
+  	width: 100%;
   	height: fit-content;
   	
   }
@@ -77,10 +77,10 @@ $(function(){
 </script>
 
 
-<!-- 부트스트랩 4.0  -->
-<script src="webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+ <!-- 부트스트랩 4.0  -->
+<!--<script src="webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css">
-
+ -->
 
 </head>
 </head>

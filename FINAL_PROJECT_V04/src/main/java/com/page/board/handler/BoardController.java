@@ -242,6 +242,7 @@ public class BoardController {
 	         String sFileInfo = "";
 	         //파일명을 받는다 - 일반 원본파일명
 	         String filename = request.getHeader("file-name");
+	         System.out.println("filename : "+filename);
 	         //파일 확장자
 	         String filename_ext = filename.substring(filename.lastIndexOf(".")+1);
 	         //확장자를소문자로 변경
@@ -249,7 +250,7 @@ public class BoardController {
 	         //파일 기본경로
 	         String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 	         //파일 기본경로 _ 상세경로
-	         String filePath = dftFilePath + "resources/" + File.separator + "upload" + File.separator;
+	         String filePath = dftFilePath +"resources/" + File.separator+"upload" + File.separator;
 	         File file = new File(filePath);
 	         if(!file.exists()) {
 	            file.mkdirs();
@@ -272,6 +273,7 @@ public class BoardController {
 	         if(res == 0) {
 	        	 System.out.println("파일 저장 안됨");
 	         }
+	         System.out.println("파일 저장 성공!!");
 	         
 	         int numRead;
 	         byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
@@ -288,7 +290,7 @@ public class BoardController {
 	         sFileInfo += "&bNewLine=true";
 	         // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 	         sFileInfo += "&sFileName="+ filename;
-	         sFileInfo += "&sFileURL="+"resources/upload/"+realFileNm;
+	         sFileInfo += "&sFileURL="+"/resources/upload/"+realFileNm;
 	         PrintWriter print = response.getWriter();
 	         print.print(sFileInfo);
 	         print.flush();
