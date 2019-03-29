@@ -2,6 +2,7 @@ package com.page.websocket.chat.dao;
 
 import java.util.List;
 
+import com.page.user.dto.UserVO;
 import com.page.websocket.chat.dto.ChatDto;
 
 public interface ChatDao {
@@ -11,5 +12,7 @@ public interface ChatDao {
 	public List<ChatDto> ChatSelectList();
 	public List<ChatDto> ChatSelectPageList(int pageno);
 	public int ChatInsert(ChatDto dto);
+	
+	public UserVO chatSelectID(int user_no);
 
 }

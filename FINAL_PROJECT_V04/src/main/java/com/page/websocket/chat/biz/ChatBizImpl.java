@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.page.user.dto.UserVO;
 import com.page.websocket.chat.dao.ChatDao;
 import com.page.websocket.chat.dto.ChatDto;
 
@@ -27,6 +28,11 @@ public class ChatBizImpl implements ChatBiz {
 	@Override
 	public List<ChatDto> ChatSelectPageList(int pageno) {
 		return dao.ChatSelectPageList(pageno);
+	}
+
+	@Override
+	public UserVO chatSelectID(int user_no) {
+		return dao.chatSelectID(user_no);
 	}
 
 }

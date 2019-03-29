@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.page.user.dto.UserVO;
 import com.page.websocket.chat.dto.ChatDto;
 
 @Repository
@@ -46,4 +47,14 @@ public class ChatDaoImpl implements ChatDao {
 		return list;
 	}
 
+	@Override
+	public UserVO chatSelectID(int user_no) {
+		UserVO dto = new UserVO();
+		
+		dto  = sqlSession.selectOne(NAMESPACE+"chatSelectID",user_no);
+		
+		return dto;		
+	}
+
+	
 }
