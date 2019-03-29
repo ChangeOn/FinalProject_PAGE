@@ -24,10 +24,15 @@ function Add_Calendar(){
 				"</div>"	
 
 		)
-	
-	// Calendar 실행
-		
-		resizable_switch('ON', $(".calendar"));
+		// Calendar 실행
+		$(".calcontainer").resizable({
+			minHeight: 506,
+			minWidth: 500,
+			resize: function( event, ui ) {
+				$('#calendar').fullCalendar('option', 'height', ui.size.height-32);
+			}
+		});		
+		//resizable_switch('ON', $(".calcontainer"));	
 		
 	$("#conimg").click(function(){
 		$(".calcontainer").remove();
