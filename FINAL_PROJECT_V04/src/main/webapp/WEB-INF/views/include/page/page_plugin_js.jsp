@@ -43,7 +43,7 @@ function Add_Map(){
 		"<div class='map_wrap card bg-light'>"
 			+"<div class='card-header' style='height:2em'>"
 			+"<h4><span><i class='fas fa-map-marked-alt'></i></span> Map "
-			+"<i class='fas fa-times fa-sm float-right' onclick='mapClose()'></i></h4>"
+			+"<i id='mapCloseIcon' class='fas fa-times fa-sm float-right' onclick='mapClose()'></i></h4>"
 			+"</div>"
 			+"<div class='card-body' id='map' style='position: relative; width: 100%; height: 100%; overflow: hidden;'></div>"
 			+"<script src='resources/js/page/map/map-functions.js'><"+"/script>"

@@ -1,20 +1,29 @@
 $(function(){	
 	// 지도 draggable
+	
 	$(".map_wrap .card-header").mousedown(function(e) {
-		$(".map_wrap").draggable({
-			disabled : false
-		});
+		if ($("#menu-toggle").text() != '시작하기'){
+			draggable_switch('ON', $(".map_wrap"));
+		}		
 	})
 	$(".map_wrap .card-header").mouseup(function(e) {
-		$(".map_wrap").draggable({
-			disabled : true
-		});
+		draggable_switch('OFF', $(".map_wrap"));
 	})	
 	
 	$(".map_wrap").resizable({
 		resize: function( event, ui ) {
 			map.relayout();
 		}
+	});
+	resizable_switch('ON', $(".map_wrap"));
+	
+	// 토글 버튼 클릭시 닫기버튼 비활성화
+	$("#menu-toggle").click(function() {
+		if ($("#menu-toggle").text() != '시작하기'){
+			$("#mapCloseIcon").hide();
+		} else if ($("#menu-toggle").text() != '종료하기'){				
+			$("#mapCloseIcon").show();
+		}			
 	});
 
 });
