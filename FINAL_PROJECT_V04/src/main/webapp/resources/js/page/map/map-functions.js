@@ -1,13 +1,10 @@
-$(function(){
-	//$(".map_wrap .card-header").draggable();
-	
-	// movePaint 마우스를 눌렀을 때
+$(function(){	
+	// 지도 draggable
 	$(".map_wrap .card-header").mousedown(function(e) {
 		$(".map_wrap").draggable({
 			disabled : false
 		});
 	})
-	// movePaint 마우스를 뗄 때
 	$(".map_wrap .card-header").mouseup(function(e) {
 		$(".map_wrap").draggable({
 			disabled : true
@@ -19,8 +16,12 @@ $(function(){
 			map.relayout();
 		}
 	});
+
 });
 
+function mapClose(){
+	$(".map_wrap").remove();
+}
 
 /* 키워드로 검색 */
 //마커를 담을 배열입니다

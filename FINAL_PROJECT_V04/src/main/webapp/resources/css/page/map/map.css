@@ -7,6 +7,15 @@
 	height: 350px;
 }
 
+.card-header h4{
+	margin-top: -10px;
+	margin-left: -10px;
+}
+
+.fa-times-circle:before{
+	cursor: pointer;
+}
+
 /* 키워드검색 */
 #menu_wrap {
 	position: relative;
@@ -37,9 +46,7 @@
 	position: absolute;
 	left: -60px;
 	bottom: -45px;
-/* 	width: 288px; */
 	height: 122px;
-/* 	margin-left: -144px; */
 	text-align: left;
 	overflow: hidden;
 	font-size: 12px;
