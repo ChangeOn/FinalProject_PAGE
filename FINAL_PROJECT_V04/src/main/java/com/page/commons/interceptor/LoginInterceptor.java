@@ -7,10 +7,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.util.WebUtils;
 
+import com.page.model.biz.PageService;
+import com.page.model.dto.PageVO;
 import com.page.user.biz.UserService;
 import com.page.user.dto.UserVO;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
@@ -39,12 +42,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         
         /* 클라이언트에서 전해받은 파라미터로 조회한 유저정보 가져오기 */
         ModelMap model_map = modelAndView.getModelMap();
-        Object user_vo =  model_map.get("user");
+        Object before_user_vo =  model_map.get("user");
+        UserVO user_vo = (UserVO) before_user_vo;
 
         //로그인에 성공했을 경우
         if (user_vo != null) {
         	
-        	//세션에 로그인한 유저정보 등록
+        	//세션에 로그인한 유저 정보 등록
             http_session.setAttribute(LOGIN, user_vo);
             
             /* 로그인 유지를 선택한 경우 쿠키 설정을 최신화 한다. */

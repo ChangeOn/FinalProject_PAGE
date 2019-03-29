@@ -217,6 +217,12 @@ function clearAllTimeouts() {
 $(function() {
 	
 	$(document)
+	.ready(function(){
+		
+		$(document).unbind();
+		$(".d-flex").toggleClass("toggled");
+		
+	})
 	/* COLLAPSE 관련 */
 	// 전체 토글 실행 시
 	.on("show.bs.collapse", ".collapse" , function() {
@@ -376,8 +382,8 @@ $(function() {
 	// 페이지 탭 추가 생성
 	.on("click", "#new-page", function(e) {
 		
-		var page_default_name = ["두번째", "세번째"];
-		var now_page_default_name = page_default_name[$("[class~=page-tab-group]").find("[class~=page-tab]").length-1];
+		var page_default_name = ["첫번째", "두번째", "세번째"];
+		var now_page_default_name = page_default_name[$("[class~=page-tab-group]").find("[class~=page-tab]").length];
 		var now_page_tab_size = $("[class~=page-tab-group]").find("[class~=page-tab]").length;
 		$(this).blur();
 		event.preventDefault();
@@ -403,7 +409,7 @@ $(function() {
 		    	    	if(data.message == "true")
 		    			$("[id~=new-page]").before(
 		    					'<button type="button" class="btn btn-light page-tab">'
-		    					+ page_default_name[$("[class~=page-tab-group]").find("[class~=page-tab]").length-1]
+		    					+ page_default_name[$("[class~=page-tab-group]").find("[class~=page-tab]").length]
 		    					+'</button>');
 		    	    }
 		    });
@@ -413,6 +419,15 @@ $(function() {
 				$("[id=new-page]").remove();
 			}
 		}
+	})
+	// 페이지 탭 클릭 이벤트
+	.on("click", ".page-tab", function(e) {
+		
+		event.preventDefault();
+		$(this).blur();
+		
+		console.log($(this).attr("class"));
+		$(this).removeClass("btn-light").addClass("btn-warning");
 	})
 });
 

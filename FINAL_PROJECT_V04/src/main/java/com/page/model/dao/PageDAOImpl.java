@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.page.model.dto.PageVO;
 import com.page.model.dto.PageWithUserVO;
 import com.page.model.dto.Page_CreateVO;
+import com.page.user.dto.UserVO;
 
 @Repository
 public class PageDAOImpl implements PageDAO {
@@ -45,6 +46,12 @@ public class PageDAOImpl implements PageDAO {
 	public int checkOverlabPageName(PageWithUserVO page_with_user_vo) throws Exception {
 		
 		return sqlSession.selectOne(NAMESPACE + ".checkOverlabPageName", page_with_user_vo);
+	}
+
+	@Override
+	public List<PageVO> searchUserPages(UserVO user_vo) throws Exception {
+		
+		return sqlSession.selectList(NAMESPACE + ".searchUserPages", user_vo);
 	}
 
 }

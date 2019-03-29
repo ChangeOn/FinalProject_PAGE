@@ -29,6 +29,7 @@
 	<context:component-scan base-package="kh.project.build" />
 	
 	<context:component-scan base-package="com.page" />
+	<context:component-scan base-package="com.page.model" />
 	<context:component-scan base-package="com.page.user" />
 	<context:component-scan base-package="com.page.websocket" />
 	
@@ -44,6 +45,8 @@
     <beans:bean id="authInterceptor" class="com.page.commons.interceptor.AuthInterceptor"/>
     <beans:bean id="loginAfterInterceptor" class="com.page.commons.interceptor.LoginAfterInterceptor"/>
     <beans:bean id="loginBeforeInterceptor" class="com.page.commons.interceptor.LoginAfterInterceptor"/>
+    <beans:bean id="pageCreateBeforeInterceptor" class="com.page.commons.interceptor.PageCreateBeforeInterceptor"/>
+    <beans:bean id="refreshPageInterceptor" class="com.page.commons.interceptor.RefreshPageInterceptor"/>
     
      <mvc:interceptors>
         <mvc:interceptor>
@@ -55,13 +58,23 @@
             <beans:ref bean="loginInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
+            <mvc:mapping path="/user/register"/>
+            <beans:ref bean="loginAfterInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
             <mvc:mapping path="/page" />
+            <mvc:mapping path="/page/**" />
             <mvc:mapping path="/user/info"/>
             <beans:ref bean="authInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
-            <mvc:mapping path="/user/register"/>
-            <beans:ref bean="loginAfterInterceptor"/>
+            <mvc:mapping path="/page/new_tab"/>
+            <beans:ref bean="pageCreateBeforeInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+        	<mvc:mapping path="/page" />
+            <mvc:mapping path="/page/**"/>
+            <beans:ref bean="refreshPageInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 </beans:beans>

@@ -32,6 +32,13 @@
 		WHERE 	ROWNUM = 1
 	</select>
 	
+	<select id="searchUserPages" parameterType="UserVO" resultMap="PageVOResultMap">
+		SELECT 	A.PAGE_NAME, A.PAGE_CONTENT
+		FROM	PAGES A INNER JOIN PAGE_CREATE B
+		ON      A.PAGE_NO = B.PAGE_NO
+		AND     B.USER_NO = #{user_no}
+	</select>
+	
 	<select id="checkOverlabPageName" parameterType="PageWithUserVO" resultType="int">
 		SELECT 	COUNT(*)
 		FROM	PAGES A INNER JOIN PAGE_CREATE B

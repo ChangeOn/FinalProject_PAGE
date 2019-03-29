@@ -74,7 +74,6 @@ public class PageController {
     	page_create_vo.setPage_no(page_vo.getPage_no());
     	page_create_vo.setUser_no(user_vo.getUser_no());
     	page_service.connectUserWithPage(page_create_vo);
-    		
     }
     
     /*
@@ -107,6 +106,8 @@ public class PageController {
     	page_create_vo.setPage_no(page_vo.getPage_no());
     	page_create_vo.setUser_no(user_vo.getUser_no());
     	page_service.connectUserWithPage(page_create_vo);
+    	
+    	model.addAttribute("user", user_vo);
     	
     	request.setCharacterEncoding("utf8");
         response.setContentType("application/json");

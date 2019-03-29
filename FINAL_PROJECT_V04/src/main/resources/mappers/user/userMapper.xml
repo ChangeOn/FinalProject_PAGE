@@ -63,6 +63,9 @@
             ,#{user_sex}
             ,#{user_signature}
         )
+        <selectKey keyProperty="user_no" resultType="int" order="AFTER">
+   			SELECT USER_NO_SEQ.CURRVAL FROM DUAL
+  		</selectKey>
     </insert>
 
     <select id="getUserPw" resultType="string">

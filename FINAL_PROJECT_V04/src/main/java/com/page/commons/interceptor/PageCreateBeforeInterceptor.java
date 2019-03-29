@@ -1,5 +1,7 @@
 package com.page.commons.interceptor;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,9 +9,12 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.page.model.biz.PageService;
+import com.page.model.dto.PageVO;
 import com.page.model.dto.PageWithUserVO;
 import com.page.user.dto.UserVO;
 
@@ -19,7 +24,7 @@ public class PageCreateBeforeInterceptor extends HandlerInterceptorAdapter {
 	private PageService page_service;
 	
     private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
-	
+    
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {

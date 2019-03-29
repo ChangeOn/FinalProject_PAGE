@@ -1,5 +1,7 @@
 package com.page.model.biz;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import com.page.model.dao.PageDAO;
 import com.page.model.dto.PageVO;
 import com.page.model.dto.PageWithUserVO;
 import com.page.model.dto.Page_CreateVO;
+import com.page.user.dto.UserVO;
 
 @Service
 public class PageServiceImpl implements PageService {
@@ -41,6 +44,12 @@ public class PageServiceImpl implements PageService {
 	public int checkOverlabPageName(PageWithUserVO page_with_user_vo) throws Exception {
 		
 		return pageDAO.checkOverlabPageName(page_with_user_vo);
+	}
+
+	@Override
+	public List<PageVO> searchUserPages(UserVO user_vo) throws Exception {
+			
+		return pageDAO.searchUserPages(user_vo);
 	}
 
 }
