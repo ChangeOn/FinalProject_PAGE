@@ -47,7 +47,7 @@ function Add_Map(){
 			+"<i class='fas fa-times-circle fa-xs float-right' onclick='mapClose()'></i></h4>"
 			+"</div>"
 			+"<div class='card-body' id='map' style='position: relative; width: 100%; height: 100%; overflow: hidden;'></div>"
-			+"<script src='resources/js/map-functions.js'><"+"/script>"
+			+"<script src='resources/js/page/map/map-functions.js'><"+"/script>"
 			// 키워드로 장소검색
 			+"<div id='menu_wrap'>"
 				+"<div class='option'>"
