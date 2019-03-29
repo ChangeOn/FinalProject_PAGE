@@ -1,27 +1,47 @@
+
+$(function(){
+	$(".calcontainer").draggable();
+});
+
+
+
+
+
 function Add_Calendar(){
 	
 	console.log("캘린더 생성");
 	
 	if($("[class~=editor][class~=table]").length==0){
-		
+
 		$(".container-fluid").prepend(
-			"<div class='caltable draggable border border-dark rounded' id='caltable'>"	+
-				"<div class='calendar' id='calendar'>"+
-				"</div>"+
-			"</div>"	
+				
+				"<div class='calcontainer draggable border border-dark rounded' id='calcontainer' style='width:700px; position:relative'>"+
+				"<div class='calcontrol' style='position:relative; height:30px;'><img id='conimg' src='resources/image/delete-button.png' style='width:20px; height:20px; float:right; '></div>"+
+					"<div class='caltable'>"+
+						
+						"<div class='calendar' id='calendar'></div>"+
+					"</div>"+
+				"</div>"	
+
 		)
+	
 	// Calendar 실행
 		
 		resizable_switch('ON', $(".calendar"));
 		
+	$("#conimg").click(function(){
+		$(".calcontainer").remove();
+	})	
+	
+	$(function(){
+	$(".calcontainer").draggable();
+});
 		
-	$('button:contains("list")').click(function(){
-		
-	})
-		
-		
+	
 	$(document).ready(function() {
-			
+		
+		
+		
 			var seq=0;
 			var myStartDate='';
 			var myEndDate='';
@@ -85,13 +105,7 @@ function Add_Calendar(){
 				        		'</div>'+
 				        		'<div class="form-group">'+
 				        			'<input class="form-control" placeholder="Event Content" id="content" name="content">'+
-				        		'</div>'+
-				        		'<div class="form-group col-xs-3" style="display:inline-block">'+
-				        			'<input class="form-control" placeholder="StartTime (00 : 00)" id="stime" name="stime" >'+
-				        		'</div>'+
-				        		'<div class="form-group col-xs-3" style="display:inline-block">'+
-			        			'<input class="form-control" placeholder="EndTime (00 : 00)" id="etime" name="etime" >'+
-			        			'</div>',
+				        		'</div>',
 
 				        showCancelButton: true,
 				        confirmButtonClass: 'btn btn-success',
