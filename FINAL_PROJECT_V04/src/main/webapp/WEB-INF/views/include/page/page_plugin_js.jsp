@@ -22,21 +22,17 @@
 <script type="text/javascript" src="${path}/resources/js/page/chat/chat-functions.js"></script>
 <!-- Calendar -->
 <script type="text/javascript" src="${path}/resources/js/page/calendar/calendar-functions.js"></script>
-
 <!-- sweetalert -->
 <script type="text/javascript" src="resources/js/sweetalert2.min.js"></script>
 <link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css'/>
-
 <!-- moment.js -->
 <script type="text/javascript" src="resources/js/moment.min.js"></script>
-
 <!-- fullcalendar -->
 <script type="text/javascript" src="resources/js/page/calendar/fullcalendar.min.js"></script>
 <link rel='stylesheet' type='text/css' href='resources/css/page/calendar/fullcalendar.css' />
 <link rel='stylesheet' type='text/css' href='resources/css/page/calendar/fullcalendar.min.css' />
 <link rel='stylesheet' type='text/css' href='resources/css/page/calendar/fullcalendar.print.css' media="print"/>
 <script type="text/jacascript" src="resources/js/json2.js"></script>
-
 <!-- Map -->
 <link rel="stylesheet" href="resources/css/page/map/map.css">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2fb1c4ff5a5b502155b05f2ba5928593&libraries=services"></script>

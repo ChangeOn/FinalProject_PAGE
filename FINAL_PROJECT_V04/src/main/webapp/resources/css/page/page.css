@@ -25,12 +25,15 @@ body {
     width: 30px;
     height: auto;
 }
+#user-profile #page-home {
+	width: 30px;
+    height: auto;
+}
 #user-profile li {
-	margin-left: 10px;
-	margin-right: 10px;
 	padding: 2px;
 	float: left ;
 }
+
 /* /상단 네비게이션 바 관련*/
 
 /* 텍스트 상자 관련 */
@@ -84,6 +87,17 @@ body {
 	width: 100%;
 }
 /* /페이지 탭 관련 */
+
+/* 하단 네비게이션 바 관련 */
+#new-page {
+	border: 0;
+}
+
+#new-page img {
+	width: 30px;
+	height: auto;
+}
+/* /하단 네비게이션 바 관련 */
 
 /* 부트스트랩 기본 설정 */
 #sidebar-wrapper {

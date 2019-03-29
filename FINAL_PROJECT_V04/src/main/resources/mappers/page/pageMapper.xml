@@ -4,16 +4,40 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.page.mappers.page.pageMapper">
+
 	<resultMap id="PageVOResultMap" type="PageVO">
 		<id property="page_no" column="PAGE_NO" />
 		<result property="page_name" column="PAGE_NAME" />
 		<result property="page_content" column="PAGE_CONTENT"
 			jdbcType="CLOB" javaType="java.lang.String" />
 	</resultMap>
+	
+	<resultMap id="PageWithUserVOResultMap" type="PageWithUserVO">
+		<id property="page_no" column="PAGE_NO" />
+		<result property="page_name" column="PAGE_NAME" />
+		<result property="page_content" column="PAGE_CONTENT"
+			jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="user_no" column="USER_NO" />
+	</resultMap>
+	
+	<resultMap id="Page_CreateVOResultMap" type="Page_CreateVO">
+		<id property="page_create_no" column="PAGE_CREATE_NO" />
+		<result property="user_no" column="USER_NO" />
+		<result property="page_no" column="PAGE_NO" />
+	</resultMap>
 
 	<select id="loadPageContent" resultMap="PageVOResultMap">
 		SELECT 	*
 		FROM 	PAGES
+		WHERE 	ROWNUM = 1
+	</select>
+	
+	<select id="checkOverlabPageName" parameterType="PageWithUserVO" resultType="int">
+		SELECT 	COUNT(*)
+		FROM	PAGES A INNER JOIN PAGE_CREATE B
+		ON      A.PAGE_NO = B.PAGE_NO
+		WHERE	B.USER_NO = #{user_no}
+		AND     A.PAGE_NAME = #{page_name}
 	</select>
 
 	<insert id="savePageContent" parameterType="PageVO">
@@ -24,7 +48,31 @@
 		) VALUES (
 			PAGE_NO_SEQ.NEXTVAL
 			,#{page_name}
-			,#{page_content}
+		<choose>
+ 			<when test="page_content != null">
+ 				,#{page_content}
+ 			</when>
+ 			<otherwise>
+ 				,EMPTY_CLOB()
+ 			</otherwise>
+ 		</choose>
+			
 		)
+		<selectKey keyProperty="page_no" resultType="int" order="AFTER">
+   			SELECT PAGE_NO_SEQ.CURRVAL FROM DUAL
+  		</selectKey>
+	</insert>
+	
+	<insert id="connectUserWithPage" parameterType="Page_CreateVO">
+		INSERT INTO PAGE_CREATE (
+			PAGE_CREATE_NO
+			,USER_NO
+			,PAGE_NO		
+		) VALUES (
+			PAGE_CREATE_NO_SEQ.NEXTVAL
+			,#{user_no}
+			,#{page_no}
+		)
+		
 	</insert>
 </mapper>

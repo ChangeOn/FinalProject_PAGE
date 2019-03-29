@@ -68,12 +68,12 @@
 		<ul id="user-profile" class="navbar-nav ml-auto mt-4 mt-lg-0">
 			<c:if test="${not empty login}">
 				<li class="nav-item">
-					<a class="nav-link" href="#">Home</a>
+					<button class="btn btn-light" href="#"><img id="page-home" src="${path }resources/image/page/home.png"></button>
 				</li>
-				<li class="nav-item border border-light rounded">
-					<a id="user-profile-img" href="#"> 
-					<img src="${pageContext.request.contextPath}/resources/image/${login.user_img}" class="user-image">
-					</a>
+				<li class="nav-item">
+					<button id="user-profile-img" class="btn btn-light" href="#"> 
+						<img src="${pageContext.request.contextPath}/resources/image/${login.user_img}" class="user-image">
+					</button>
 				</li>
 				<li class="nav-item">
 				<span class="navbar-text text-dark" href="#">${login.user_name} 님</span>

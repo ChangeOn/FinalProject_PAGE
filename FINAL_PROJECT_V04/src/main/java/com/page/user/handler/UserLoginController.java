@@ -82,6 +82,7 @@ public class UserLoginController {
     	
         Object object = http_session.getAttribute("login");
         if (object != null) {
+        	
         	System.out.println("SYSTEM: UserLoginController' logout progressing");
             UserVO user_vo = (UserVO) object;
             http_session.removeAttribute("login");

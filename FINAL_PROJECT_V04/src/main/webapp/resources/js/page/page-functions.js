@@ -359,15 +359,58 @@ $(function() {
 			    json_object.page_name = "test_name"
 			    json_object.page_content = $container[0].innerHTML;
 			    
+			    //AJAX를 통해 JSON 오브젝트 전달
 			    $.ajax({
 			    	    type : "POST",
 			    	    dataType : 'json',
 			    	    data : json_object,
 			    	    url : "/page/save",
 			    	    success : function() {
-			    	       console.log("ajax success");
+			    	       
+			    	    	console.log("success");
 			    	    }
 			    });
+			}
+		}
+	})
+	// 페이지 탭 추가 생성
+	.on("click", "#new-page", function(e) {
+		
+		var page_default_name = ["두번째", "세번째"];
+		var now_page_default_name = page_default_name[$("[class~=page-tab-group]").find("[class~=page-tab]").length-1];
+		var now_page_tab_size = $("[class~=page-tab-group]").find("[class~=page-tab]").length;
+		$(this).blur();
+		event.preventDefault();
+		
+		console.log(now_page_tab_size);
+		//페이지 탭 생성은 총 3개까지만 한정
+		if(now_page_tab_size < 3) {
+			
+			//JSON 오브젝트 생성
+		    var json_object = new Object();
+		    //JSON 오브젝트에 PageVO 모델 바인딩
+		    json_object.page_name = now_page_default_name
+			
+		    //AJAX를 통해 유저별 페이지 탭 정보 저장
+		    $.ajax({
+		    	    type : "POST",
+		    	    dataType : 'json',
+		    	    data : json_object,
+		    	    async: false,
+		    	    url : "/page/new_tab",
+		    	    success : function(data) {
+		    	       
+		    	    	if(data.message == "true")
+		    			$("[id~=new-page]").before(
+		    					'<button type="button" class="btn btn-light page-tab">'
+		    					+ page_default_name[$("[class~=page-tab-group]").find("[class~=page-tab]").length-1]
+		    					+'</button>');
+		    	    }
+		    });
+			
+			//페이지 추가 생성을 막기 위해 마지막 페이지 탭 생성시 버튼 삭제
+			if(now_page_tab_size == 2) {
+				$("[id=new-page]").remove();
 			}
 		}
 	})

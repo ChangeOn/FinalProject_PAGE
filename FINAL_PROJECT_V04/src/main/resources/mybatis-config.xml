@@ -10,13 +10,23 @@
     </settings>
 
     <typeAliases>
+    	<!-- CHAT -->
         <typeAlias type="com.page.websocket.chat.dto.ChatDto" alias="ChatDto"/>
+        <!-- USER -->
         <typeAlias type="com.page.user.dto.UserVO" alias="UserVO"/>
+        <!-- PAGE -->
         <typeAlias type="com.page.model.dto.PageVO" alias="PageVO"/>
+        <typeAlias type="com.page.model.dto.PageWithUserVO" alias="PageWithUserVO"/>
+        <typeAlias type="com.page.model.dto.Page_CreateVO" alias="Page_CreateVO"/>
+        <!-- BOARD -->
         <typeAlias type="com.page.board.model.dto.boardDto" alias="boardDto"/>
+        <!-- ANSWER? -->
 		<typeAlias type="com.page.board.model.dto.ansDto" alias="ansDto"/>
+		<!-- FILE -->
 		<typeAlias type="com.page.board.model.dto.fileDto" alias="fileDto"/>
+		<!-- CALENDAR -->
 		<typeAlias type="com.page.cal.model.dto.CalDto" alias="CalDto"/>
+		<!-- MAP -->
 		<typeAlias type="com.page.map.dto.MapDto" alias="MapDto"/>
     </typeAliases>
 
