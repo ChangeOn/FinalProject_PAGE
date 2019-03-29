@@ -219,8 +219,7 @@ $(function() {
 	$(document)
 	.ready(function(){
 		
-		$(document).unbind();
-		$(".d-flex").toggleClass("toggled");
+
 		
 	})
 	/* COLLAPSE 관련 */
