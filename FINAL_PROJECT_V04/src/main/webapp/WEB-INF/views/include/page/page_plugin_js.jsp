@@ -42,9 +42,8 @@ function Add_Map(){
 	$(".container-fluid").prepend(
 		"<div class='map_wrap card bg-light'>"
 			+"<div class='card-header' style='height:2em'>"
-			//+"<button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>x</span></button>"
 			+"<h4><span><i class='fas fa-map-marked-alt'></i></span> Map "
-			+"<i class='fas fa-times-circle fa-xs float-right' onclick='mapClose()'></i></h4>"
+			+"<i class='fas fa-times fa-sm float-right' onclick='mapClose()'></i></h4>"
 			+"</div>"
 			+"<div class='card-body' id='map' style='position: relative; width: 100%; height: 100%; overflow: hidden;'></div>"
 			+"<script src='resources/js/page/map/map-functions.js'><"+"/script>"
@@ -54,7 +53,6 @@ function Add_Map(){
 					+"<div id='optiondiv'>"
 						+"<form onsubmit='searchPlaces(); return false;'>"
 							+"<input type='text' id='keyword' size='15' placeholder='Keyword + Enter' />"
-							//+"<button class='btn btn-light btn-sm' type='submit'>search</button>"
 						+"</form>"
 					+"</div>"
 				+"</div>"

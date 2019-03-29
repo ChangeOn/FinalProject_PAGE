@@ -12,8 +12,12 @@
 	margin-left: -10px;
 }
 
-.fa-times-circle:before{
+.fa-times:before{
 	cursor: pointer;
+}
+.fa-times{
+	margin-top: 5px;
+	margin-right: -5px;
 }
 
 /* 키워드검색 */
