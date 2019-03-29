@@ -32,7 +32,7 @@ function Add_Calendar(){
 			var year=today.getFullYear();
 		
 			var id="kh";
-
+			$(".fc-list-item-time").hide();
 			
 			$('#calendar').fullCalendar({
 	    		  
@@ -40,7 +40,7 @@ function Add_Calendar(){
 				    header: {
 				      left: 'prev,next today',
 				      center: 'title',
-				      right: 'month,agendaWeek,agendaDay,listMonth'
+				      right: 'month,agendaWeek,listMonth'
 				    },
 				    
 				    defaultDate: today,
@@ -49,17 +49,16 @@ function Add_Calendar(){
 				    // 월/주/일 버튼 view
 				    views : {
 				    	month : {
-				    		titleFormat : "MMMM YYYY"
+				    		titleFormat : "YYYY MMMM"
 				    	},
 				    	week:{
-				    		titleFormat : " MMMM D YYYY"
+				    		titleFormat : "DD MMMM YYYY"
+				    	
 				    	},
-				    	day:{
-				    		titleFormat : "D MMM YYYY"
-				    	},
+				    	
 				    	list:{
 				    		buttonTest : "listMonth",
-				    		titleFormat : "MMMM YYYY",
+				    		titleFormat : "YYYY MMMM",
 				    		listMonthFormat : "YYYY-MM-DD"
 				    	}
 				    	
@@ -88,8 +87,11 @@ function Add_Calendar(){
 				        			'<input class="form-control" placeholder="Event Content" id="content" name="content">'+
 				        		'</div>'+
 				        		'<div class="form-group col-xs-3" style="display:inline-block">'+
-				        			'<input class="form-control" placeholder="Time (00 : 00)" id="time" name="time" >'+
-				        		'</div>',
+				        			'<input class="form-control" placeholder="StartTime (00 : 00)" id="stime" name="stime" >'+
+				        		'</div>'+
+				        		'<div class="form-group col-xs-3" style="display:inline-block">'+
+			        			'<input class="form-control" placeholder="EndTime (00 : 00)" id="etime" name="etime" >'+
+			        			'</div>',
 
 				        showCancelButton: true,
 				        confirmButtonClass: 'btn btn-success',
@@ -102,9 +104,10 @@ function Add_Calendar(){
 				                var eventData;
 				                event_title = $('#title').val();
 				                event_content=$('#content').val();
-				                event_time=$("#time").val();
+				                event_starttime=$("#stime").val();
+				                event_endtime=$("#etime").val();
 				                
-				                swal(typeof event_time);
+				                console.log(typeof event_starttime);
 				                
 				      
 				                
@@ -198,8 +201,8 @@ function Add_Calendar(){
 				    					id:$(this).attr('seq'),
 				    					title:$(this).attr('title'),
 				    					content:$(this).attr('content'),
-					    				start:$(this).attr('startdate'),
-					    				end:$(this).attr('enddate')
+					    				start:moment($(this).attr('startdate')).format('YYYY-MM-DD'),
+					    				end:moment($(this).attr('enddate')).format('YYYY-MM-DD')
 				    				});
 				    			});
 				    			callback(events);
@@ -210,7 +213,7 @@ function Add_Calendar(){
 				    // Render 생길때 
 				    eventRender : function(event,element,view){
 				    	element.append("<span class='removebtn'>X</span>");
-				    	
+				    	$(".fc-list-item-time").hide();
 				    	//if(view.name=="listMonth"){
 				    	//	element.find('.fc-list-item-title').html(event.title);
 				    	//}

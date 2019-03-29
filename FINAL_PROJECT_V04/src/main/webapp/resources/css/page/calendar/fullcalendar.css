@@ -21,6 +21,11 @@
 	cursor: pointer;
     background-color: #FFF
 }
+
+.fc-list-item-time {
+	display: none;
+}
+ 
  
  
  .fc-time{
