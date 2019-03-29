@@ -10,8 +10,15 @@
 	<div class="btn-toolbar page-tab-group" role="toolbar"
 		aria-label="Toolbar with button groups">
 		<c:if test="${not empty pages}">
-			<c:forEach var="item" items="${pages}">
-				<button type="button" class="btn btn-light page-tab">${item.page_name}</button>
+			<c:forEach var="item" varStatus="status" items="${pages}">
+				<c:choose>
+					<c:when test="${status.index eq 0}">
+						<button type="button" class="btn btn-primary page-tab main actived">${item.page_name}</button>
+					</c:when>
+					<c:otherwise>
+						<button type="button" class="btn btn-light page-tab">${item.page_name}</button>
+					</c:otherwise>
+				</c:choose>
 			</c:forEach>
 		</c:if>
 		<c:if test="${fn:length(pages) < 3}">

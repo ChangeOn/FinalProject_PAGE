@@ -31,9 +31,9 @@ public class PageDAOImpl implements PageDAO {
 	}
 
 	@Override
-	public PageVO loadPageContent(PageVO page_vo) throws Exception {
+	public PageVO loadPageContent(PageWithUserVO page_with_user_vo) throws Exception {
 		
-		return sqlSession.selectOne(NAMESPACE + ".loadPageContent", page_vo);
+		return sqlSession.selectOne(NAMESPACE + ".loadPageContent", page_with_user_vo);
 	}
 
 	@Override

@@ -214,14 +214,99 @@ function clearAllTimeouts() {
 
 /*/주요 기능별 메소드 정의 */
 
+/* 페이지 편집 모드 스위치 */
+function page_edit_mode_switch(ONOFF) {
+	
+	var clicked_button = $("[class~=edit-mode-switch]");
+	
+	/* 페이지 편집 모드 ON */
+	if(ONOFF == 'ON') {
+		console.log("페이지 편집 모드 시작");
+
+		clicked_button.blur();
+
+		//버튼 효과 및 문구 변경
+		clicked_button.removeClass("btn-secondary");
+		clicked_button.addClass("btn-light");
+		clicked_button.html('종료하기');
+		
+		//페이지 편집 메뉴창 토글
+		$("[class~=d-flex]").toggleClass("toggled");
+		
+		// 드래그 및 리사이즈 기능 전체 설정
+		draggable_switch('ON');
+		resizable_switch('ON');
+	}
+	/*/페이지 편집 모드 ON */
+	/*페이지 편집 모드 OFF */
+	else if(ONOFF == 'OFF') {
+	
+		console.log("페이지 편집 모드 종료 시도");
+		
+		clicked_button.blur();
+		
+		// 종료 전 다른 에디터가 실행 중인 경우
+		if($(document).find("[class~=editor]").length > 0) {
+			console.log("종료 전 에디터가 실행 중인 경우")
+			
+			// 경고창 표시
+			$("#using-editor-warnning").collapse('show');
+		}
+		// 실행중인 에디터가 없는 경우
+		else{
+			console.log("실행 중인 에디터가 없는 경우")
+			
+			//버튼 효과 및 문구 변경
+			clicked_button.removeClass("btn-light");
+			clicked_button.addClass("btn-secondary");
+			clicked_button.html('시작하기');
+			
+			//페이지 편집 메뉴창 토글
+			$("[class~=d-flex]").toggleClass("toggled");
+			
+			// 전체 드래그 기능 해제
+			draggable_switch('OFF');
+			resizable_switch('OFF');
+			
+			console.log("페이지 요소의 드래그 기능 제거 완료");
+			console.log("페이지 편집 모드 종료 완료");
+			
+			
+			/* 
+			 * 페이지 편집 모드 종료시 완성된 페이지의 모습을 
+			 * 데이터베이스에 저장하기 위해 HTML을 JSON의 형태로 전송한다.
+			 * */
+			
+			//편집된 HTML을 담고 있는 객체
+			var $container = $(".container-fluid").clone();
+			//JSON 오브젝트 생성
+		    var json_object = new Object();
+		    //JSON 오브젝트에 PageVO 모델 바인딩
+		    json_object.page_name = "test_name"
+		    json_object.page_content = $container[0].innerHTML;
+		    
+		    //AJAX를 통해 JSON 오브젝트 전달
+		    /*
+		    $.ajax({
+		    	    type : "POST",
+		    	    dataType : 'json',
+		    	    data : json_object,
+		    	    url : "/page/save",
+		    	    success : function() {
+		    	       
+		    	    	console.log("success");
+		    	    }
+		    });
+		    */
+		}
+	}
+	/*/페이지 편집 모드 OFF */
+}
+/*/페이지 편집 모드 스위치 */
+
 $(function() {
 	
 	$(document)
-	.ready(function(){
-		
-
-		
-	})
 	/* COLLAPSE 관련 */
 	// 전체 토글 실행 시
 	.on("show.bs.collapse", ".collapse" , function() {
@@ -303,79 +388,15 @@ $(function() {
 		}
 	})
 	// 페이지 편집 토글 버튼 클릭 시
-	.on("click", "#menu-toggle", function(e) {
-		console.log("페이지 편집 모드 시작");
-
-		e.preventDefault();
-		$(this).blur();
+	.on("click", ".edit-mode-switch", function(e) {
 		
-		// 페이지 편집 모드 시작
-		if($(this).hasClass('btn btn-secondary')) {
-			$(this).attr('class', 'btn btn-light');
-			$(this).html('종료하기');
-			
-			e.preventDefault();
-			$("#wrapper").toggleClass("toggled");
-			
-			console.log("페이지 요소 드래그 기능 설정");
-			
-			// 드래그 및 리사이즈 기능 전체 설정
-			draggable_switch('ON');
-			resizable_switch('ON');
-			
-		//페이지 편집 모드 종료
-		} else {
-			console.log("페이지 편집 모드 종료 시도");
-			
-			// 종료 전 다른 에디터가 실행 중인 경우
-			if($(document).find("[class~=editor]").length > 0) {
-				console.log("종료 전 에디터가 실행 중인 경우")
-				
-				// 경고창 표시
-				$("#using-editor-warnning").collapse('show');
-			}
-			// 실행중인 에디터가 없는 경우
-			else{
-				console.log("실행 중인 에디터가 없는 경우")
-				
-				// 포커스 제거 및 편집 모드 토글 버튼 색상 변경
-				$("#menu-toggle").attr('class', 'btn btn-secondary');
-				$("#menu-toggle").html('시작하기');
-				$("#wrapper").toggleClass("toggled");
-				
-				// 전체 드래그 기능 해제
-				draggable_switch('OFF');
-				resizable_switch('OFF');
-				
-				console.log("페이지 요소의 드래그 기능 제거 완료");
-				console.log("페이지 편집 모드 종료 완료");
-				
-				
-				/* 
-				 * 페이지 편집 모드 종료시 완성된 페이지의 모습을 
-				 * 데이터베이스에 저장하기 위해 HTML을 JSON의 형태로 전송한다.
-				 * */
-				
-				//편집된 HTML을 담고 있는 객체
-				var $container = $(".container-fluid").clone();
-				//JSON 오브젝트 생성
-			    var json_object = new Object();
-			    //JSON 오브젝트에 PageVO 모델 바인딩
-			    json_object.page_name = "test_name"
-			    json_object.page_content = $container[0].innerHTML;
-			    
-			    //AJAX를 통해 JSON 오브젝트 전달
-			    $.ajax({
-			    	    type : "POST",
-			    	    dataType : 'json',
-			    	    data : json_object,
-			    	    url : "/page/save",
-			    	    success : function() {
-			    	       
-			    	    	console.log("success");
-			    	    }
-			    });
-			}
+		event.preventDefault();
+		
+		if($(this).hasClass("btn-light")) {
+			page_edit_mode_switch("OFF")
+		}
+		else {
+			page_edit_mode_switch("ON")
 		}
 	})
 	// 페이지 탭 추가 생성
@@ -425,8 +446,47 @@ $(function() {
 		event.preventDefault();
 		$(this).blur();
 		
-		console.log($(this).attr("class"));
-		$(this).removeClass("btn-light").addClass("btn-warning");
+		//이미 활성화 되어있는 페이지를 클릭했을 경우
+		if($(this).hasClass("actived")) {
+			
+			console.log("already")
+			return;
+		} 
+		//다른 페이지 탭을 클릭했을 경우
+		else {
+			console.log("other one clicked")
+			
+			//이미 활성화 되어있는 페이지 탭 비활성화
+			$("[class~=page-tab-group]").find("[class~=actived]")
+			.removeClass("btn-primary").removeClass("actived")
+			.addClass("btn-light");
+			
+			$(this).removeClass("btn-light")
+			.addClass("btn-primary").addClass("actived");
+			
+			/* 
+			 * 다른 페이지 탭을 클릭했을 때, 해당 페이지에 저장해놓은 상태를 불러오기 위해
+			 * AJAX를 통해 페이지 정보를 받아와서 HTML을 수정한다.
+			 * */
+			
+			//JSON 오브젝트 생성
+		    var json_object = new Object();
+		    
+		    //JSON 오브젝트에 PageVO 모델 바인딩
+		    json_object.page_name = $(this).html();
+		    
+		    //AJAX를 통해 JSON 오브젝트 전달
+		    $.ajax({
+		    	    type : "POST",
+		    	    dataType : 'json',
+		    	    data : json_object,
+		    	    url : "/page/load",
+		    	    success : function(data) {
+		    	       
+		    	    	console.log(data);
+		    	    }
+		    });
+		}
 	})
 });
 

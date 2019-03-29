@@ -9,7 +9,7 @@
 <body>
 
 	<!-- 전체 페이지 레이아웃 -->
-	<div class="d-flex" id="wrapper">
+	<div class="d-flex toggled" id="wrapper">
 	
 		<!-- 좌측 사이드 바 -->
 		<%@ include file="../include/page/page_sidebar.jsp"%>

@@ -3,6 +3,7 @@ package com.page.handler;
 import com.page.user.dto.UserVO;
 import com.page.model.biz.PageService;
 import com.page.model.dto.PageVO;
+import com.page.model.dto.PageWithUserVO;
 import com.page.model.dto.Page_CreateVO;
 
 import org.json.simple.JSONObject;
@@ -118,10 +119,31 @@ public class PageController {
         json_object.put("message", "true");
         out.print(json_object);
     }
+    
+    @RequestMapping(value = "/load", method = RequestMethod.POST)
+    public void loadPagePOST(HttpSession http_session, HttpServletResponse response,
+    		HttpServletRequest request ,PageWithUserVO page_with_user_vo, Model model ) throws Exception {
+    	
+    	/* 
+    	 * 파라미터로 얻은 페이지 이름 정보와 세션에 등록된 유저정보를 토대로,
+    	 * 데이터베이스에서 해당 유저의 해당 페이지 정보를 불러온다.
+    	 *  */
+    	
+    	//로그인 정보를 통해 유저정보 받기
+    	Object before_user_vo = http_session.getAttribute("login");
+		UserVO user_vo = (UserVO) before_user_vo;
+		
+		page_with_user_vo.setUser_no(user_vo.getUser_no());
+		PageVO page_vo = page_service.loadPageContent(page_with_user_vo);
+    	
+    	request.setCharacterEncoding("utf8");
+        response.setContentType("application/json");
         
-//        JSONObject json_object = new JSONObject();
-//        json_object.put("page_no", page_vo.getPage_no());
-//       json_object.put("page_name", page_vo.getPage_name());
-//        json_object.put("page_content", page_vo.getPage_content());
+        PrintWriter out = response.getWriter();
+
+        JSONObject json_object = new JSONObject();
+        json_object.put("page_content", page_vo.getPage_content());
+        out.print(json_object);
+    }
 }
 

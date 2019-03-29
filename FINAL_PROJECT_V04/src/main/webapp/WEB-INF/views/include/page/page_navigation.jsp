@@ -12,7 +12,7 @@
 	class="navbar sticky-top navbar-expand-lg navbar-light bg-light border-bottom">
 
 	<!-- 페이지 편집 모드 토글 버튼 -->
-	<button class="btn btn-light" id="menu-toggle">종료하기</button>
+	<button class="btn btn-secondary edit-mode-switch" id="menu-toggle">시작하기</button>
 
 	<!-- /페이지 편집 모드 토글 버튼 -->
 

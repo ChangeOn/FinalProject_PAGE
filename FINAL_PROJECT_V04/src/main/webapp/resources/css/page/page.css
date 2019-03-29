@@ -89,6 +89,10 @@ body {
 /* /페이지 탭 관련 */
 
 /* 하단 네비게이션 바 관련 */
+.page-tab {
+	margin-right:10px;
+}
+
 #new-page {
 	border: 0;
 }
