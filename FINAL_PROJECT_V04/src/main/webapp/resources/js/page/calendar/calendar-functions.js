@@ -4,9 +4,14 @@ function Add_Calendar(){
 	
 	if($("[class~=editor][class~=table]").length==0){
 		
+		if ($("#calcontainer").length > 0){
+			alert("캘린더는 한개이상 실행이 불가능합니다.");
+			return false;
+		}
+		
 		$(".container-fluid").prepend(
 				
-				"<div class='calcontainer border border-dark rounded' id='calcontainer' style='width:700px; position:relative'>"+
+				"<div class='calcontainer draggable border border-dark rounded' id='calcontainer' style='width:700px; position:relative'>"+
 				"<div class='calcontrol' style='position:relative; height:30px;'><img id='conimg' src='resources/image/delete-button.png' style='width:20px; height:20px; float:right; '></div>"+
 					"<div class='caltable'>"+
 						
@@ -26,10 +31,19 @@ function Add_Calendar(){
 		// 드래그 및 리사이즈 기능 전체 설정
 		resizable_switch('ON', $("#calcontainer"));
 		draggable_switch('ON', $("#calcontainer"));
+	
+		// 토글 버튼 클릭시 닫기버튼 비활성화
+		$("#menu-toggle").click(function() {
+			if ($("#menu-toggle").text() != '시작하기'){
+				$(".calcontrol").hide();
+			} else if ($("#menu-toggle").text() != '종료하기'){
+				$(".calcontrol").show();
+			}			
+		});
 		
-	$("#conimg").click(function(){
-		$(".calcontainer").remove();
-	})	
+		$("#conimg").click(function(){
+			$(".calcontainer").remove();
+		})	
 	
 	$(document).ready(function() {		
 		
@@ -172,7 +186,6 @@ function Add_Calendar(){
 				    eventAfterRender:function(event,element,view){
 				    	$(element).attr("id",event.id);
 				    },
-				
 				    
 				    navLinks: true, // can click day/week names to navigate views
 				    editable: true,

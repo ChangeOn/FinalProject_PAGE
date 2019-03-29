@@ -253,26 +253,39 @@
         
     	// movePaint 마우스를 눌렀을 때
 		$("#movePaint").mousedown(function(e) {
-			$("#paintcontainer").draggable({
-				disabled : false
-			});
+			if ($("#menu-toggle").text() != '시작하기'){
+				draggable_switch('ON', $("#paintcontainer"));			
+			}
 		})
 		// movePaint 마우스를 뗄 때
 		$("#movePaint").mouseup(function(e) {
-			$("#paintcontainer").draggable({
-				disabled : true
-			});
+			draggable_switch('OFF', $("#paintcontainer"));
 		})
+		
+		// 토글 버튼 클릭시 최소화, 닫기버튼 비활성화
+		$("#menu-toggle").click(function() {
+			if ($("#menu-toggle").text() != '시작하기'){
+				$("#paintexit").hide();
+				$("#paintminimize").hide();
+			} else if ($("#menu-toggle").text() != '종료하기'){
+				$("#paintexit").show();
+				$("#paintminimize").show();
+			}			
+    	});
 		
 		// paintexit 클릭, 페인트 div 삭제
 		$("#paintexit").click(function() {
-			$("#paintcontainer").remove();
+			if ($("#menu-toggle").text() != '시작하기'){
+				$("#paintcontainer").remove();			
+			}			
 		})
 		
 		// paintminimize 클릭, 그림판 최소화
 		$("#paintminimize").click(function() {
-			$("#paintcontainer div .card-body").toggle();
-			$("#paintcontainer div .card-footer").toggle();
+			if ($("#menu-toggle").text() != '시작하기'){
+				$("#paintcontainer div .card-body").toggle();
+				$("#paintcontainer div .card-footer").toggle();			
+			}			
 		})
     });
     

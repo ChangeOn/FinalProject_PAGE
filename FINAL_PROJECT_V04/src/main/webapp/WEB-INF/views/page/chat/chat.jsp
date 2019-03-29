@@ -227,6 +227,15 @@
 		$("#moveChat").mouseup(function(e) {
 			draggable_switch('OFF', $("#chatcontainer"));
 		})
+		
+		// 토글 버튼 클릭시 닫기버튼 비활성화
+		$("#menu-toggle").click(function() {
+			if ($("#menu-toggle").text() != '시작하기'){
+				$("#chatDelteIcon").hide();
+			} else if ($("#menu-toggle").text() != '종료하기'){				
+				$("#chatDelteIcon").show();
+			}			
+    	});
 	});
 
 	function setRandomColor() {
@@ -340,7 +349,7 @@
 				<input type="text" id="nickname" style="display:none; width: 30%;">
 				<input type="button" id="enterBtn" style="display:none;" value="입장">
 				<input type="button" id="exitBtn" style="display:none;" value="나가기">
-				<i class="fas fa-times-circle icon-red float-right" onclick="deleteChat();"></i>			
+				<i id="chatDelteIcon" class="fas fa-times-circle icon-red float-right" onclick="deleteChat();"></i>			
 			</h4>
 			
 			<div id="chatMessageArea" class="card-body"></div>
