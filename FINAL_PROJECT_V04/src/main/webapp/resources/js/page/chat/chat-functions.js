@@ -19,7 +19,10 @@
 				    $("#chatMessageArea").height(ui.size.height-35-56-65);
 				}
 			});
+			// 드래그 및 리사이즈 기능 전체 설정
+			resizable_switch('ON', $("#chatcontainer"));
 		});
+		
 	}	
 	
 	function deleteChat() {		

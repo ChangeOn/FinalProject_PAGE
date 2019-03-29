@@ -219,15 +219,13 @@
 		
 		// moveChat 마우스를 눌렀을 때
 		$("#moveChat").mousedown(function(e) {
-			$("#chatcontainer").draggable({
-				disabled : false
-			});
+			if ($("#menu-toggle").text() != '시작하기'){
+				draggable_switch('ON', $("#chatcontainer"));
+			}
 		})
 		// moveChat 마우스를 뗄 때
 		$("#moveChat").mouseup(function(e) {
-			$("#chatcontainer").draggable({
-				disabled : true
-			});
+			draggable_switch('OFF', $("#chatcontainer"));
 		})
 	});
 

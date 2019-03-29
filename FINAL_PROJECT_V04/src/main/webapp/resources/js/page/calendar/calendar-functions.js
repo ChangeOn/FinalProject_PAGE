@@ -1,21 +1,12 @@
-
-$(function(){
-	$(".calcontainer").draggable();
-});
-
-
-
-
-
 function Add_Calendar(){
 	
 	console.log("캘린더 생성");
 	
 	if($("[class~=editor][class~=table]").length==0){
-
+		
 		$(".container-fluid").prepend(
 				
-				"<div class='calcontainer draggable border border-dark rounded' id='calcontainer' style='width:700px; position:relative'>"+
+				"<div class='calcontainer border border-dark rounded' id='calcontainer' style='width:700px; position:relative'>"+
 				"<div class='calcontrol' style='position:relative; height:30px;'><img id='conimg' src='resources/image/delete-button.png' style='width:20px; height:20px; float:right; '></div>"+
 					"<div class='caltable'>"+
 						
@@ -31,21 +22,16 @@ function Add_Calendar(){
 			resize: function( event, ui ) {
 				$('#calendar').fullCalendar('option', 'height', ui.size.height-32);
 			}
-		});		
-		//resizable_switch('ON', $(".calcontainer"));	
+		});
+		// 드래그 및 리사이즈 기능 전체 설정
+		resizable_switch('ON', $("#calcontainer"));
+		draggable_switch('ON', $("#calcontainer"));
 		
 	$("#conimg").click(function(){
 		$(".calcontainer").remove();
 	})	
 	
-	$(function(){
-	$(".calcontainer").draggable();
-});
-		
-	
-	$(document).ready(function() {
-		
-		
+	$(document).ready(function() {		
 		
 			var seq=0;
 			var myStartDate='';
