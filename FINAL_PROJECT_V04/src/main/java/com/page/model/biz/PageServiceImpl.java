@@ -52,4 +52,10 @@ public class PageServiceImpl implements PageService {
 		return pageDAO.searchUserPages(user_vo);
 	}
 
+	@Override
+	public void updatePageContent(PageWithUserVO page_with_user_vo) throws Exception {
+		
+		pageDAO.updatePageContent(page_with_user_vo);
+	}
+
 }

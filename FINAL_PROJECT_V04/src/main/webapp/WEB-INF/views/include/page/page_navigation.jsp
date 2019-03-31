@@ -42,9 +42,18 @@
 		<a href='#' onclick='Same_Editor_Warnning("N", this.id)' class='alert-link'> 아니오 </a>
 	</div>
 	<div id='create-editor-warnning' class='collapse alert alert-danger' role='alert'>
-	동일 에디터가 이미 실행 중입니다.
+		동일 에디터가 이미 실행 중입니다.
+	</div>
+	<div id='other-tab-warnning' class='collapse alert alert-danger' role='alert'>
+		다른 페이지 탭을 불러오기 전, 페이지 편집을 먼저 마쳐주십시오.
 	</div>
 	<!-- /상황별 경고 표시 -->
+	
+	<!-- 상황별 알림 표시 -->
+	<div id='update-tab-warnning' class='collapse alert alert-primary' role='alert'>
+		페이지 탭 정보가 업데이트 되었습니다.
+	</div>
+	<!-- /상황별 알림 표시 -->
 	
 	<!-- 텍스트 관련 경고 -->
 	<!-- /텍스트 관련 경고 -->

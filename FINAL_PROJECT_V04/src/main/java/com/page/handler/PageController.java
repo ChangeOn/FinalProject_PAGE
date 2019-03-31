@@ -51,30 +51,29 @@ public class PageController {
      *  */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public void pagePOST(HttpSession http_session, HttpServletResponse response,
-    		PageVO page_vo, Model model ) throws Exception {
+    		PageWithUserVO page_with_user_vo, Model model ) throws Exception {
     	
     	/* 세션에 로그인 정보를 통해 유저정보를 얻고, 유저정보를 토대로
-    	 * 페이지 정보 및, 생성 정보를 만든다. */
-    	
-    	/* Q. 유저당 페이지 개수는 정해져 있는데, 같은 페이지는 덮어쓰게 해야하는 것 아닌가?
-    	 *  */
-    	
+    	 * 특정 페이지 정보를 갱신한다. */
+
     	/* 로그인 유지 여부는 인증 인터셉터가 처리하고, 데이터베이스 관련 생성 여부는
     	 * 관련 서비스 BIZ에서 처리하도록 한다. */
     	
-    	Object object = http_session.getAttribute("login");
+    	Object before_user_vo = http_session.getAttribute("login");
     	
 		//로그인 정보를 통해 유저정보 받기
-		UserVO user_vo = (UserVO) object;
+		UserVO user_vo = (UserVO) before_user_vo;
 		
-		//페이지 정보 생성하기
-		page_service.savePageContent(page_vo);
+		//특정 페이지 정보 갱신
+		page_with_user_vo.setUser_no(user_vo.getUser_no());
+		page_service.updatePageContent(page_with_user_vo);
 		
-		//페이지 생성 정보 생성하기
-    	Page_CreateVO page_create_vo = new Page_CreateVO();
-    	page_create_vo.setPage_no(page_vo.getPage_no());
-    	page_create_vo.setUser_no(user_vo.getUser_no());
-    	page_service.connectUserWithPage(page_create_vo);
+        //클라이언트로 성공 메세지 전송
+        PrintWriter out = response.getWriter();
+
+        JSONObject json_object = new JSONObject();
+        json_object.put("message", "true");
+        out.print(json_object);
     }
     
     /*
@@ -113,6 +112,7 @@ public class PageController {
     	request.setCharacterEncoding("utf8");
         response.setContentType("application/json");
         
+        //클라이언트로 성공 메세지 전송
         PrintWriter out = response.getWriter();
 
         JSONObject json_object = new JSONObject();

@@ -18,4 +18,6 @@ public interface PageService {
     List<PageVO> searchUserPages(UserVO user_vo) throws Exception;
     //특정 유저 특정 페이지 정보 조회
     PageVO loadPageContent(PageWithUserVO page_with_user_vo) throws Exception;
+  //특정 유저 특정 페이지 정보 갱신
+    void updatePageContent(PageWithUserVO page_with_user_vo) throws Exception;
 }

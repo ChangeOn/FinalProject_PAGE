@@ -251,6 +251,7 @@ function page_edit_mode_switch(ONOFF) {
 			
 			// 경고창 표시
 			$("#using-editor-warnning").collapse('show');
+			return;
 		}
 		// 실행중인 에디터가 없는 경우
 		else{
@@ -277,27 +278,35 @@ function page_edit_mode_switch(ONOFF) {
 			 * 데이터베이스에 저장하기 위해 HTML을 JSON의 형태로 전송한다.
 			 * */
 			
+			var actived_page_tab_name = $("[class~=page-tab-group]")
+			.find("[class~=actived]").html();
+			console.log(actived_page_tab_name.length);
+			
 			//편집된 HTML을 담고 있는 객체
 			var $container = $(".container-fluid").clone();
 			//JSON 오브젝트 생성
 		    var json_object = new Object();
 		    //JSON 오브젝트에 PageVO 모델 바인딩
-		    json_object.page_name = "test_name"
+		    json_object.page_name = actived_page_tab_name
 		    json_object.page_content = $container[0].innerHTML;
 		    
 		    //AJAX를 통해 JSON 오브젝트 전달
-		    /*
+		    
 		    $.ajax({
 		    	    type : "POST",
 		    	    dataType : 'json',
 		    	    data : json_object,
 		    	    url : "/page/save",
-		    	    success : function() {
+		    	    success : function(data) {
 		    	       
-		    	    	console.log("success");
+		    	    	if(data.message = "true") {
+		    	    		
+		    				// 알림창 표시
+		    				$("#update-tab-warnning").collapse('show');
+		    	    	}
 		    	    }
 		    });
-		    */
+		    
 		}
 	}
 	/*/페이지 편집 모드 OFF */
@@ -307,6 +316,37 @@ function page_edit_mode_switch(ONOFF) {
 $(function() {
 	
 	$(document)
+	.ready(function() {
+		
+		/* 
+		 * 페이지가 로드될때 메인페이지 정보를 불러온다.
+		 * */
+		
+		//이미 활성화 되어있는 페이지 탭 비활성화
+		var main_page_tab = $("[class~=page-tab-group]").find("[class~=main]");
+		main_page_tab.removeClass("btn-light")
+		.addClass("btn-primary").addClass("actived");
+		
+		//JSON 오브젝트 생성
+	    var json_object = new Object();
+	    
+	    //JSON 오브젝트에 PageVO 모델 바인딩
+	    json_object.page_name = main_page_tab.html();
+	    
+	    //AJAX를 통해 JSON 오브젝트 전달
+	    $.ajax({
+	    	    type : "POST",
+	    	    dataType : 'json',
+	    	    data : json_object,
+	    	    url : "/page/load",
+	    	    success : function(data) {
+	    	       
+	    	    	//기존 페이지 컨텐츠를 제거하고 불러온 컨텐츠를 적용시킨다.
+	    	    	$("[class~=container-fluid]").empty();
+	    	    	$("[class~=container-fluid]").append(data.page_content);
+	    	    }
+	    });
+	})
 	/* COLLAPSE 관련 */
 	// 전체 토글 실행 시
 	.on("show.bs.collapse", ".collapse" , function() {
@@ -446,46 +486,60 @@ $(function() {
 		event.preventDefault();
 		$(this).blur();
 		
-		//이미 활성화 되어있는 페이지를 클릭했을 경우
-		if($(this).hasClass("actived")) {
+		/* 
+		 * 페이지 편집 모드가 활성화 되어 있는 경우 경고창 출력
+		 * */
+		
+		if($("[class~=d-flex]").hasClass("toggled")) {
 			
-			console.log("already")
-			return;
-		} 
-		//다른 페이지 탭을 클릭했을 경우
+			//이미 활성화 되어있는 페이지를 클릭했을 경우
+			if($(this).hasClass("actived")) {
+				
+				return;
+			} 
+			//다른 페이지 탭을 클릭했을 경우
+			else {
+				
+				//이미 활성화 되어있는 페이지 탭 비활성화
+				$("[class~=page-tab-group]").find("[class~=actived]")
+				.removeClass("btn-primary").removeClass("actived")
+				.addClass("btn-light");
+				
+				$(this).removeClass("btn-light")
+				.addClass("btn-primary").addClass("actived");
+				
+				/* 
+				 * 다른 페이지 탭을 클릭했을 때, 해당 페이지에 저장해놓은 상태를 불러오기 위해
+				 * AJAX를 통해 페이지 정보를 받아와서 HTML을 수정한다.
+				 * */
+				
+				//JSON 오브젝트 생성
+			    var json_object = new Object();
+			    
+			    //JSON 오브젝트에 PageVO 모델 바인딩
+			    json_object.page_name = $(this).html();
+			    
+			    //AJAX를 통해 JSON 오브젝트 전달
+			    $.ajax({
+			    	    type : "POST",
+			    	    dataType : 'json',
+			    	    data : json_object,
+			    	    url : "/page/load",
+			    	    success : function(data) {
+			    	       
+			    	    	//기존 페이지 컨텐츠를 제거하고 불러온 컨텐츠를 적용시킨다.
+			    	    	$("[class~=container-fluid]").empty();
+			    	    	$("[class~=container-fluid]").append(data.page_content);
+			    	    }
+			    });
+			}
+		}
+		//페이지 편집 모드가 활성화중인 경우
 		else {
-			console.log("other one clicked")
-			
-			//이미 활성화 되어있는 페이지 탭 비활성화
-			$("[class~=page-tab-group]").find("[class~=actived]")
-			.removeClass("btn-primary").removeClass("actived")
-			.addClass("btn-light");
-			
-			$(this).removeClass("btn-light")
-			.addClass("btn-primary").addClass("actived");
-			
-			/* 
-			 * 다른 페이지 탭을 클릭했을 때, 해당 페이지에 저장해놓은 상태를 불러오기 위해
-			 * AJAX를 통해 페이지 정보를 받아와서 HTML을 수정한다.
-			 * */
-			
-			//JSON 오브젝트 생성
-		    var json_object = new Object();
-		    
-		    //JSON 오브젝트에 PageVO 모델 바인딩
-		    json_object.page_name = $(this).html();
-		    
-		    //AJAX를 통해 JSON 오브젝트 전달
-		    $.ajax({
-		    	    type : "POST",
-		    	    dataType : 'json',
-		    	    data : json_object,
-		    	    url : "/page/load",
-		    	    success : function(data) {
-		    	       
-		    	    	console.log(data);
-		    	    }
-		    });
+		
+			// 경고창 표시
+			$("#other-tab-warnning").collapse('show');
+			return;
 		}
 	})
 });

@@ -62,7 +62,11 @@
  				,#{page_content}
  			</when>
  			<otherwise>
- 				,EMPTY_CLOB()
+ 				,<![CDATA[
+					'<div class="bottom-fixed-by-level-1" style="position: relative; top: 2000px;">
+					<br>
+					</div>'
+				]]>
  			</otherwise>
  		</choose>
 			
@@ -82,6 +86,19 @@
 			,#{user_no}
 			,#{page_no}
 		)
-		
 	</insert>
+	
+	<update id="updatePageContent" parameterType="PageWithUserVO">
+		MERGE   INTO PAGES A
+		USING       ( 
+			SELECT	C.*
+			FROM	PAGES C INNER JOIN PAGE_CREATE D
+		    ON      C.PAGE_NO = D.PAGE_NO
+			WHERE	D.USER_NO = #{user_no}
+		    AND     C.PAGE_NAME = #{page_name}
+			) B
+		ON(A.PAGE_NO=B.PAGE_NO)
+		WHEN MATCHED THEN
+		UPDATE SET A.PAGE_CONTENT = #{page_content}
+	</update>
 </mapper>

@@ -54,4 +54,10 @@ public class PageDAOImpl implements PageDAO {
 		return sqlSession.selectList(NAMESPACE + ".searchUserPages", user_vo);
 	}
 
+	@Override
+	public void updatePageContent(PageWithUserVO page_with_user_vo) throws Exception {
+		
+		sqlSession.update(NAMESPACE + ".updatePageContent", page_with_user_vo);
+	}
+
 }

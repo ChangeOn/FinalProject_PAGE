@@ -24,18 +24,7 @@
 			
 			<!-- 컨텐츠 레이아웃 -->
 			<div class="container-fluid">
-				<div class="draggable text"
-					style="position: relative; left: 500px; top: 5px;">
-					<div class="plain text OFF" data-origin="div">
-						<div id="jqte-div">
-							<span style="font-size: 197px;">PAGE</span>
-						</div>
-					</div>
-				</div>
-				<div class="bottom-fixed-by-level-1"
-					style="position: relative; top: 2000px;">
-					<br>
-				</div>
+				<!-- 유저별 페이지 정보 상이 -->
 			</div>
 			<!-- /컨텐츠 레이아웃 -->
 
