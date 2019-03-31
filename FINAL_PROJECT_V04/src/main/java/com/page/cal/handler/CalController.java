@@ -52,13 +52,16 @@ public class CalController {
 	
 	@RequestMapping(value="/calDBEvent", method= { RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public String getCal(String id,Model model, HttpServletRequest request) throws IOException {
+	public String getCal(Model model, HttpServletRequest request) throws IOException {
 		
 		ModelAndView mv=new ModelAndView();
 		//String myid=(String) request.getAttribute(id);
 		
 		//System.out.println("jh db도착 : id="+myid);
 		
+		UserVO userVO=(UserVO) request.getSession().getAttribute("login");
+		
+		String id=userVO.getUser_id();
 		
 		String jsonMsg=null;
 		// 나의 일정 data 추출

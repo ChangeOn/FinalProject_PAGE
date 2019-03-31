@@ -221,14 +221,12 @@ function Add_Calendar(){
 				    eventLimit: false, // allow "more" link when too many events
 				    
 				    //start,end,callback
-				    events : function(start,end,timezone,callback,id){
+				    events : function(start,end,timezone,callback){
 				    	
 				    	$.ajax({
 				    		type :"GET",
 				    		url : "calDBEvent",
-				    		data:{
-				    			"id":id
-				    		},
+				    		
 				    		dataType:'json',
 				    		success:function(data) { 
 				    			var events =[];
