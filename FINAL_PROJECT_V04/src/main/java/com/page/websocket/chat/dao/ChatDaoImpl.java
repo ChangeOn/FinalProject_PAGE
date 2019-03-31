@@ -56,5 +56,24 @@ public class ChatDaoImpl implements ChatDao {
 		return dto;		
 	}
 
+	@Override
+	public int CheckSaveChat(int user_no) {
+		int res = 0;
+		
+		res = sqlSession.selectOne(NAMESPACE+"CheckSaveChat",user_no);
+		return res;
+	}
+
+	@Override
+	public int CheckSavePaint(int user_no) {
+		int res = 0;
+		
+		res = sqlSession.selectOne(NAMESPACE+"CheckSavePaint",user_no);
+		
+		return res;
+	}
+
+	
+
 	
 }

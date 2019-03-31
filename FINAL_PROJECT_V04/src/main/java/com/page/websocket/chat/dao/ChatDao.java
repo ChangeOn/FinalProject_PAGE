@@ -14,5 +14,8 @@ public interface ChatDao {
 	public int ChatInsert(ChatDto dto);
 	
 	public UserVO chatSelectID(int user_no);
+	
+	public int CheckSaveChat(int user_no);
+	public int CheckSavePaint(int user_no);
 
 }

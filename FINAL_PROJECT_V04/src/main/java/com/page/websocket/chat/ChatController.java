@@ -38,6 +38,7 @@ import org.springframework.web.util.WebUtils;
 import com.page.board.model.biz.boardBiz;
 import com.page.board.model.dto.fileDto;
 import com.page.user.dto.UserVO;
+import com.page.websocket.chat.biz.ChatBiz;
 import com.page.websocket.file.biz.FileBiz;
 import com.page.websocket.handler.ChatWebSocketHandler;
 
@@ -51,6 +52,9 @@ public class ChatController {
 		
 	@Autowired
 	private FileBiz filebiz;
+	
+	@Autowired
+	private ChatBiz chatbiz;
 	
 	@RequestMapping("/web/chat")
 	public String viewChatPage(Model model, HttpServletRequest request) {
@@ -198,6 +202,40 @@ public class ChatController {
 	  if( deleteFile.exists() ) deleteFile.delete();
 	  
 	  return encodedString;
+	}
+	
+	@RequestMapping("/checksavechat")
+	@ResponseBody
+	public String ajax_checksavechat(HttpServletRequest request) throws Throwable{
+	  
+		UserVO userVO = (UserVO)request.getSession().getAttribute("login");
+		
+		logger.info("no : "+userVO.getUser_no());
+		int user_no = userVO.getUser_no();
+		int res = chatbiz.CheckSaveChat(user_no);
+		
+		if (res == 0 ) {
+			return "none";
+		} else {
+			return "exist";
+		}
+	}
+	
+	@RequestMapping("/checksavepaint")
+	@ResponseBody
+	public String ajax_checksavepaint(HttpServletRequest request) throws Throwable{
+	  
+		UserVO userVO = (UserVO)request.getSession().getAttribute("login");
+		
+		logger.info("no : "+userVO.getUser_no());
+		int user_no = userVO.getUser_no();
+		int res = chatbiz.CheckSavePaint(user_no);
+		
+		if (res == 0 ) {
+			return "none";
+		} else {
+			return "exist";
+		}
 	}
 
 

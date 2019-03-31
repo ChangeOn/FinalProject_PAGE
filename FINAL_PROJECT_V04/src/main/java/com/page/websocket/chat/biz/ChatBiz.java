@@ -12,5 +12,8 @@ public interface ChatBiz {
 	public List<ChatDto> ChatSelectPageList(int pageno);
 	
 	public UserVO chatSelectID(int user_no);
+	
+	public int CheckSaveChat(int user_no);
+	public int CheckSavePaint(int user_no);
 
 }

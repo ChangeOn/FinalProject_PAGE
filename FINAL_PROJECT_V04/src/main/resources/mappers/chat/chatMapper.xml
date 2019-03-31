@@ -25,6 +25,22 @@
         FROM 	users
         WHERE 	user_no = #{user_no}
     </select>
+    
+    <select id="CheckSaveChat" parameterType="Int" resultType="java.lang.Integer">
+	    SELECT  COUNT(*)
+		FROM    PAGES A INNER JOIN PAGE_CREATE B
+		ON      A.PAGE_NO = B.PAGE_NO
+		WHERE   B.USER_NO = #{user_no}
+		AND     DBMS_LOB.INSTR( PAGE_CONTENT, 'chat' )>0
+	</select>
+	
+	<select id="CheckSavePaint" parameterType="Int" resultType="java.lang.Integer">
+	    SELECT  COUNT(*)
+		FROM    PAGES A INNER JOIN PAGE_CREATE B
+		ON      A.PAGE_NO = B.PAGE_NO
+		WHERE   B.USER_NO = #{user_no}
+		AND     DBMS_LOB.INSTR( PAGE_CONTENT, 'paint' )>0
+	</select>
 	
 	 
 </mapper>

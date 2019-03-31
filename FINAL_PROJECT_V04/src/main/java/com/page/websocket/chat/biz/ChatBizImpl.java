@@ -35,4 +35,14 @@ public class ChatBizImpl implements ChatBiz {
 		return dao.chatSelectID(user_no);
 	}
 
+	@Override
+	public int CheckSaveChat(int user_no) {		
+		return dao.CheckSaveChat(user_no);
+	}
+
+	@Override
+	public int CheckSavePaint(int user_no) {
+		return dao.CheckSavePaint(user_no);
+	}
+
 }
