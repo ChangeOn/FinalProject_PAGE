@@ -24,7 +24,12 @@
 				minHeight: 521,
 				maxHeight: 521
 			});
-			resizable_switch('ON', $("#boardcontainer"));
+			// 토글 버튼 상태에따라  크기변경 여부 활성화/비활성화
+			if ($("#menu-toggle").text() != '시작하기'){
+				resizable_switch('ON', $("#boardcontainer"));				
+			} else if ($("#menu-toggle").text() != '종료하기'){				
+				resizable_switch('OFF', $("#boardcontainer"));
+			}			
 		})
 	} 
  	
