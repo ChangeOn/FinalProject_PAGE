@@ -30,15 +30,32 @@ function Add_Calendar(){
 		});
 		// 드래그 및 리사이즈 기능 전체 설정
 		resizable_switch('ON', $("#calcontainer"));
-		draggable_switch('ON', $("#calcontainer"));
-	
-		// 토글 버튼 클릭시 닫기버튼 비활성화
-		$("#menu-toggle").click(function() {
-			if ($("#menu-toggle").text() != '시작하기'){
-				$(".calcontrol").hide();
-			} else if ($("#menu-toggle").text() != '종료하기'){
-				$(".calcontrol").show();
-			}			
+		draggable_switch('ON', $("#calcontainer"));		
+		
+		// 편집모드 시 닫기버튼 활성화
+		$("#page-edit-mode-on-warnning #Y").click(function() {
+			if ($("#menu-toggle").text() == '종료하기'){
+				$("#conimg").show();
+				$(".calcontainer").resizable("destroy");
+				$(".calcontainer").resizable({
+					minHeight: 506,
+					minWidth: 500,
+					resize: function( event, ui ) {
+						$('#calendar').fullCalendar('option', 'height', ui.size.height-32);
+					}
+				});
+				resizable_switch('ON', $("#calcontainer"));
+				draggable_switch('ON', $("#calcontainer"));	
+			}					
+		});	
+		
+		// 편집모드 끝낼 시 닫기버튼 비활성화
+		$("#page-edit-mode-off-warnning #Y").click(function() {
+			if ($("#menu-toggle").text() == '시작하기'){
+				$("#conimg").hide();
+				resizable_switch('OFF', $("#calcontainer"));
+				draggable_switch('OFF', $("#calcontainer"));
+			}					
 		});
 		
 		$("#conimg").click(function(){

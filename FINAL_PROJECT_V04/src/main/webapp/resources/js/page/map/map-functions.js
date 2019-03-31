@@ -15,16 +15,24 @@ $(function(){
 			map.relayout();
 		}
 	});
-	resizable_switch('ON', $(".map_wrap"));
-	
-	// 토글 버튼 클릭시 닫기버튼 비활성화
-	$("#menu-toggle").click(function() {
-		if ($("#menu-toggle").text() != '시작하기'){
-			$("#mapCloseIcon").hide();
-		} else if ($("#menu-toggle").text() != '종료하기'){				
+	resizable_switch('ON', $(".map_wrap"));	
+		
+	// 편집모드 시 닫기버튼 활성화
+	$("#page-edit-mode-on-warnning #Y").click(function() {
+		if ($("#menu-toggle").text() == '종료하기'){
 			$("#mapCloseIcon").show();
-		}			
-	});
+			$(".map_wrap").resizable("destroy");
+			resizable_switch('ON', $(".map_wrap"));
+		}					
+	});	
+	
+	// 편집모드 끝낼 시 닫기버튼 비활성화
+	$("#page-edit-mode-off-warnning #Y").click(function() {
+		if ($("#menu-toggle").text() == '시작하기'){
+			$("#mapCloseIcon").hide();
+			resizable_switch('OFF', $(".map_wrap"));
+		}					
+	});	
 
 });
 

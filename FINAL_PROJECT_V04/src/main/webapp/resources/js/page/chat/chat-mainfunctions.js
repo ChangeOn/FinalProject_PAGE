@@ -43,16 +43,44 @@
 		// moveChat 마우스를 뗄 때
 		$("#moveChat").mouseup(function(e) {
 			draggable_switch('OFF', $("#chatcontainer"));
-		})
+		})		
 		
-		// 토글 버튼 클릭시 닫기버튼 비활성화
-		$("#menu-toggle").click(function() {
-			if ($("#menu-toggle").text() != '시작하기'){
-				$("#chatDelteIcon").hide();
-			} else if ($("#menu-toggle").text() != '종료하기'){				
-				$("#chatDelteIcon").show();
-			}			
+		// 페이지 변경 클릭 시
+		$(".page-tab").click(function() {		
+			//이미 활성화 되어있는 페이지를 클릭했을 경우
+			if($(this).hasClass("actived")) {					
+				return;
+			} else {
+				$('#exitBtn').click();
+			}
     	});
+		
+		// 편집모드 시 닫기버튼 활성화
+		$("#page-edit-mode-on-warnning #Y").click(function() {
+			if ($("#menu-toggle").text() == '종료하기'){
+				$("#chatDelteIcon").show();
+				$("#chatcontainer").resizable("destroy");
+				$("#chatcontainer").resizable({
+					minHeight: 260,
+					minWidth: 430,
+					maxHeight: 800,
+					resize: function( event, ui ) {
+					    $("#chatMessageArea").height(ui.size.height-35-56-65);
+					}
+				});
+				// 드래그 및 리사이즈 기능 전체 설정
+				resizable_switch('ON', $("#chatcontainer"));
+			}					
+		});	
+		
+		// 편집모드 끝낼 시 닫기버튼 비활성화
+		$("#page-edit-mode-off-warnning #Y").click(function() {
+			if ($("#menu-toggle").text() == '시작하기'){
+				$("#chatDelteIcon").hide();
+				resizable_switch('OFF', $("#chatcontainer"));
+			}					
+		});
+		
 	});
 
 	function connect() {

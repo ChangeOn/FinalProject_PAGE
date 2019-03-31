@@ -25,14 +25,16 @@
 				maxHeight: 521
 			});
 			// 토글 버튼 상태에따라  크기변경 여부 활성화/비활성화
-			if ($("#menu-toggle").text() != '시작하기'){
-				resizable_switch('ON', $("#boardcontainer"));				
-			} else if ($("#menu-toggle").text() != '종료하기'){				
+			if ($("#menu-toggle").text() == '시작하기'){
+				$("#boardDelteIcon").hide();
 				resizable_switch('OFF', $("#boardcontainer"));
+			} else if ($("#menu-toggle").text() == '종료하기'){
+				$("#boardDelteIcon").show();
+				resizable_switch('ON', $("#boardcontainer"));				
 			}			
 		})
 	} 
  	
-	function deleteBoard(){
+	function deleteBoardContainer(){
 		$("#boardcontainer").remove();
 	}

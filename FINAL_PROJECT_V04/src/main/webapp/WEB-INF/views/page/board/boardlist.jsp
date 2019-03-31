@@ -25,7 +25,6 @@
 	}
 
 </style>
-<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <script type="text/javascript">
 	
 	function searchBtn(){
@@ -68,31 +67,36 @@
 			draggable_switch('OFF', $("#boardline"));
 		})
 		
-		// 토글 버튼 클릭시 닫기버튼 비활성화
-		$("#menu-toggle").click(function() {
-			if ($("#menu-toggle").text() != '시작하기'){
-				$("#boardDelteIcon").hide();
-			} else if ($("#menu-toggle").text() != '종료하기'){				
+		// 편집모드 시 닫기버튼 활성화
+		$("#page-edit-mode-on-warnning #Y").click(function() {
+			if ($("#menu-toggle").text() == '종료하기'){
 				$("#boardDelteIcon").show();
-			}			
+				$("#boardcontainer").resizable("destroy");
+				$("#boardcontainer").resizable({
+					minWidth: 550,
+					minHeight: 521,
+					maxHeight: 521
+				});
+				resizable_switch('ON', $("#boardcontainer"));
+			}					
+		});	
+		
+		// 편집모드 끝낼 시 닫기버튼 비활성화
+		$("#page-edit-mode-off-warnning #Y").click(function() {
+			if ($("#menu-toggle").text() == '시작하기'){
+				$("#boardDelteIcon").hide();
+				resizable_switch('OFF', $("#boardcontainer"));
+			}					
 		});
 	
 	})
-
-
 </script>
-
 <style type="text/css">
 	th{
 		text-align: center;
 	}
 
 </style>
-
-<!-- 부트스트랩 4.0  -->
-<!-- <script src="webjars/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css"> -->
-
 </head>
 <body> 
 <div class="container">
@@ -111,15 +115,10 @@
 		<button type="button" class="btn btn-outline-secondary" onClick="searchBtn()">검색</button>
 		
 	</form>
-	<i id="boardDelteIcon" class="fas fa-times-circle icon-red float-right" onclick="deleteBoard()"></i>
+	<i id="boardDelteIcon" class="fas fa-times-circle icon-red float-right" onclick="deleteBoardContainer()"></i>
 	</nav>
 	
-	<table class="table table-hover table-sm" >
-		<%-- <col width="100"/>
-		<col width="300"/>
-		<col width="200"/>
-		<col width="100"/>
-		<col width="200"/>	 --%>
+	<table class="table table-hover table-sm" >		
 		<thead class="thead-dark">
 		<tr >
 			<th style="text-align: center" scope="col">번호</th>
@@ -184,7 +183,4 @@
 </div>
 
 </body>
-<!-- <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<!-- <script src="resources/js/bootstrap.min.js"></script>  -->
-
 </html>

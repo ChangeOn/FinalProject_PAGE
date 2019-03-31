@@ -246,16 +246,22 @@ $(document).ready(function() {
 			draggable_switch('OFF', $("#paintcontainer"));
 		})
 		
-		// 토글 버튼 클릭시 최소화, 닫기버튼 비활성화
-		$("#menu-toggle").click(function() {
-			if ($("#menu-toggle").text() != '시작하기'){
-				$("#paintexit").hide();
-				$("#paintminimize").hide();
-			} else if ($("#menu-toggle").text() != '종료하기'){
+		
+		// 편집모드 시 닫기버튼 활성화
+		$("#page-edit-mode-on-warnning #Y").click(function() {
+			if ($("#menu-toggle").text() == '종료하기'){
 				$("#paintexit").show();
 				$("#paintminimize").show();
-			}			
-    	});
+			}					
+		});	
+		
+		// 편집모드 끝낼 시 닫기버튼 비활성화
+		$("#page-edit-mode-off-warnning #Y").click(function() {
+			if ($("#menu-toggle").text() == '시작하기'){
+				$("#paintexit").hide();
+				$("#paintminimize").hide();
+			}					
+		});		
 		
 		// paintexit 클릭, 페인트 div 삭제
 		$("#paintexit").click(function() {
