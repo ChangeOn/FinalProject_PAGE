@@ -13,7 +13,16 @@
 
 	<!-- 페이지 편집 모드 토글 버튼 -->
 	<button class="btn btn-secondary edit-mode-switch" id="menu-toggle">시작하기</button>
-
+	<div id="page-edit-mode-on-warnning" class="collapse alert alert-dark" role="alert">
+		페이지 편집 모드를 시작하시겠습니까?  
+		<a href='#' onclick='Page_Edit_Mode_ON_Warnning(this.id)' id='Y' class='alert-link'>예 </a> / 
+		<a href='#' onclick='Page_Edit_Mode_ON_Warnning(this.id)' id='N' class='alert-link'> 아니오 </a>
+	</div>
+	<div id="page-edit-mode-off-warnning" class="collapse alert alert-dark" role="alert">
+		페이지 편집 모드를 종료하고, 저장하시겠습니까?
+		<a href='#' onclick='Page_Edit_Mode_OFF_Warnning(this.id)' id='Y' class='alert-link'>예 </a> / 
+		<a href='#' onclick='Page_Edit_Mode_OFF_Warnning(this.id)' id='N' class='alert-link'> 아니오 </a>
+	</div>
 	<!-- /페이지 편집 모드 토글 버튼 -->
 
 	<!-- 페이지 편집 상세 알림 -->
@@ -34,7 +43,7 @@
 	<div id='using-editor-warnning' class='collapse alert alert-danger' role='alert'>
 		에디터 실행 중에 편집 모드를 종료할 경우 진행중이던 작업 내용은 모두 제거됩니다. 
 		<a href='#' onclick='Using_Editor_Warnning(this.id)' id='Y' class='alert-link'>예 </a> / 
-		<a href='#' onclick='Using_Warnning(this.id)' id='N' class='alert-link'> 아니오 </a>
+		<a href='#' onclick='Using_Editor_Warnning(this.id)' id='N' class='alert-link'> 아니오 </a>
 	</div>
 	<div id='same-editor-warnning' class='collapse alert alert-danger' role='alert'>
 		이미 실행 중인 동일 에디터의 작업 내용은 모두 제거됩니다. 

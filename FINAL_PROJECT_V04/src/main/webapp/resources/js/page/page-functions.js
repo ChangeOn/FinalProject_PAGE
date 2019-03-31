@@ -433,10 +433,12 @@ $(function() {
 		event.preventDefault();
 		
 		if($(this).hasClass("btn-light")) {
-			page_edit_mode_switch("OFF")
+			// 알림창 표시
+			$("#page-edit-mode-off-warnning").collapse('show');
 		}
 		else {
-			page_edit_mode_switch("ON")
+			// 알림창 표시
+			$("#page-edit-mode-on-warnning").collapse('show');
 		}
 	})
 	// 페이지 탭 추가 생성
@@ -543,6 +545,36 @@ $(function() {
 		}
 	})
 });
+
+function Page_Edit_Mode_ON_Warnning(YN) {
+	
+	// 상단 네비게이션 바 초기화
+	before_alert();
+	
+	// 페이지 
+	if(YN == 'Y') {
+		
+		page_edit_mode_switch('ON');
+	}
+	else {
+		return;
+	}
+}
+
+function Page_Edit_Mode_OFF_Warnning(YN) {
+	
+	// 상단 네비게이션 바 초기화
+	before_alert();
+	
+	// 페이지 
+	if(YN == 'Y') {
+		
+		page_edit_mode_switch('OFF');
+	}
+	else {
+		return;
+	}
+}
 
 function Using_Editor_Warnning(YN) {
 	
