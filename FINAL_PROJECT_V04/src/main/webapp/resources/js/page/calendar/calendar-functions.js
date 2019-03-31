@@ -56,7 +56,25 @@ function Add_Calendar(){
 			var month=today.getMonth();
 			var year=today.getFullYear();
 		
-			var id="kh";
+			var id="";
+			
+			$.ajax({
+				
+				type:"post",
+				url:"calId",
+				dataType:"text",
+				success:function(data){
+					console.log("id가져오기 성공");
+					id=data;
+					console.log(id);
+				},
+				error:function(request,status,error){
+					console.log("id가져오기 실패")
+					swal("id 가져오기 실패!"+"\n"+"code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+			
+			
 			$(".fc-list-item-time").hide();
 			
 			$('#calendar').fullCalendar({
@@ -158,7 +176,7 @@ function Add_Calendar(){
 				             	$.ajax({
 				         			
 				         			type : "post",
-				         			url:"insertCal.do",
+				         			url:"insertCal",
 				         			data:{
 				         				"seq":seq,
 				         				"id":id,
@@ -203,11 +221,11 @@ function Add_Calendar(){
 				    eventLimit: false, // allow "more" link when too many events
 				    
 				    //start,end,callback
-				    events : function(start,end,timezone,callback){
+				    events : function(start,end,timezone,callback,id){
 				    	
 				    	$.ajax({
 				    		type :"GET",
-				    		url : "calDBEvent.do",
+				    		url : "calDBEvent",
 				    		data:{
 				    			"id":id
 				    		},
@@ -255,7 +273,7 @@ function Add_Calendar(){
 				    			// 삭제 정보 보내기
 				    			$.ajax({
 				    				type : "post",
-				    				url : "deleteCal.do",
+				    				url : "deleteCal",
 				    				data : {
 				    					"seq":event._id
 				    				},

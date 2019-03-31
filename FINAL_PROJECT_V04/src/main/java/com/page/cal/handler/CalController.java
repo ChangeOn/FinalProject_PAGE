@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.page.cal.model.biz.CalBiz;
 import com.page.cal.model.dto.CalDto;
+import com.page.user.dto.UserVO;
 
 /**
  * Handles requests for the application home page.
@@ -38,11 +39,26 @@ public class CalController {
 	@Autowired
 	private CalBiz cbiz;
 	
+	@RequestMapping(value="/calId",method= {RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	public String getId(HttpServletRequest request) {
+		
+		UserVO userVO=(UserVO)request.getSession().getAttribute("login");
+			
+		String myid=userVO.getUser_id();
+			
+		return myid;
+	}
+	
 	@RequestMapping(value="/calDBEvent", method= { RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public String getCal(String id, HttpServletRequest request) throws IOException {
+	public String getCal(String id,Model model, HttpServletRequest request) throws IOException {
 		
 		ModelAndView mv=new ModelAndView();
+		//String myid=(String) request.getAttribute(id);
+		
+		//System.out.println("jh db도착 : id="+myid);
+		
 		
 		String jsonMsg=null;
 		// 나의 일정 data 추출
