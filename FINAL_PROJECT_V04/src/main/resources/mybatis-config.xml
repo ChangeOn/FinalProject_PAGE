@@ -18,6 +18,9 @@
         <typeAlias type="com.page.model.dto.PageVO" alias="PageVO"/>
         <typeAlias type="com.page.model.dto.PageWithUserVO" alias="PageWithUserVO"/>
         <typeAlias type="com.page.model.dto.Page_CreateVO" alias="Page_CreateVO"/>
+        <!-- BOOKMARK -->
+        <typeAlias type="com.page.bookmark.model.dto.BookmarkVO" alias="BookmarkVO"/>
+        <typeAlias type="com.page.bookmark.model.dto.BookmarkWithPageVO" alias="BookmarkWithPageVO"/>
         <!-- BOARD -->
         <typeAlias type="com.page.board.model.dto.boardDto" alias="boardDto"/>
         <!-- ANSWER? -->

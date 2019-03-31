@@ -16,6 +16,7 @@ import com.page.user.dto.UserVO;
 public class PageServiceImpl implements PageService {
 
 	private final PageDAO pageDAO;
+	
     @Inject
     public PageServiceImpl(PageDAO pageDAO) {
     	

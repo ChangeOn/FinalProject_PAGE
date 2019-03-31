@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.page.bookmark.model.biz.BookmarkService;
+import com.page.bookmark.model.dto.BookmarkVO;
 import com.page.model.biz.PageService;
 import com.page.model.dto.PageVO;
 import com.page.user.biz.UserService;
@@ -25,6 +27,8 @@ public class RefreshPageInterceptor  extends HandlerInterceptorAdapter {
 	private UserService user_service;
 	@Inject
 	private PageService page_service;
+	@Inject
+	private BookmarkService bookmark_service;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -51,9 +55,15 @@ public class RefreshPageInterceptor  extends HandlerInterceptorAdapter {
         Object before_user_vo = http_session.getAttribute("login");
         UserVO user_vo = (UserVO) before_user_vo;
 		
-        //유저 정보를 토대로 페이지 목록 조회
+        //유저 정보를 토대로 페이지 목록 및 북마크 조회
         List<PageVO> user_page_lsit = page_service.searchUserPages(user_vo);
+        System.out.println(user_vo);
+        List<BookmarkVO> bookmark_list = bookmark_service.searchPageBookmarks(user_vo);
+        
         http_session.setAttribute("pages", user_page_lsit);
+        http_session.setAttribute("bookmarks", bookmark_list);
+
         System.out.println(user_page_lsit);
+        System.out.println(bookmark_list);
 	}
 }

@@ -27,18 +27,20 @@
 	</resultMap>
 
 	<select id="loadPageContent" parameterType="PageWithUserVO" resultMap="PageVOResultMap">
-		SELECT 	A.PAGE_NAME, A.PAGE_CONTENT
+		SELECT 	A.*
 		FROM	PAGES A INNER JOIN PAGE_CREATE B
 		ON      A.PAGE_NO = B.PAGE_NO
 		WHERE   B.USER_NO = #{user_no}
 		AND		A.PAGE_NAME = #{page_name}
+		ORDER BY A.PAGE_NO ASC
 	</select>
 	
 	<select id="searchUserPages" parameterType="UserVO" resultMap="PageVOResultMap">
-		SELECT 	A.PAGE_NAME, A.PAGE_CONTENT
+		SELECT 	A.*
 		FROM	PAGES A INNER JOIN PAGE_CREATE B
 		ON      A.PAGE_NO = B.PAGE_NO
 		WHERE   B.USER_NO = #{user_no}
+		ORDER BY A.PAGE_NO ASC
 	</select>
 	
 	<select id="checkOverlabPageName" parameterType="PageWithUserVO" resultType="int">

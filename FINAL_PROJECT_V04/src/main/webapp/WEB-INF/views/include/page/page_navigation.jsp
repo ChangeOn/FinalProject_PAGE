@@ -26,16 +26,29 @@
 	<!-- /페이지 편집 모드 토글 버튼 -->
 
 	<!-- 페이지 편집 상세 알림 -->
-	<div id="page-details" class="collapse alert alert-dark" role="alert">
+	<div id="page-details" class="collapse alert alert-warning" role="alert">
+		
+		미구현된 기능으로, 추후 업데이트 예정입니다.
+		<!-- 
+		미구현 된 기능 추후 업데이트 예정
+		
 		페이지를 
 		<a href="#" class="alert-link">추가 </a> 하거나 
 		<a href="#" class="alert-link">삭제 </a> 할 수 있습니다.
+		 -->
 	</div>
 
-	<div id="partner-details" class="collapse alert alert-dark" role="alert">
+	<div id="partner-details" class="collapse alert alert-warning" role="alert">
+	
+		미구현된 기능으로, 추후 업데이트 예정입니다.
+	
+		<!-- 
+		미구현 된 기능 추후 업데이트 예정
+		
 		파트너를 
 		<a href="#" class="alert-link">초대 </a> 하거나 
 		<a href="#" class="alert-link">관리 </a> 할 수 있습니다.
+		-->
 	</div>
 	<!-- /페이지 편집 상세 메뉴 -->
 
@@ -47,8 +60,8 @@
 	</div>
 	<div id='same-editor-warnning' class='collapse alert alert-danger' role='alert'>
 		이미 실행 중인 동일 에디터의 작업 내용은 모두 제거됩니다. 
-		<a href='#' onclick='Same_Editor_Warnning("Y", this.id)' class='alert-link'>예 </a> / 
-		<a href='#' onclick='Same_Editor_Warnning("N", this.id)' class='alert-link'> 아니오 </a>
+		<a href='#' onclick='Same_Editor_Warnning("Y")' class='alert-link'>예 </a> / 
+		<a href='#' onclick='Same_Editor_Warnning("N")' class='alert-link'> 아니오 </a>
 	</div>
 	<div id='create-editor-warnning' class='collapse alert alert-danger' role='alert'>
 		동일 에디터가 이미 실행 중입니다.
@@ -63,6 +76,30 @@
 		페이지 탭 정보가 업데이트 되었습니다.
 	</div>
 	<!-- /상황별 알림 표시 -->
+	
+	<!-- 북마크 관련 알림 -->
+	<div id='add-bookmark-warnning' class='collapse alert alert-secondary' role='alert'>
+		현제 페이지 시점으로 북마크를 생성하시겠습니까?
+		<a href='#' onclick='Add_Bookmark_Warnning("Y")' class='alert-link'>예 </a> / 
+		<a href='#' onclick='Add_Bookmark_Warnning("N")' class='alert-link'> 아니오 </a>
+	</div>
+	<div id='input-bookmark-details-warnning' class='collapse alert alert-secondary' role='alert'>
+		<form class="form" action="bookmark/add" method="post">
+			<input type="hidden" id="page_no" name="page_no"></input>
+			<input type="hidden" id="bookmark_scrolltop" name="bookmark_scrolltop" value=0></input>
+			<div style="display: inline-block;">
+				<span>추가하실 북마크의 이름을 설정합니다. </span>
+			</div>
+			<div style="display: inline-block;">
+				<input type="text" name="bookmark_name"></input>
+			</div>
+			<div style="display: inline-block; font-size: 0.9rem;
+			margin-left: 5px;">
+				<button type="submit" class="btn btn-warning">생성</button>
+			</div>
+		</form>
+	</div>
+	<!-- /북마크 관련 알림 -->
 	
 	<!-- 텍스트 관련 경고 -->
 	<!-- /텍스트 관련 경고 -->
@@ -86,9 +123,6 @@
 		<ul id="user-profile" class="navbar-nav ml-auto mt-4 mt-lg-0">
 			<c:if test="${not empty login}">
 				<li class="nav-item">
-					<button class="btn btn-light" href="#"><img id="page-home" src="${path }resources/image/page/home.png"></button>
-				</li>
-				<li class="nav-item">
 					<button id="user-profile-img" class="btn btn-light" href="#"> 
 						<img src="${pageContext.request.contextPath}/resources/image/${login.user_img}" class="user-image">
 					</button>
@@ -97,11 +131,21 @@
 				<span class="navbar-text text-dark" href="#">${login.user_name} 님</span>
 				</li>
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					<a class="nav-link dropdown-toggle" href="#" id="bookmark-Dropdown"
+						role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">북마크</a>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="bookmark-Dropdown">
+							<c:forEach var="item" varStatus="status" items="${bookmarks}">
+								<a class="dropdown-item" id="${item.bookmark_no }" href="#" onclick="Show_Bookmark_Page(this.id)">${item.bookmark_name }</a>
+							</c:forEach>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#" onclick="Show_Add_Bookmark_Warnning()">북마크 추가</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="profile-Dropdown"
 						role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 메뉴 </a>
-					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Action</a> 
-						<a class="dropdown-item" href="#">Another action</a>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-Dropdown">
+						<a class="dropdown-item" href="#">마이페이지</a> 
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="${path}/user/logout">로그아웃</a>
 					</div>

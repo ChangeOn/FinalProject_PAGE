@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.page.mappers.bookmark.bookmarkMapper">
+
+	<resultMap id="BookmarkVOResultMap" type="BookmarkVO">
+		<id property="bookmark_no" column="BOOKMARK_NO" />
+		<result property="page_no" column="PAGE_NO" />
+		<result property="bookmark_name" column="BOOKMARK_NAME" />
+		<result property="bookmark_scrolltop" column="BOOKMARK_SCROLLTOP"/>
+	</resultMap>
+	<resultMap id="BookmarkWithPageVOResultMap" type="BookmarkWithPageVO">
+		<id property="bookmark_no" column="BOOKMARK_NO" />
+		<result property="page_no" column="PAGE_NO" />
+		<result property="bookmark_name" column="BOOKMARK_NAME" />
+		<result property="bookmark_scrolltop" column="BOOKMARK_SCROLLTOP"/>
+		<result property="page_content" column="PAGE_CONTENT" />
+	</resultMap>
+	
+	<select id="searchPageBookmarks" parameterType="UserVO" resultMap="BookmarkVOResultMap">
+		SELECT  A.*
+		FROM    BOOKMARK A INNER JOIN PAGE_CREATE B
+		ON      A.PAGE_NO = B.PAGE_NO
+		WHERE   B.USER_NO = #{user_no}
+		ORDER BY A.BOOKMARK_NO ASC
+	</select>
+	
+	<select id="loadPageBookmark" parameterType="BookmarkWithPageVO" resultMap="BookmarkWithPageVOResultMap">
+		SELECT  A.*, C.PAGE_CONTENT
+		FROM    BOOKMARK A INNER JOIN PAGE_CREATE B
+		ON      A.PAGE_NO = B.PAGE_NO
+		INNER JOIN PAGES C
+		ON		B.PAGE_NO = C.PAGE_NO
+		WHERE	A.BOOKMARK_NO = #{bookmark_no}
+	</select>
+	
+	<insert id="savePageContent" parameterType="BookmarkVO">
+		INSERT INTO BOOKMARK (
+			BOOKMARK_NO
+			,PAGE_NO
+			,BOOKMARK_NAME
+			,BOOKMARK_SCROLLTOP
+		) VALUES (
+			BOOKMARK_NO_SEQ.NEXTVAL
+			,#{page_no}
+			,#{bookmark_name}
+			,#{bookmark_scrolltop}
+		)
+	</insert>
+</mapper>

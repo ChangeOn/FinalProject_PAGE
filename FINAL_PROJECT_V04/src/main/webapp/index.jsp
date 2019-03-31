@@ -145,7 +145,7 @@
 								</div>
 							</div>
 							<!-- 성별 -->
-							<div class="form-group row"">
+							<div class="form-group row">
 								<div class="col-3" style="padding-right: 0">
 		    						<a id="M" class="btn btn-primary active" href="#" onclick="toggles(this)"
 		    						style="width:100%;">MAN</a>

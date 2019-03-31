@@ -315,17 +315,45 @@ function page_edit_mode_switch(ONOFF) {
 
 $(function() {
 	
+	$("[class~=container-fluid]")
+	/* 윈도우 스크롤 감지 이벤트 */
+	.on('scroll', function() {
+		
+		var bookmark_scrolltop = $("[id~=input-bookmark-details-warnning]").find("[id~=bookmark_scrolltop]");
+		var page_no = $("[id~=input-bookmark-details-warnning]").find("[id~=page_no]");
+		var actived_page_tab_no = parseInt($("[class~=page-tab-group]").find("[class~=actived]").attr("id"));
+		
+		/* 스크롤이 이동할 때마다 북마크 생성 폼의 
+		 * INPUT 값을 갱신한다. */
+		bookmark_scrolltop.val($(".container-fluid").scrollTop());
+		page_no.val(actived_page_tab_no);
+	})
+	
 	$(document)
 	.ready(function() {
 		
 		/* 
 		 * 페이지가 로드될때 메인페이지 정보를 불러온다.
+		 * 동작 화면의 크기가 모바일일 경우 데스크톱 사용을 권장하는 알림을 띄우고,
+		 * 인덱스 페이지로 돌려보낸다.
 		 * */
 		
-		//이미 활성화 되어있는 페이지 탭 비활성화
+		if(!($(window).width()>=1024)) {
+			
+			alert("모바일 환경으로는 본서비스를 이용하기 어려우니," 
+					+" 데스크톱 사용을 권장합니다.");
+			window.location.href="/";
+		}
+		
+		//메인 페이지 탭 비활성화
 		var main_page_tab = $("[class~=page-tab-group]").find("[class~=main]");
 		main_page_tab.removeClass("btn-light")
 		.addClass("btn-primary").addClass("actived");
+		
+		//북마크 추가를 위한 메인 페이지 탭 번호 설정
+		var page_no = $("[id~=input-bookmark-details-warnning]").find("[id~=page_no]");
+		var actived_page_tab_no = parseInt($("[class~=page-tab-group]").find("input[id~=page_no]").val());
+		page_no.val(actived_page_tab_no);
 		
 		//JSON 오브젝트 생성
 	    var json_object = new Object();
@@ -510,6 +538,14 @@ $(function() {
 				$(this).removeClass("btn-light")
 				.addClass("btn-primary").addClass("actived");
 				
+				//북마크 생성을 위한 페이지 탭 번호 갱신
+				var actived_page_tab_no = parseInt($("[class~=page-tab-group]").find("[class~=actived]").attr("id"));
+				var page_no = $("[id~=input-bookmark-details-warnning]").find("[id~=page_no]");
+				page_no.val(actived_page_tab_no);
+				
+				var bookmark_scrolltop = $("[id~=input-bookmark-details-warnning]").find("[id~=bookmark_scrolltop]");
+				bookmark_scrolltop.val(0);
+				
 				/* 
 				 * 다른 페이지 탭을 클릭했을 때, 해당 페이지에 저장해놓은 상태를 불러오기 위해
 				 * AJAX를 통해 페이지 정보를 받아와서 HTML을 수정한다.
@@ -630,8 +666,70 @@ function Same_Editor_Warnning(YN, id) {
 	}
 }
 
-/* 텍스트 관련 */
+function Show_Add_Bookmark_Warnning() {
+	
+	// 경고창 표시
+	$("#add-bookmark-warnning").collapse('show');
+	return;
+}
+function Add_Bookmark_Warnning(YN) {
+	
+	// 상단 네비게이션 바 초기화
+	before_alert();
+	
+	// 북마크 생성
+	if(YN == 'Y') {
+		
+		// 경고창 표시
+		$("#input-bookmark-details-warnning").collapse('show');
+		return;
+	}
+}
+function Show_Bookmark_Page(bookmark_no) {
+	
+	/* INPUT 값으로 미리 지정되어 있는 북마크 번호를 기준으로,
+	 * 페이지 정보를 조회한다. */
+	
+	/* 
+	 * 다른 페이지 탭을 클릭했을 때, 해당 페이지에 저장해놓은 상태를 불러오기 위해
+	 * AJAX를 통해 페이지 정보를 받아와서 HTML을 수정한다.
+	 * */
+	
+	//JSON 오브젝트 생성
+    var json_object = new Object();
+    
+    //JSON 오브젝트에 PageVO 모델 바인딩
+    json_object.bookmark_no = bookmark_no;
+    
+    //AJAX를 통해 JSON 오브젝트 전달
+    $.ajax({
+    	    type : "POST",
+    	    dataType : 'json',
+    	    data : json_object,
+    	    url : "/bookmark/load",
+    	    success : function(data) {
+    	       
+    	    	console.log(data.page_content);
+    	    	console.log(data.bookmark_scrolltop);
+    	    	
+				//이미 활성화 되어있는 페이지 탭 비활성화
+				$("[class~=page-tab-group]").find("[class~=actived]")
+				.removeClass("btn-primary").removeClass("actived")
+				.addClass("btn-light");
+				
+				$("[class~=page-tab-group]").find("[id~="+data.page_no+"]").removeClass("btn-light")
+				.addClass("btn-primary").addClass("actived");
+				
+	   	    	//기존 페이지 컨텐츠를 제거하고 불러온 컨텐츠를 적용시킨다.
+    	    	$("[class~=container-fluid]").empty();
+    	    	$("[class~=container-fluid]").append(data.page_content);
+    	    }
+    });
+}
 
+/*/북마크 관련 */
+
+/* 텍스트 관련 */
 function Add_PlainText() {
 
 	// 텍스트 에디터 플러그인 JQTE

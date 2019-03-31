@@ -13,10 +13,12 @@
 			<c:forEach var="item" varStatus="status" items="${pages}">
 				<c:choose>
 					<c:when test="${status.index eq 0}">
-						<button type="button" class="btn btn-primary page-tab main actived">${item.page_name}</button>
+						<button type="button" id="${item.page_no }" class="btn btn-primary page-tab main actived">${item.page_name}</button>
+						<input type="hidden" id="page_no" name="page_no" value="${item.page_no }"></input>
 					</c:when>
 					<c:otherwise>
-						<button type="button" class="btn btn-light page-tab">${item.page_name}</button>
+						<button type="button" id="${item.page_no }" class="btn btn-light page-tab">${item.page_name}</button>
+						<input type="hidden" id="page_no" name="page_no" value="${item.page_no }"></input>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>

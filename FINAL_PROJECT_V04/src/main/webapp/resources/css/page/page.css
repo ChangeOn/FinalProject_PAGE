@@ -62,6 +62,9 @@ body {
 	max-height: calc(100vh);
 	overflow-y: auto !important;
 }
+.list-group-item-action.bg-white {
+	font-size: 0.8rem;
+}
 /* /사이드바 관련 */
 
 /* 컨텐츠 영역 관련 */
