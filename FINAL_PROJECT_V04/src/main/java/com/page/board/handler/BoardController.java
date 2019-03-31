@@ -28,6 +28,7 @@ import com.page.board.model.dto.SearchCriteria;
 import com.page.board.model.dto.ansDto;
 import com.page.board.model.dto.boardDto;
 import com.page.board.model.dto.fileDto;
+import com.page.user.dto.UserVO;
 
 
 @Controller
@@ -117,14 +118,16 @@ public class BoardController {
 	}
 	@ResponseBody
 	@RequestMapping(value="/insertBoard", method=RequestMethod.GET)
-	public String insertBoard(String title, String editor) {
+	public String insertBoard(HttpServletRequest request,String title, String editor) {
 		
-
+		UserVO userVO = (UserVO)request.getSession().getAttribute("login");
 		boardDto dto = new boardDto();
+		dto.setId(userVO.getUser_id());
 		dto.setTitle(title);
 		dto.setContent(editor);
 		int res = bbiz.insertBoard(dto);
-		
+		System.out.println("editor"+editor);
+		System.out.println("title"+title);
 	
     	if(res>0) {
 			return "success";			
@@ -136,12 +139,13 @@ public class BoardController {
 	
 	
 	@RequestMapping("/selectOne")
-	public String detailBoard(Model model,int boardseq) {
+	public String detailBoard(HttpServletRequest request,Model model,int boardseq) {
 		
+		UserVO userVO = (UserVO)request.getSession().getAttribute("login");
 		boardDto dto = bbiz.selectOne(boardseq);
 		
 		dto.setBoardseq(boardseq);
-		
+
 		Criteria cri = new Criteria(1,5,boardseq);
 
 		
@@ -152,6 +156,7 @@ public class BoardController {
 		
 		List<ansDto> listAnswer = abiz.ansPaging(cri);
 		
+		model.addAttribute("userVO",userVO);
 		model.addAttribute("bdto",dto);
 		model.addAttribute("listAnswer",listAnswer);
 		model.addAttribute("pageMaker",pageMaker);
@@ -219,8 +224,10 @@ public class BoardController {
 	}
 	@ResponseBody
 	@RequestMapping(value="/insertAnswer", method=RequestMethod.GET)
-	public String insertAnswer(@ModelAttribute ansDto adto,int boardseq) {
-
+	public String insertAnswer(@ModelAttribute ansDto adto,int boardseq,HttpServletRequest request) {
+		UserVO userVO = (UserVO)request.getSession().getAttribute("login");
+		
+		adto.setId(userVO.getUser_id());
 		abiz.insertAns(adto);
 		 
 		return "redirect:selectOne?boardseq="+boardseq;

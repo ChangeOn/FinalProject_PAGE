@@ -49,13 +49,16 @@ $(function(){
         var title = document.getElementById("title").value;
         var content = document.getElementById("editor").value;
 
+        if(title == null || title == ""){
+        	alert("제목을 입력해주세요.")
+        }else{
+        	
         
         $.ajax({
     		url:"updateBoard",
     		type:"get",
     		data:"boardseq="+boardseq+"&title="+title+"&content="+content,
     		success:function(data){
-    			alert("완료");
     			refresh('${pageContext.request.contextPath}/selectOne?boardseq='+boardseq);
     		},
     		error:function(){
@@ -64,6 +67,7 @@ $(function(){
 
     	
     	})
+        }
 
     });
 });

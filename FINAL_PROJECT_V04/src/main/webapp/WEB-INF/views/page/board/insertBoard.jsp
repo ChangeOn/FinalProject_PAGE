@@ -54,22 +54,27 @@ $(function(){
         var title = document.getElementById("title").value;
         var editor = document.getElementById("editor").value;
         
+        if(title == null || title == ""){
+        	alert("제목을 입력해주세요.");
+
+        }else if(editor == "<p>" || editor ==""){
+        	alert("내용을 입력해주세요.")
+
+        }else{
         
         $.ajax({
     		url:"insertBoard",
     		type:"get",
     		data:"title="+title+"&editor="+editor,
     		success:function(data){
-    			alert("완료");
+    			alert("글 작성 완료")
     			refresh('${pageContext.request.contextPath}/boardlist');
     		},
     		error:function(){
     			
     		}
-    	
-    	
     	})
-        
+        }
 
     });
 });

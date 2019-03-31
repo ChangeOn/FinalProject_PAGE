@@ -22,7 +22,7 @@
  	
  	<insert id="insertBoard" parameterType="boardDto">
  		INSERT INTO BOARD
- 		VALUES(BOARDSEQ.NEXTVAL,'kh',0,#{title},#{content},SYSDATE,0,0,0)
+ 		VALUES(BOARDSEQ.NEXTVAL,#{id},0,#{title},#{content},SYSDATE,0,0,0)
  	</insert>
  	
  	<update id="updateBoard" parameterType="boardDto">

@@ -39,7 +39,6 @@
 		    		type:"get",
 		    		data:"boardseq="+boardseq+"&anscontent="+anscontent,
 		    		success:function(data){
-		    			alert("완료");
 		    			refresh('${pageContext.request.contextPath}/selectOne?boardseq='+boardseq);
 		    		},
 		    		error:function(){
@@ -57,8 +56,7 @@
 		function deleteAnswer(ansno){
 		var ansno = ansno;
 		var boardseq = $("#boardseq").val();
-		
-		alert(ansno+":::::"+boardseq);
+
 		
 		if(confirm("정말 삭제하시겠습니까?") == true){
 			refresh('${pageContext.request.contextPath}/deleteAnswer?boardseq='+boardseq+'&ansno='+ansno);
@@ -66,6 +64,15 @@
 			return;
 		}
 		
+	}
+		// 게시글 삭제
+		function deleteBoard(boardseq){
+		 var boardseq = boardseq;
+		 if(confirm("정말 삭제하시겠습니까?") == true){
+				refresh('${pageContext.request.contextPath}/deleteform?boardseq='+boardseq);
+			}else{
+				return;
+			}
 	}
 	
 
@@ -98,9 +105,9 @@
 			<tr>
 				<td colspan="2" align="right">
 					<c:choose>
-						<c:when test="${bdto.id eq 'kh' }">
+						<c:when test="${bdto.id eq userVO.user_id }">
 							<input type="button" value="수정" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/updateform?boardseq=${bdto.boardseq}')">
-							<input type="button" value="삭제" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/deleteform?boardseq=${bdto.boardseq}')">
+							<input type="button" value="삭제" class="btn btn-outline-secondary btn-sm" onclick="deleteBoard(${bdto.boardseq})">
 							<input type="button" value="목록으로" class="btn btn-outline-secondary btn-sm" onclick="refresh('${pageContext.request.contextPath}/boardlist')">
 						</c:when>
 						<c:otherwise>
@@ -152,7 +159,7 @@
 						<td align="center"><fmt:formatDate value="${adto.ansregdate }" pattern="yyyy-MM-dd HH:mm:ss"/>
 						</td>
 					<c:choose>
-						<c:when test="${adto.id eq 'KH' }">
+						<c:when test="${adto.id eq userVO.user_id  }">
 						<td><button onClick="deleteAnswer(${adto.ansno})" class="btn btn-outline-secondary btn-sm">삭제</button></td>
 						</c:when>
 						<c:otherwise>

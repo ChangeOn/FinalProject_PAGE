@@ -37,7 +37,7 @@
 	
 	<insert id="insertAnswer">
 		INSERT INTO ANSBOARD 
-		VALUES(#{boardseq},ANSWERSEQ.NEXTVAL,'KH',#{anscontent},SYSDATE)
+		VALUES(#{boardseq},ANSWERSEQ.NEXTVAL,#{id},#{anscontent},SYSDATE)
 		
 	</insert>
 	
