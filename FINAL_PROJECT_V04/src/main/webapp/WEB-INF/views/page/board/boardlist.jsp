@@ -58,17 +58,24 @@
 	}
 	$(document).ready(function() {
 		
-	$("#boardline").mousedown(function(e){
-		$("#boardline").draggable({
-			disabled : false
+		$("#boardline").mousedown(function(e){
+			if ($("#menu-toggle").text() != '시작하기'){
+				draggable_switch('ON', $("#boardline"));
+			}
+		})
+		
+		$("#boardline").mouseup(function(e) {
+			draggable_switch('OFF', $("#boardline"));
+		})
+		
+		// 토글 버튼 클릭시 닫기버튼 비활성화
+		$("#menu-toggle").click(function() {
+			if ($("#menu-toggle").text() != '시작하기'){
+				$("#boardDelteIcon").hide();
+			} else if ($("#menu-toggle").text() != '종료하기'){				
+				$("#boardDelteIcon").show();
+			}			
 		});
-	})
-	
-	$("#boardline").mouseup(function(e) {
-			$("#boardline").draggable({
-				disabled : true
-			});
-	})
 	
 	})
 
@@ -104,7 +111,7 @@
 		<button type="button" class="btn btn-outline-secondary" onClick="searchBtn()">검색</button>
 		
 	</form>
-	<i class="fas fa-times-circle icon-red float-right" onclick="deleteBoard()"></i>
+	<i id="boardDelteIcon" class="fas fa-times-circle icon-red float-right" onclick="deleteBoard()"></i>
 	</nav>
 	
 	<table class="table table-hover table-sm" >
