@@ -11,7 +11,8 @@
 	var randomcolor = setRandomColor();
 	var userid = '${userid}';
 	var username = '${username}';
-	var pageno = '${pageno}';	
+	var pageno = '${pageno}';
+	var profileimg = '${profileimg}';
 
 	function connect() {
 		wsocket = new WebSocket("ws://localhost:8787/chat-ws.do");		
@@ -44,7 +45,7 @@
 		if (jsonmsg.type == 'msg') {
 			appendMessage('<div class="message">'
 					+'<div class="img_cont_msg">'
-					+'<img src="http://placehold.it/50/55C1E7/fff&amp;text=U" class="rounded-circle user_img_msg"></div>'
+					+'<img src="resources/image/'+jsonmsg.profileimg+'" class="rounded-circle user_img_msg"></div>'
 					+ '<div class="nickname"><p style="background-color:'+jsonmsg.randomcolor+';">'
 					+ jsonmsg.nickname + '</p></div>' + '<div class="msg"><p>'
 					+ jsonmsg.message + '</p></div>' + '</div>');			
@@ -62,7 +63,7 @@
 		} else if (jsonmsg.type == 'filedata') {			
 			appendMessage('<div class="message">'
 					+'<div class="img_cont_msg">'
-					+'<img src="http://placehold.it/50/55C1E7/fff&amp;text=U" class="rounded-circle user_img_msg"></div>'
+					+'<img src="resources/image/'+jsonmsg.profileimg+'" class="rounded-circle user_img_msg"></div>'
 					+ '<div class="nickname"><p style="background-color:'+jsonmsg.randomcolor+';">'
 					+ jsonmsg.nickname
 					+ '</p></div>'
@@ -75,7 +76,7 @@
 		} else if (jsonmsg.type == 'video') {	
 			appendMessage("<div class='message'>"
 					+'<div class="img_cont_msg">'
-					+'<img src="http://placehold.it/50/55C1E7/fff&amp;text=U" class="rounded-circle user_img_msg"></div>'
+					+'<img src="resources/image/'+jsonmsg.profileimg+'" class="rounded-circle user_img_msg"></div>'
 					+ "<div class='nickname'><p style='background-color:"+jsonmsg.randomcolor+";'>"
 					+ jsonmsg.nickname
 					+ "</p></div>"
@@ -99,7 +100,7 @@
 			return false;
 		}
 		wsocket.send('{"type" :"msg", "nickname" :"' + nickname
-				+ '", "message" :"' + msg + '", "randomcolor" :"' + randomcolor + '", "pageno" :"' + pageno
+				+ '", "message" :"' + msg + '", "randomcolor" :"' + randomcolor + '", "pageno" :"' + pageno + '", "profileimg" :"' + profileimg
 				+ '"}');
 		$('#message').val('');
 	}
@@ -123,7 +124,7 @@
 		}
 
 		wsocket.send('{"type" :"video", "nickname" :"' + nickname
-				+ '", "url" :"' + url + '", "randomcolor" :"' + randomcolor+ '", "pageno" :"' + pageno
+				+ '", "url" :"' + url + '", "randomcolor" :"' + randomcolor+ '", "pageno" :"' + pageno + '", "profileimg" :"' + profileimg
 				+ '"}');
 		$('#videoUp').val('');
 	}
@@ -163,6 +164,7 @@
 					obj.newFileName = data.newFileName;
 					obj.fileno = String(data.fileno);
 					obj.pageno = pageno;
+					obj.profileimg = profileimg;
 					jsonStr = JSON.stringify(obj);
 
 					wsocket.send(jsonStr);

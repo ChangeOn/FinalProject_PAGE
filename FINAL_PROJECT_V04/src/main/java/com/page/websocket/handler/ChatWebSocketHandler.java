@@ -74,12 +74,14 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 				sendmessage = "{\"type\" :\"msg\","
 							+ "\"nickname\" :\""+chatbiz.chatSelectID(dto.getUserno()).getUser_name()+"\","
 							+ "\"message\" :\""+dto.getChatcontent()+"\","
+							+ "\"profileimg\" :\""+chatbiz.chatSelectID(dto.getUserno()).getUser_img()+"\","
 							+ "\"randomcolor\" :\""+dto.getChatcolor()+"\"}";
 			// 동영상
 			} else if (dto.getChattype().equals("video")){
 				sendmessage = "{\"type\" :\"video\","
 							+ "\"nickname\" :\""+chatbiz.chatSelectID(dto.getUserno()).getUser_name()+"\","
 							+ "\"url\" :\""+dto.getVideourl()+"\","
+							+ "\"profileimg\" :\""+chatbiz.chatSelectID(dto.getUserno()).getUser_img()+"\","
 							+ "\"randomcolor\" :\""+dto.getChatcolor()+"\"}";
 			// 파일
 			} else if (dto.getChattype().equals("filedata")){
@@ -88,6 +90,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 							+ "\"nickname\" :\""+chatbiz.chatSelectID(dto.getUserno()).getUser_name()+"\","
 							+ "\"filename\" :\""+ selectFileDto.getFiletitle()+"\","
 							+ "\"newFileName\" :\""+ selectFileDto.getFilestream()+"\","
+							+ "\"profileimg\" :\""+chatbiz.chatSelectID(dto.getUserno()).getUser_img()+"\","
 							+ "\"randomcolor\" :\""+dto.getChatcolor()+"\"}";
 			}
 			session.sendMessage(new TextMessage(sendmessage));
@@ -104,7 +107,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
-		logger.info(session.getId()+"(IP)"+session.getRemoteAddress().getHostName() + "로부터 메시지 수신 : " + message.getPayload());
+		//logger.info(session.getId()+"(IP)"+session.getRemoteAddress().getHostName() + "로부터 메시지 수신 : " + message.getPayload());
 		
 		// 들어온 사람의 실제 로그인 아이디 정보를 가져온다.
     	Map<String, Object> map = session.getAttributes();

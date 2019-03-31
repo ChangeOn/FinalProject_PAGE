@@ -27,5 +27,5 @@
 	
 	function deleteChat() {		
 		$('#exitBtn').click();
-		$('#chatcontainer').remove();
+		$('.container-fluid #chatcontainer').remove();
 	}

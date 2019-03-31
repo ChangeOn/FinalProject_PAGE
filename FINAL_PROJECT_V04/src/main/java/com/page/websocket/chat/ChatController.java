@@ -61,6 +61,7 @@ public class ChatController {
 		model.addAttribute("userid", userVO.getUser_id() );
 		model.addAttribute("username", userVO.getUser_name() );
 		model.addAttribute("pageno", userVO.getUser_no() );
+		model.addAttribute("profileimg", userVO.getUser_img() );
 		
 		return "/page/chat/chat";
 	}
