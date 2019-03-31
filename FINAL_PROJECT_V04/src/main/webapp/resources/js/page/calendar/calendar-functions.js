@@ -224,17 +224,16 @@ function Add_Calendar(){
 				    events : function(start,end,timezone,callback){
 				    	
 				    	$.ajax({
-				    		type :"GET",
+				    		type :"POST",
 				    		url : "calDBEvent",
-				    		
 				    		dataType:'json',
 				    		success:function(data) { 
 				    			var events =[];
 				    			$(data).each(function(){
 				    				events.push({
-				    					id:$(this).attr('seq'),
-				    					title:$(this).attr('title'),
-				    					content:$(this).attr('content'),
+				    					id:decodeURIComponent($(this).attr('seq')),
+				    					title:decodeURIComponent($(this).attr('title')),
+				    					content:decodeURIComponent($(this).attr('content')),
 					    				start:moment($(this).attr('startdate')).format('YYYY-MM-DD'),
 					    				end:moment($(this).attr('enddate')).format('YYYY-MM-DD')
 				    				});

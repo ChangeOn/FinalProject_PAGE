@@ -2,6 +2,7 @@ package com.page.cal.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,8 +53,9 @@ public class CalController {
 	
 	@RequestMapping(value="/calDBEvent", method= { RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public String getCal(Model model, HttpServletRequest request) throws IOException {
+	public String getCal(Model model, HttpServletRequest request,HttpServletResponse response) throws IOException {
 		
+		response.setContentType("text/html;charset=UTF-8");
 		ModelAndView mv=new ModelAndView();
 		//String myid=(String) request.getAttribute(id);
 		
@@ -77,13 +79,16 @@ public class CalController {
 			cdto=mydtos.get(i);
 			JSONObject obj=new JSONObject();
 			
+			//URLEncoder.encode(cdto.getId(), "UTF-8");
+			//URLEncoder.encode(cdto.getTitle(), "UTF-8");
+			//URLEncoder.encode(cdto.getContent(), "UTF-8");
+			
 			obj.put("seq",cdto.getSeq());
 			obj.put("id",cdto.getId());
 			obj.put("startdate", cdto.getStartdate());
 			obj.put("enddate", cdto.getEnddate());
-			obj.put("title",cdto.getTitle());
+			obj.put("title",URLEncoder.encode(cdto.getTitle(), "UTF-8"));
 		
-			
 			jarr.add(obj);
 			}
 		
@@ -95,7 +100,7 @@ public class CalController {
 		mv.addObject("caljson",jsonMsg);
 			
 			
-		return jsonMsg;
+		return jsonMsg.toString();
 	}
 	
 	@RequestMapping(value="/insertCal",method = { RequestMethod.GET, RequestMethod.POST })
